@@ -1,6 +1,4 @@
 ﻿  MyForm.cpp
-C:\Me\college\structured programming\assignment3\app\Project7\MyForm.cpp(7,33): warning C4829: Possibly incorrect parameters to function main. Consider 'int main(Platform::Array<Platform::String^>^ argv)'
-  .NETFramework,Version=v4.7.2.AssemblyAttributes.cpp
-  Generating Code...
+C:\Users\ALRWAD LAPTOP\Desktop\hey\app\Project7\MyForm.cpp(7,33): warning C4829: Possibly incorrect parameters to function main. Consider 'int main(Platform::Array<Platform::String^>^ argv)'
   MyForm.obj : MSIL module encountered; incremental linking is disabled for MSIL; performing full link
-  Project7.vcxproj -> C:\Me\college\structured programming\assignment3\app\x64\Debug\Project7.exe
+  Project7.vcxproj -> C:\Users\ALRWAD LAPTOP\Desktop\hey\app\x64\Debug\Project7.exe
