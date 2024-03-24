@@ -2,8 +2,6 @@
 #include "Image_Class.h"
 using namespace std;
 
-// test
-
 void blackAndWhite(){
     string filename;
     cout << "Enter the filename: " << endl;
