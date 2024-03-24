@@ -5,10 +5,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{3891A3E8-86CC-4559-832E-0931D7E7AA11}|Project7\\Project7.vcxproj|C:\\Me\\college\\structured programming\\assignment3\\app\\Project7\\MyForm.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}|Form",
       "RelativeMoniker": "D:0:0:{3891A3E8-86CC-4559-832E-0931D7E7AA11}|Project7\\Project7.vcxproj|solutionrelative:Project7\\MyForm.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}|Form"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{3891A3E8-86CC-4559-832E-0931D7E7AA11}|Project7\\Project7.vcxproj|C:\\Me\\college\\structured programming\\assignment3\\app\\Project7\\MyForm.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{3891A3E8-86CC-4559-832E-0931D7E7AA11}|Project7\\Project7.vcxproj|solutionrelative:Project7\\MyForm.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     }
   ],
   "DocumentGroupContainers": [
@@ -33,21 +29,8 @@
               "ToolTip": "C:\\Me\\college\\structured programming\\assignment3\\app\\Project7\\MyForm.h [Design]",
               "RelativeToolTip": "Project7\\MyForm.h [Design]",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
-              "WhenOpened": "2024-03-22T14:16:59.421Z",
+              "WhenOpened": "2024-03-22T22:38:35.876Z",
               "EditorCaption": " [Design]"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "MyForm.cpp",
-              "DocumentMoniker": "C:\\Me\\college\\structured programming\\assignment3\\app\\Project7\\MyForm.cpp",
-              "RelativeDocumentMoniker": "Project7\\MyForm.cpp",
-              "ToolTip": "C:\\Me\\college\\structured programming\\assignment3\\app\\Project7\\MyForm.cpp",
-              "RelativeToolTip": "Project7\\MyForm.cpp",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
-              "WhenOpened": "2024-03-22T14:16:57.425Z",
-              "EditorCaption": ""
             }
           ]
         }
