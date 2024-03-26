@@ -1,0 +1,9 @@
+C:/Me/college/structured programming/assignment3/app/build-untitled-Desktop_Qt_6_6_3_MinGW_64_bit-Debug/CMakeFiles/untitled.dir
+C:/Me/college/structured programming/assignment3/app/build-untitled-Desktop_Qt_6_6_3_MinGW_64_bit-Debug/CMakeFiles/edit_cache.dir
+C:/Me/college/structured programming/assignment3/app/build-untitled-Desktop_Qt_6_6_3_MinGW_64_bit-Debug/CMakeFiles/rebuild_cache.dir
+C:/Me/college/structured programming/assignment3/app/build-untitled-Desktop_Qt_6_6_3_MinGW_64_bit-Debug/CMakeFiles/list_install_components.dir
+C:/Me/college/structured programming/assignment3/app/build-untitled-Desktop_Qt_6_6_3_MinGW_64_bit-Debug/CMakeFiles/install.dir
+C:/Me/college/structured programming/assignment3/app/build-untitled-Desktop_Qt_6_6_3_MinGW_64_bit-Debug/CMakeFiles/install/local.dir
+C:/Me/college/structured programming/assignment3/app/build-untitled-Desktop_Qt_6_6_3_MinGW_64_bit-Debug/CMakeFiles/install/strip.dir
+C:/Me/college/structured programming/assignment3/app/build-untitled-Desktop_Qt_6_6_3_MinGW_64_bit-Debug/CMakeFiles/untitled_autogen_timestamp_deps.dir
+C:/Me/college/structured programming/assignment3/app/build-untitled-Desktop_Qt_6_6_3_MinGW_64_bit-Debug/CMakeFiles/untitled_autogen.dir

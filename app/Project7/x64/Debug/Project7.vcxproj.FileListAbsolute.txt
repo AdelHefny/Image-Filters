@@ -1,9 +1,0 @@
-C:\Users\ALRWAD LAPTOP\source\repos\Project7\Project7\x64\Debug\Project7.vcxproj.AssemblyReference.cache
-C:\Users\ALRWAD LAPTOP\source\repos\Project7\Project7\x64\Debug\Project7.MyForm.resources
-C:\Users\ALRWAD LAPTOP\source\repos\Project7\Project7\x64\Debug\Project7.vcxproj.GenerateResource.cache
-C:\Me\college\structured programming\assignment3\app\Project7\x64\Debug\Project7.vcxproj.AssemblyReference.cache
-C:\Me\college\structured programming\assignment3\app\Project7\x64\Debug\Project7.MyForm.resources
-C:\Me\college\structured programming\assignment3\app\Project7\x64\Debug\Project7.vcxproj.GenerateResource.cache
-C:\Users\ALRWAD LAPTOP\Desktop\hey\app\Project7\x64\Debug\Project7.vcxproj.AssemblyReference.cache
-C:\Users\ALRWAD LAPTOP\Desktop\hey\app\Project7\x64\Debug\Project7.MyForm.resources
-C:\Users\ALRWAD LAPTOP\Desktop\hey\app\Project7\x64\Debug\Project7.vcxproj.GenerateResource.cache

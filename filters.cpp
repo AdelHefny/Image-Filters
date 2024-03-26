@@ -2,7 +2,7 @@
 #include "Image_Class.h"
 using namespace std;
 
-// test
+// testfsdfd
 
 void blackAndWhite(){
     string filename;
@@ -69,9 +69,7 @@ void resize(){
             newImage(i,j,2) = image(x,y,2);
         }
     }
-    cout << "enter new image name" << endl;
-    cin >> filename;
-    newImage.saveImage(filename);
+
 }
 
 void flip(){
