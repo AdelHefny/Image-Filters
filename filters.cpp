@@ -5,6 +5,8 @@ using namespace std;
 
 // testfsdfd
 
+
+
 int taking_choice(int range){
     int choice;
     while(true){
@@ -27,7 +29,7 @@ int taking_choice(int range){
     }
     return choice;
 }
-void savingImage(Image newImage,string filename){
+void savingImage(Image& newImage,string& filename){
     cout << "1) save in current image\n" << "2) enter new image filename\n";
     int choice = taking_choice(2);
     if(choice == 1){
@@ -45,14 +47,72 @@ void savingImage(Image newImage,string filename){
             break;
         }
     }
+    // Open the saved image using the default system viewer
+    system(filename.c_str());
+}
+void gray_scale(){
+    string filename; // Declare a string variable to store the filename
+    cout << "Please enter colored image name to turn to gray scale: ";
+    // Get the filename from user input
+    while(true){
+        cin >> filename;
+        if(!regex_match(filename,regex("^[a-zA-Z1-9]+\\.(PNG|png|BMP|bmp|JPG|jpg|TGA|tga)$"))){
+            cout << "invalid path" << endl;
+            continue;
+        }
+        break;
+    }
+
+    // Create an Image object with the provided filename
+    Image image;
+    try{
+        image.loadNewImage(filename);
+    } catch(exception& e) {
+        cout << e.what() << endl;
+        return;
+    }
+
+    // Loop through each pixel in the image
+    for (int i = 0; i < image.width; ++i) {
+        for (int j = 0; j < image.height; ++j) {
+            unsigned  int avg = 0; // Initialize an integer variable to store the average value
+
+            // Calculate the average value of RGB channels for each pixel
+            for (int k = 0; k < 3; ++k) {
+                avg += image(i, j, k);
+            }
+
+            avg /= 3; // Calculate the final average value
+
+            // Set the RGB values of the pixel to the calculated average
+            for (int k = 0; k < 3; ++k) {
+                image(i, j, k) = avg;
+            }
+        }
+    }
+
+    // Save the modified image with the provided filename
+    savingImage(image,filename);
 }
 void blackAndWhite(){
     string filename;
     cout << "Enter the filename: " << endl;
-    cin >> filename;
+    while(true){
+        cin >> filename;
+        if(!regex_match(filename,regex("^[a-zA-Z1-9]+\\.(PNG|png|BMP|bmp|JPG|jpg|TGA|tga)$"))){
+            cout << "invalid path" << endl;
+            continue;
+        }
+        break;
+    }
 
-    Image image(filename);
-
+    Image image;
+    try{
+        image.loadNewImage(filename);
+    } catch(exception& e) {
+        cout << e.what() << endl;
+        return;
+    }
     for(int i = 0;i < image.width;i++){
         for(int j = 0;j < image.height;j++){
             int avg = 0;
@@ -73,13 +133,26 @@ void blackAndWhite(){
 void resize(){
     cout << "Enter the file name: " << endl;
     string filename;
-    cin >> filename;
+    while(true){
+        cin >> filename;
+        if(!regex_match(filename,regex("^[a-zA-Z1-9]+\\.(PNG|png|BMP|bmp|JPG|jpg|TGA|tga)$"))){
+            cout << "invalid path" << endl;
+            continue;
+        }
+        break;
+    }
 
     cout << "New with and new height" << endl;
     int newWidth,newHeight;
     cin >> newWidth >> newHeight;
 
-    Image image(filename);
+    Image image;
+    try{
+        image.loadNewImage(filename);
+    } catch(exception& e) {
+        cout << e.what() << endl;
+        return;
+    }
     // creating a new image with the desired width and height
     Image newImage(newWidth,newHeight);
     int oldWidth = image.width,oldHeight = image.height;
@@ -113,9 +186,22 @@ void resize(){
 void flip(){
     string filename;
     cout << "Enter filename: " << endl;
-    cin >> filename;
+    while(true){
+        cin >> filename;
+        if(!regex_match(filename,regex("^[a-zA-Z1-9]+\\.(PNG|png|BMP|bmp|JPG|jpg|TGA|tga)$"))){
+            cout << "invalid path" << endl;
+            continue;
+        }
+        break;
+    }
 
-    Image image(filename);
+    Image image;
+    try{
+        image.loadNewImage(filename);
+    } catch(exception& e) {
+        cout << e.what() << endl;
+        return;
+    }
 
     cout << "1) horizontal" << endl << "2) vertical" << endl;
     int choice;
@@ -127,7 +213,6 @@ void flip(){
             }
             if (cin.fail())
                 throw "Please enter an integer";
-
             break;
         }
     }catch (exception &e){
@@ -162,9 +247,22 @@ void crop(){
     // elephant.jpg
     string filename;
     cout << "Enter the filename:" << endl;
-    cin >> filename;
+    while(true){
+        cin >> filename;
+        if(!regex_match(filename,regex("^[a-zA-Z1-9]+\\.(PNG|png|BMP|bmp|JPG|jpg|TGA|tga)$"))){
+            cout << "invalid path" << endl;
+            continue;
+        }
+        break;
+    }
 
-    Image image(filename);
+    Image image;
+    try{
+        image.loadNewImage(filename);
+    } catch(exception& e) {
+        cout << e.what() << endl;
+        return;
+    }
 
     cout << "Enter the from x and y: " << endl;
     int fromX,fromY;
@@ -190,13 +288,13 @@ void crop(){
 }
 
 int main(){
-    cout << "Welcome to image filters app\nChose a filter to start: ";
+    cout << "Welcome to image filters app\nChose a filter to start: \n";
     int choice;
     while(true){
+        cout << "1) Grayscale Conversion\n2) Black and White\n3) Invert Image\n4) Merge Images\n5) Flip Image" << endl;
         choice = taking_choice(5);
-        cout << "1) Grayscale Conversion\n2) Black and White\n3) Invert Image\n4)Merge Images\n5) Flip Image" << endl;
         if(choice == 1){
-
+            gray_scale();
         }else if(choice == 2){
             blackAndWhite();
         }else if(choice == 3){
