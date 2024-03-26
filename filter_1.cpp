@@ -1,14 +1,14 @@
-#include <iostream> // Include the input-output stream library
-#include "Image_Class.h" // Include the header file for the Image class
+#include <iostream> 
+#include "Image_Class.h" 
 
-using namespace std; // Using the standard namespace
+using namespace std; 
 
 int main() {
-    string filename; // Declare a string variable to store the filename
+    string filename; 
     cout << "Please enter colored image name to turn to gray scale: ";
-    cin >> filename; // Get the filename from user input
+    cin >> filename; 
 
-    // Create an Image object with the provided filename
+    
     Image image(filename);
 
     // Loop through each pixel in the image
@@ -30,11 +30,10 @@ int main() {
         }
     }
 
-    // Prompt the user to enter a filename to save the modified image
     cout << "Please enter image name to save the new image\n";
     cout << "and specify extension .jpg .bmp .png .tga: ";
 
-    cin >> filename; // Get the filename for the new image from user input
+    cin >> filename; 
 
     // Save the modified image with the provided filename
     image.saveImage(filename);
@@ -42,5 +41,5 @@ int main() {
     // Open the saved image using the default system viewer
     system(filename.c_str());
 
-    return 0; // Return 0 to indicate successful completion
+    return 0; 
 }
