@@ -1,9 +1,51 @@
 #include <iostream>
 #include "Image_Class.h"
+#include <regex>
 using namespace std;
 
 // testfsdfd
 
+int taking_choice(int range){
+    int choice;
+    while(true){
+        try {
+            cout << "Enter your choice:";
+            cin >> choice;
+            if (cin.fail()) {
+                cin.clear(); // Clear the fail state
+                cin.ignore(numeric_limits<streamsize>::max(), '\n'); // Discard remaining characters
+                throw runtime_error("Invalid input. Please enter an integer.");
+            }
+        } catch (exception& e) {
+            cout << e.what() << endl; // Print error message
+        }
+        if(choice < 1 || choice > range){
+            cout << "choice must be in range of 1 and " << range << endl;
+            continue;
+        }
+        break;
+    }
+    return choice;
+}
+void savingImage(Image newImage,string filename){
+    cout << "1) save in current image\n" << "2) enter new image filename\n";
+    int choice = taking_choice(2);
+    if(choice == 1){
+        newImage.saveImage(filename);
+    }else{
+        while(true){
+            cout << "please enter the file name you want the image to be saved as " << endl;
+            cout << "please specify the image type .jpg .bmp, .png, .tga:" << endl;
+            cin >> filename;
+            if(regex_match(filename,regex("^[a-zA-Z1-9]+\\.(PNG|png|BMP|bmp|JPG|jpg|TGA|tga)$"))){
+                newImage.saveImage(filename);
+            }else{
+                continue;
+            }
+            break;
+        }
+    }
+}
 void blackAndWhite(){
     string filename;
     cout << "Enter the filename: " << endl;
@@ -25,11 +67,7 @@ void blackAndWhite(){
         }
     }
 
-    cout << "please enter the file name you want the image to be saved as " << endl;
-    cout << "please specify the image type .jpg .bmp, .png, .tga:" << endl;
-
-    cin >> filename;
-    image.saveImage(filename);
+    savingImage(image,filename);
 }
 
 void resize(){
@@ -69,7 +107,7 @@ void resize(){
             newImage(i,j,2) = image(x,y,2);
         }
     }
-
+    savingImage(newImage,filename);
 }
 
 void flip(){
@@ -117,9 +155,7 @@ void flip(){
             }
         }
     }
-    cout << "enter new filename" << endl;
-    cin >> filename;
-    image.saveImage(filename);
+    savingImage(image,filename);
 }
 
 void crop(){
@@ -150,12 +186,28 @@ void crop(){
         counterX++;
         counterY = 0;
     }
-    cout << "please enter the file name you want the image to be saved as" << endl << "please specify the image type .jpg .bmp, .png, .tga:" << endl;
-    cin >> filename;
-    newImage.saveImage(filename);
+    savingImage(newImage,filename);
 }
 
 int main(){
-    crop();
+    cout << "Welcome to image filters app\nChose a filter to start: ";
+    int choice;
+    while(true){
+        choice = taking_choice(5);
+        cout << "1) Grayscale Conversion\n2) Black and White\n3) Invert Image\n4)Merge Images\n5) Flip Image" << endl;
+        if(choice == 1){
+
+        }else if(choice == 2){
+            blackAndWhite();
+        }else if(choice == 3){
+
+        }else if(choice == 4){
+
+        }else if(choice == 5){
+            flip();
+        }else{
+            break;
+        }
+    }
     return 0;
 }
