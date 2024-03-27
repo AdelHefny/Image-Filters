@@ -76,7 +76,6 @@ Image resizee_2(int x, int y, string filename){
     newImage.saveImage(filename);
     return newImage;
 }
-
 int main() {
     string filename1, filename2, new_filename;
     cout << "Please enter the first image name: ";

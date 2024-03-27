@@ -4,11 +4,11 @@
 //
 //  Authors :
 //  Name                           |      id       |      Problems
-//  Ahmed Mohamed Mahmoud Ahmed    |   20230598    |  filter 1
+//  Ahmed Mohamed Mahmoud Ahmed    |   20230598    |  filter 3
 //
 //  Adel ahmed Mohamed El hefny    |   20230198    |  filter 2,5
 //
-//  Ahmed Mohamed Noureldin Ahmed  |   20230035    |  filter 3,7
+//  Ahmed Mohamed Noureldin Ahmed  |   20230035    |  filter 1,4
 //
 //  Emails:
 //  adelahmedhefny@gmail.com
@@ -382,6 +382,21 @@ Image crop(Image image){
     return image;
 }
 
+Image invert(Image image){
+    int r = image.width; // Get the width of the image
+    int c = image.height; // Get the height of the image
+
+    for (int i = 0; i < r; ++i){ // Loop through each row of the image
+        for (int j = 0; j < c ; ++j){ // Loop through each column of the image
+            for (int k = 0; k < 3; ++k){ // Loop through each color channel (RGB)
+                image(i, j, k) = 255 - image(i, j, k) ; // Invert the pixel value for each color channel
+            }
+        }
+    }
+
+    return image; // return the image
+}
+
 int main(){
     cout << "Welcome to image filters app\nChose a filter to start: \n";
     int choice;
@@ -390,7 +405,7 @@ int main(){
     load_image(image,filename);
     bool saved = false;
     while(true){
-        cout << "1) Load a new image\n2) Grayscale Conversion\n3) Black and White\n4) Darken and Lighten Image\n5) Merge Images\n6) Flip Image\n7) Save the image\n8) Exit" << endl;
+        cout << "1) Load a new image\n2) Grayscale Conversion\n3) Black and White\n4) Invert\n5) Merge Images\n6) Flip Image\n7) Save the image\n8) Exit" << endl;
         choice = taking_choice(8);
         if(choice == 1){
             if(!saved){
@@ -409,7 +424,7 @@ int main(){
             image = blackAndWhite(image);
         }else if(choice == 4){
             saved = false;
-            image = brightness(image);
+            image = invert(image);
         }else if(choice == 5){
             saved = false;
             image = merge(image,filename);
