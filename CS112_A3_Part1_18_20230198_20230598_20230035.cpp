@@ -1,3 +1,23 @@
+//  Assignment 3, Task 1
+//  program :   This program is a collection of 5 filers required in the assignment  with a menu interface
+//  to make the user choose the filter he wants and save them
+//
+//  Authors :
+//  Name                           |      id       |      Problems
+//  Ahmed Mohamed Mahmoud Ahmed    |   20230598    |  filter 1
+//
+//  Adel ahmed Mohamed El hefny    |   20230198    |  filter 2,5
+//
+//  Ahmed Mohamed Noureldin Ahmed  |   20230035    |  filter 3,7
+//
+//  Emails:
+//  adelahmedhefny@gmail.com
+//  ahmednourr278@gmail.com
+//  ahmedabdellatif5355@gmail.com
+//
+//  version: 1.0.0
+//  Date : 27/3/2024
+
 #include <iostream>
 #include "Image_Class.h"
 #include <regex>
@@ -368,25 +388,48 @@ int main(){
     Image image;
     string filename;
     load_image(image,filename);
+    bool saved = false;
     while(true){
         cout << "1) Load a new image\n2) Grayscale Conversion\n3) Black and White\n4) Darken and Lighten Image\n5) Merge Images\n6) Flip Image\n7) Save the image\n8) Exit" << endl;
         choice = taking_choice(8);
         if(choice == 1){
+            if(!saved){
+                cout << "1) Do you want to save ?\n2) Continue" << endl;
+                choice = taking_choice(2);
+                if(choice == 1){
+                    savingImage(image,filename);
+                }
+            }
             load_image(image,filename);
         }else if(choice == 2){
+            saved = false;
             image = gray_scale(image);
         }else if(choice == 3){
+            saved = false;
             image = blackAndWhite(image);
         }else if(choice == 4){
+            saved = false;
             image = brightness(image);
         }else if(choice == 5){
+            saved = false;
             image = merge(image,filename);
         }else if(choice == 6){
+            saved = false;
             image = flip(image);
         }else if(choice == 7){
+            saved = true;
             savingImage(image,filename);
         }else{
-            break;
+            if(!saved){
+                cout << "1) Do you want to save ?\n2) Exit" << endl;
+                choice = taking_choice(2);
+                if(choice == 1){
+                    savingImage(image,filename);
+                }
+                break;
+            }else{
+                break;
+            }
         }
     }
     return 0;
