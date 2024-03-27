@@ -3,9 +3,23 @@
 #include <regex>
 using namespace std;
 
-// testfsdfd
-
-
+void load_image(Image &image,string &filename){
+    while(true){
+        cout << "Enter the filename:" << endl;
+        cin >> filename;
+        if(!regex_match(filename,regex("^[a-zA-Z1-9]+\\.(PNG|png|BMP|bmp|JPG|jpg|TGA|tga)$"))){
+            cout << "invalid path" << endl;
+            continue;
+        }
+        try{
+            image.loadNewImage(filename);
+        } catch(exception& e) {
+            cout << e.what() << endl;
+            continue;
+        }
+        break;
+    }
+}
 
 int taking_choice(int range){
     int choice;
@@ -50,109 +64,10 @@ void savingImage(Image& newImage,string& filename){
     // Open the saved image using the default system viewer
     system(filename.c_str());
 }
-void gray_scale(){
-    string filename; // Declare a string variable to store the filename
-    cout << "Please enter colored image name to turn to gray scale: ";
-    // Get the filename from user input
-    while(true){
-        cin >> filename;
-        if(!regex_match(filename,regex("^[a-zA-Z1-9]+\\.(PNG|png|BMP|bmp|JPG|jpg|TGA|tga)$"))){
-            cout << "invalid path" << endl;
-            continue;
-        }
-        break;
-    }
+Image resizee(int x, int y, string filename){
+    int newWidth = x, newHeight = y;
 
-    // Create an Image object with the provided filename
-    Image image;
-    try{
-        image.loadNewImage(filename);
-    } catch(exception& e) {
-        cout << e.what() << endl;
-        return;
-    }
-
-    // Loop through each pixel in the image
-    for (int i = 0; i < image.width; ++i) {
-        for (int j = 0; j < image.height; ++j) {
-            unsigned  int avg = 0; // Initialize an integer variable to store the average value
-
-            // Calculate the average value of RGB channels for each pixel
-            for (int k = 0; k < 3; ++k) {
-                avg += image(i, j, k);
-            }
-
-            avg /= 3; // Calculate the final average value
-
-            // Set the RGB values of the pixel to the calculated average
-            for (int k = 0; k < 3; ++k) {
-                image(i, j, k) = avg;
-            }
-        }
-    }
-
-    // Save the modified image with the provided filename
-    savingImage(image,filename);
-}
-void blackAndWhite(){
-    string filename;
-    cout << "Enter the filename: " << endl;
-    while(true){
-        cin >> filename;
-        if(!regex_match(filename,regex("^[a-zA-Z1-9]+\\.(PNG|png|BMP|bmp|JPG|jpg|TGA|tga)$"))){
-            cout << "invalid path" << endl;
-            continue;
-        }
-        break;
-    }
-
-    Image image;
-    try{
-        image.loadNewImage(filename);
-    } catch(exception& e) {
-        cout << e.what() << endl;
-        return;
-    }
-    for(int i = 0;i < image.width;i++){
-        for(int j = 0;j < image.height;j++){
-            int avg = 0;
-            for(int k = 0;k < 3;k++){
-                avg += image(i,j,k);
-            }
-            avg /= 3;
-            avg = (avg > 127 ? 255 : 0);
-            image(i,j,0) = avg;
-            image(i,j,1) = avg;
-            image(i,j,2) = avg;
-        }
-    }
-
-    savingImage(image,filename);
-}
-
-void resize(){
-    cout << "Enter the file name: " << endl;
-    string filename;
-    while(true){
-        cin >> filename;
-        if(!regex_match(filename,regex("^[a-zA-Z1-9]+\\.(PNG|png|BMP|bmp|JPG|jpg|TGA|tga)$"))){
-            cout << "invalid path" << endl;
-            continue;
-        }
-        break;
-    }
-
-    cout << "New with and new height" << endl;
-    int newWidth,newHeight;
-    cin >> newWidth >> newHeight;
-
-    Image image;
-    try{
-        image.loadNewImage(filename);
-    } catch(exception& e) {
-        cout << e.what() << endl;
-        return;
-    }
+    Image image(filename);
     // creating a new image with the desired width and height
     Image newImage(newWidth,newHeight);
     int oldWidth = image.width,oldHeight = image.height;
@@ -180,29 +95,209 @@ void resize(){
             newImage(i,j,2) = image(x,y,2);
         }
     }
-    savingImage(newImage,filename);
+    // saving the resized image
+    newImage.saveImage(filename);
+    return newImage;
 }
 
-void flip(){
-    string filename;
-    cout << "Enter filename: " << endl;
-    while(true){
-        cin >> filename;
-        if(!regex_match(filename,regex("^[a-zA-Z1-9]+\\.(PNG|png|BMP|bmp|JPG|jpg|TGA|tga)$"))){
-            cout << "invalid path" << endl;
-            continue;
+// Function to resize an image (second version)
+Image resizee_2(int x, int y, string filename){
+    int newWidth = x, newHeight = y;
+
+    Image image(filename);
+    // creating a new image with the desired width and height
+    Image newImage(newWidth,newHeight);
+    int oldWidth = image.width,oldHeight = image.height;
+    // getting the relative width and height
+    float relativeWidth = (float)newWidth/image.width,relativeHeight = (float)newHeight/image.height;
+
+    for(int i = 0;i < newImage.width;i++){
+        for(int j = 0;j < newImage.height;j++){
+            int x = floor((float)i/relativeWidth),y = floor((float)j/relativeHeight);
+            // checking the x-axis if it is in inside the old image
+            if(x > oldWidth - 1){
+                x = oldWidth - 1;
+            }else if(x < 0){
+                x = 0;
+            }
+            // checking the y-axis if it is in inside the old image
+            if(y > oldHeight - 1){
+                y = oldHeight - 1;
+            }else if(y < 0){
+                y = 0;
+            }
+            // setting the new image pixel
+            newImage(i,j,0) = image(x,y,0);
+            newImage(i,j,1) = image(x,y,1);
+            newImage(i,j,2) = image(x,y,2);
         }
-        break;
     }
+    // saving the resized image
+    newImage.saveImage(filename);
+    return newImage;
+}
 
-    Image image;
-    try{
-        image.loadNewImage(filename);
-    } catch(exception& e) {
-        cout << e.what() << endl;
-        return;
+Image merge(const Image& image,const string& filename1){
+    string filename2;
+
+    Image first_image = image;
+
+    Image second_image;
+
+    load_image(second_image,filename2);
+    // Determine dimensions of the final image
+    int NewHeight = max(first_image.height, second_image.height), NewWidth = max(first_image.width, second_image.width);
+    Image final_image(NewWidth,NewHeight);
+
+    // If dimensions of images are different, resize them
+    if(first_image.width != second_image.width || first_image.height != second_image.height){
+        resizee_2(NewWidth, NewHeight, filename1);
+        resizee(NewWidth, NewHeight, filename2);
+        Image NewImage_1(resizee_2(NewWidth, NewHeight, filename1));
+        Image NewImage_2(resizee(NewWidth, NewHeight, filename2));
+        int MidPoint = 0;
+        for(int i = 0; i < NewWidth; i++){
+            for(int j = 0; j < NewHeight; j++) {
+                for (int k = 0; k < 3; k++) {
+                    // Average RGB values of corresponding pixels
+                    MidPoint = (NewImage_1(i, j, k) + NewImage_2(i, j, k)) / 2;
+                    final_image(i, j, k) = MidPoint;
+                }
+            }
+        }
     }
+        // If dimensions are same, merge images directly
+    else{
+        int MidPoint = 0;
+        for(int i = 0; i < first_image.width; i++){
+            for(int j = 0; j < first_image.height; j++){
+                for(int k = 0; k < 3; k++){
+                    // Average RGB values of corresponding pixels
+                    MidPoint = (first_image(i,j,k) + second_image(i,j,k))/2;
+                    final_image(i,j,k) = MidPoint;
+                }
+            }
+        }
+    }
+    return final_image;
+}
 
+Image brightness(Image image){
+    int choice;
+    cout << "DO YOU WANT TO INCREASE THE BRIGHTNESS OR DECREASE IT BY 50%?\n";
+    cout << "1) Increase the brightness          2) Decrease the brightness: ";
+    cin >> choice;
+
+    Image final_image(image.width, image.height);
+
+    if (choice == 1) {
+        int increase_brightness;
+        // Loop through each pixel in the image
+        for (int i = 0; i < image.width; i++) {
+            for (int j = 0; j < image.height; j++) {
+                for (int k = 0; k < 3; k++) {
+                    // Get the pixel value at (i, j) for channel k
+                    int pixel_value = image(i, j, k);
+                    // Increase the brightness by multiplying the pixel value by 1.5
+                    increase_brightness = min(int(pixel_value * 1.5), 255);
+                    // Store the adjusted pixel value in the final image
+                    final_image(i, j, k) = increase_brightness;
+                }
+            }
+        }
+    } else {
+        int decrease_brightness;
+        // Loop through each pixel in the image
+        for (int i = 0; i < image.width; i++) {
+            for (int j = 0; j < image.height; j++) {
+                for (int k = 0; k < 3; k++) {
+                    // Get the pixel value at (i, j) for channel k
+                    int pixel_value = image(i, j, k);
+                    // Decrease the brightness by multiplying the pixel value by 0.5
+                    decrease_brightness = max(int(pixel_value * 0.5), 0);
+                    // Store the adjusted pixel value in the final image
+                    final_image(i, j, k) = decrease_brightness;
+                }
+            }
+        }
+    }
+    return final_image;
+}
+Image gray_scale(Image image){
+    // Loop through each pixel in the image
+    for (int i = 0; i < image.width; ++i) {
+        for (int j = 0; j < image.height; ++j) {
+            unsigned  int avg = 0; // Initialize an integer variable to store the average value
+
+            // Calculate the average value of RGB channels for each pixel
+            for (int k = 0; k < 3; ++k) {
+                avg += image(i, j, k);
+            }
+
+            avg /= 3; // Calculate the final average value
+
+            // Set the RGB values of the pixel to the calculated average
+            for (int k = 0; k < 3; ++k) {
+                image(i, j, k) = avg;
+            }
+        }
+    }
+    return image;
+}
+Image blackAndWhite(Image image){
+    for(int i = 0;i < image.width;i++){
+        for(int j = 0;j < image.height;j++){
+            int avg = 0;
+            for(int k = 0;k < 3;k++){
+                avg += image(i,j,k);
+            }
+            avg /= 3;
+            avg = (avg > 127 ? 255 : 0);
+            image(i,j,0) = avg;
+            image(i,j,1) = avg;
+            image(i,j,2) = avg;
+        }
+    }
+    return image;
+}
+
+Image resize(Image image){
+
+    cout << "New with and new height" << endl;
+    int newWidth,newHeight;
+    cin >> newWidth >> newHeight;
+
+    // creating a new image with the desired width and height
+    Image newImage(newWidth,newHeight);
+    int oldWidth = image.width,oldHeight = image.height;
+    // getting the relative width and height
+    float relativeWidth = (float)newWidth/image.width,relativeHeight = (float)newHeight/image.height;
+
+    for(int i = 0;i < newImage.width;i++){
+        for(int j = 0;j < newImage.height;j++){
+            int x = floor((float)i/relativeWidth),y = floor((float)j/relativeHeight);
+            // checking the x-axis if it is in inside the old image
+            if(x > oldWidth - 1){
+                x = oldWidth - 1;
+            }else if(x < 0){
+                x = 0;
+            }
+            // checking the y-axis if it is in inside the old image
+            if(y > oldHeight - 1){
+                y = oldHeight - 1;
+            }else if(y < 0){
+                y = 0;
+            }
+            // setting the new image pixel
+            newImage(i,j,0) = image(x,y,0);
+            newImage(i,j,1) = image(x,y,1);
+            newImage(i,j,2) = image(x,y,2);
+        }
+    }
+    return newImage;
+}
+
+Image flip(Image image){
     cout << "1) horizontal" << endl << "2) vertical" << endl;
     int choice;
     try {
@@ -240,30 +335,10 @@ void flip(){
             }
         }
     }
-    savingImage(image,filename);
+    return image;
 }
 
-void crop(){
-    // elephant.jpg
-    string filename;
-    cout << "Enter the filename:" << endl;
-    while(true){
-        cin >> filename;
-        if(!regex_match(filename,regex("^[a-zA-Z1-9]+\\.(PNG|png|BMP|bmp|JPG|jpg|TGA|tga)$"))){
-            cout << "invalid path" << endl;
-            continue;
-        }
-        break;
-    }
-
-    Image image;
-    try{
-        image.loadNewImage(filename);
-    } catch(exception& e) {
-        cout << e.what() << endl;
-        return;
-    }
-
+Image crop(Image image){
     cout << "Enter the from x and y: " << endl;
     int fromX,fromY;
     cin >> fromX >> fromY;
@@ -284,25 +359,32 @@ void crop(){
         counterX++;
         counterY = 0;
     }
-    savingImage(newImage,filename);
+    return image;
 }
 
 int main(){
     cout << "Welcome to image filters app\nChose a filter to start: \n";
     int choice;
+    Image image;
+    string filename;
+    load_image(image,filename);
     while(true){
-        cout << "1) Grayscale Conversion\n2) Black and White\n3) Invert Image\n4) Merge Images\n5) Flip Image" << endl;
-        choice = taking_choice(5);
+        cout << "1) Load a new image\n2) Grayscale Conversion\n3) Black and White\n4) Darken and Lighten Image\n5) Merge Images\n6) Flip Image\n7) Save the image\n8) Exit" << endl;
+        choice = taking_choice(8);
         if(choice == 1){
-            gray_scale();
+            load_image(image,filename);
         }else if(choice == 2){
-            blackAndWhite();
+            image = gray_scale(image);
         }else if(choice == 3){
-
+            image = blackAndWhite(image);
         }else if(choice == 4){
-
+            image = brightness(image);
         }else if(choice == 5){
-            flip();
+            image = merge(image,filename);
+        }else if(choice == 6){
+            image = flip(image);
+        }else if(choice == 7){
+            savingImage(image,filename);
         }else{
             break;
         }
