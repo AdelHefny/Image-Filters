@@ -9,6 +9,7 @@ int main() {
     cin >> filename; 
 
     
+    
     Image image(filename);
 
     // Loop through each pixel in the image
