@@ -1,69 +1,27 @@
 # ninja log v5
+22	248	7342917790504439	untitled_autogen/timestamp	178076b74c4f0a2f
 1911	2722	7341743594642214	CMakeFiles/untitled.dir/bwthread.cpp.obj	7092a71469f4da2c
-23	277	7341777867146639	untitled_autogen/timestamp	178076b74c4f0a2f
-23	277	7341777867146639	untitled_autogen/mocs_compilation.cpp	178076b74c4f0a2f
-23	277	7341777867146639	C:/Me/college/structured programming/assignment3/app/build-untitled-Desktop_Qt_6_6_3_MinGW_64_bit-Debug/untitled_autogen/timestamp	178076b74c4f0a2f
-23	277	7341777867146639	C:/Me/college/structured programming/assignment3/app/build-untitled-Desktop_Qt_6_6_3_MinGW_64_bit-Debug/untitled_autogen/mocs_compilation.cpp	178076b74c4f0a2f
-1068	1166	7340766725347030	CMakeFiles/untitled.dir/stb_image.cpp.obj	292284c6406c5e84
+22	248	7342917790504439	untitled_autogen/mocs_compilation.cpp	178076b74c4f0a2f
+22	248	7342917790504439	C:/Me/college/structured programming/assignment3/app/build-untitled-Desktop_Qt_6_6_3_MinGW_64_bit-Debug/untitled_autogen/timestamp	178076b74c4f0a2f
+22	248	7342917790504439	C:/Me/college/structured programming/assignment3/app/build-untitled-Desktop_Qt_6_6_3_MinGW_64_bit-Debug/untitled_autogen/mocs_compilation.cpp	178076b74c4f0a2f
 1054	1167	7340766725434017	CMakeFiles/untitled.dir/stb_image_write.cpp.obj	bc0ccaec264a05f7
+1068	1166	7340766725347030	CMakeFiles/untitled.dir/stb_image.cpp.obj	292284c6406c5e84
 1047	1164	7340766725307036	CMakeFiles/untitled.dir/image_class.cpp.obj	f0ef8d67ca6d499e
-881	4591	7341749775704946	CMakeFiles/untitled.dir/main.cpp.obj	297171d7aabba733
-877	4572	7341749775507392	CMakeFiles/untitled.dir/untitled_autogen/mocs_compilation.cpp.obj	98ace88ac61419c
-302	8168	7341777945997300	CMakeFiles/untitled.dir/mainwindow.cpp.obj	2c6cf111b3ab8b38
+1457	6679	7342916950738071	CMakeFiles/untitled.dir/main.cpp.obj	297171d7aabba733
+1463	6477	7342916948763838	CMakeFiles/untitled.dir/untitled_autogen/mocs_compilation.cpp.obj	98ace88ac61419c
+277	8731	7342917875193103	CMakeFiles/untitled.dir/mainwindow.cpp.obj	2c6cf111b3ab8b38
 0	48	0	CMakeFiles/clean.additional	baedbe210acaa455
 49	67	0	clean	577b940aee94fbd7
-8168	8992	7341777954197860	untitled.exe	fae59ae11ae5ba6d
-27	272	7341778602840636	untitled_autogen/timestamp	178076b74c4f0a2f
-27	272	7341778602840636	untitled_autogen/mocs_compilation.cpp	178076b74c4f0a2f
-27	272	7341778602840636	C:/Me/college/structured programming/assignment3/app/build-untitled-Desktop_Qt_6_6_3_MinGW_64_bit-Debug/untitled_autogen/timestamp	178076b74c4f0a2f
-27	272	7341778602840636	C:/Me/college/structured programming/assignment3/app/build-untitled-Desktop_Qt_6_6_3_MinGW_64_bit-Debug/untitled_autogen/mocs_compilation.cpp	178076b74c4f0a2f
-296	8058	7341778680650480	CMakeFiles/untitled.dir/mainwindow.cpp.obj	2c6cf111b3ab8b38
-8059	8892	7341778688896026	untitled.exe	fae59ae11ae5ba6d
-19	213	7341779277735157	untitled_autogen/timestamp	178076b74c4f0a2f
-19	213	7341779277735157	untitled_autogen/mocs_compilation.cpp	178076b74c4f0a2f
-19	213	7341779277735157	C:/Me/college/structured programming/assignment3/app/build-untitled-Desktop_Qt_6_6_3_MinGW_64_bit-Debug/untitled_autogen/timestamp	178076b74c4f0a2f
-19	213	7341779277735157	C:/Me/college/structured programming/assignment3/app/build-untitled-Desktop_Qt_6_6_3_MinGW_64_bit-Debug/untitled_autogen/mocs_compilation.cpp	178076b74c4f0a2f
-232	5567	7341779331196243	CMakeFiles/untitled.dir/mainwindow.cpp.obj	2c6cf111b3ab8b38
-5568	6297	7341779338496597	untitled.exe	fae59ae11ae5ba6d
-27	289	7341779830844008	untitled_autogen/timestamp	178076b74c4f0a2f
-27	289	7341779830844008	untitled_autogen/mocs_compilation.cpp	178076b74c4f0a2f
-27	289	7341779830844008	C:/Me/college/structured programming/assignment3/app/build-untitled-Desktop_Qt_6_6_3_MinGW_64_bit-Debug/untitled_autogen/timestamp	178076b74c4f0a2f
-27	289	7341779830844008	C:/Me/college/structured programming/assignment3/app/build-untitled-Desktop_Qt_6_6_3_MinGW_64_bit-Debug/untitled_autogen/mocs_compilation.cpp	178076b74c4f0a2f
-323	8238	7341779910283460	CMakeFiles/untitled.dir/mainwindow.cpp.obj	2c6cf111b3ab8b38
-8239	9479	7341779922631653	untitled.exe	fae59ae11ae5ba6d
-21	221	7341781829128253	untitled_autogen/timestamp	178076b74c4f0a2f
-21	221	7341781829128253	untitled_autogen/mocs_compilation.cpp	178076b74c4f0a2f
-21	221	7341781829128253	C:/Me/college/structured programming/assignment3/app/build-untitled-Desktop_Qt_6_6_3_MinGW_64_bit-Debug/untitled_autogen/timestamp	178076b74c4f0a2f
-21	221	7341781829128253	C:/Me/college/structured programming/assignment3/app/build-untitled-Desktop_Qt_6_6_3_MinGW_64_bit-Debug/untitled_autogen/mocs_compilation.cpp	178076b74c4f0a2f
-245	5787	7341781884685204	CMakeFiles/untitled.dir/mainwindow.cpp.obj	2c6cf111b3ab8b38
-5788	6813	7341781894947095	untitled.exe	fae59ae11ae5ba6d
-22	227	7341782958841394	untitled_autogen/timestamp	178076b74c4f0a2f
-22	227	7341782958841394	untitled_autogen/mocs_compilation.cpp	178076b74c4f0a2f
-22	227	7341782958841394	C:/Me/college/structured programming/assignment3/app/build-untitled-Desktop_Qt_6_6_3_MinGW_64_bit-Debug/untitled_autogen/timestamp	178076b74c4f0a2f
-22	227	7341782958841394	C:/Me/college/structured programming/assignment3/app/build-untitled-Desktop_Qt_6_6_3_MinGW_64_bit-Debug/untitled_autogen/mocs_compilation.cpp	178076b74c4f0a2f
-246	6661	7341783023065882	CMakeFiles/untitled.dir/mainwindow.cpp.obj	2c6cf111b3ab8b38
-6662	7412	7341783030568038	untitled.exe	fae59ae11ae5ba6d
-21	262	7341784002054113	untitled_autogen/timestamp	178076b74c4f0a2f
-21	262	7341784002054113	untitled_autogen/mocs_compilation.cpp	178076b74c4f0a2f
-21	262	7341784002054113	C:/Me/college/structured programming/assignment3/app/build-untitled-Desktop_Qt_6_6_3_MinGW_64_bit-Debug/untitled_autogen/timestamp	178076b74c4f0a2f
-21	262	7341784002054113	C:/Me/college/structured programming/assignment3/app/build-untitled-Desktop_Qt_6_6_3_MinGW_64_bit-Debug/untitled_autogen/mocs_compilation.cpp	178076b74c4f0a2f
-286	7164	7341784070995742	CMakeFiles/untitled.dir/mainwindow.cpp.obj	2c6cf111b3ab8b38
-7165	7915	7341784078519462	untitled.exe	fae59ae11ae5ba6d
-25	299	7341785665970949	untitled_autogen/timestamp	178076b74c4f0a2f
-25	299	7341785665970949	untitled_autogen/mocs_compilation.cpp	178076b74c4f0a2f
-25	299	7341785665970949	C:/Me/college/structured programming/assignment3/app/build-untitled-Desktop_Qt_6_6_3_MinGW_64_bit-Debug/untitled_autogen/timestamp	178076b74c4f0a2f
-25	299	7341785665970949	C:/Me/college/structured programming/assignment3/app/build-untitled-Desktop_Qt_6_6_3_MinGW_64_bit-Debug/untitled_autogen/mocs_compilation.cpp	178076b74c4f0a2f
-332	7717	7341785740093475	CMakeFiles/untitled.dir/mainwindow.cpp.obj	2c6cf111b3ab8b38
-7718	8844	7341785751341171	untitled.exe	fae59ae11ae5ba6d
-6	206	7341788750914889	untitled_autogen/timestamp	178076b74c4f0a2f
-6	206	7341788750914889	untitled_autogen/mocs_compilation.cpp	178076b74c4f0a2f
-6	206	7341788750914889	C:/Me/college/structured programming/assignment3/app/build-untitled-Desktop_Qt_6_6_3_MinGW_64_bit-Debug/untitled_autogen/timestamp	178076b74c4f0a2f
-6	206	7341788750914889	C:/Me/college/structured programming/assignment3/app/build-untitled-Desktop_Qt_6_6_3_MinGW_64_bit-Debug/untitled_autogen/mocs_compilation.cpp	178076b74c4f0a2f
-226	5680	7341788805603295	CMakeFiles/untitled.dir/mainwindow.cpp.obj	2c6cf111b3ab8b38
-5681	6405	7341788812790490	untitled.exe	fae59ae11ae5ba6d
-25	247	7341790723775039	untitled_autogen/timestamp	178076b74c4f0a2f
-25	247	7341790723775039	untitled_autogen/mocs_compilation.cpp	178076b74c4f0a2f
-25	247	7341790723775039	C:/Me/college/structured programming/assignment3/app/build-untitled-Desktop_Qt_6_6_3_MinGW_64_bit-Debug/untitled_autogen/timestamp	178076b74c4f0a2f
-25	247	7341790723775039	C:/Me/college/structured programming/assignment3/app/build-untitled-Desktop_Qt_6_6_3_MinGW_64_bit-Debug/untitled_autogen/mocs_compilation.cpp	178076b74c4f0a2f
-269	7545	7341790796694685	CMakeFiles/untitled.dir/mainwindow.cpp.obj	2c6cf111b3ab8b38
-7546	8523	7341790806438389	untitled.exe	fae59ae11ae5ba6d
+8731	10077	7342917888616268	untitled.exe	fae59ae11ae5ba6d
+22	214	7342924145241805	untitled_autogen/timestamp	178076b74c4f0a2f
+22	214	7342924145241805	untitled_autogen/mocs_compilation.cpp	178076b74c4f0a2f
+22	214	7342924145241805	C:/Me/college/structured programming/assignment3/app/build-untitled-Desktop_Qt_6_6_3_MinGW_64_bit-Debug/untitled_autogen/timestamp	178076b74c4f0a2f
+22	214	7342924145241805	C:/Me/college/structured programming/assignment3/app/build-untitled-Desktop_Qt_6_6_3_MinGW_64_bit-Debug/untitled_autogen/mocs_compilation.cpp	178076b74c4f0a2f
+233	6041	7342924203390448	CMakeFiles/untitled.dir/mainwindow.cpp.obj	2c6cf111b3ab8b38
+6042	6894	7342924211996141	untitled.exe	fae59ae11ae5ba6d
+21	255	7342925367445707	untitled_autogen/timestamp	178076b74c4f0a2f
+21	255	7342925367445707	untitled_autogen/mocs_compilation.cpp	178076b74c4f0a2f
+21	255	7342925367445707	C:/Me/college/structured programming/assignment3/app/build-untitled-Desktop_Qt_6_6_3_MinGW_64_bit-Debug/untitled_autogen/timestamp	178076b74c4f0a2f
+21	255	7342925367445707	C:/Me/college/structured programming/assignment3/app/build-untitled-Desktop_Qt_6_6_3_MinGW_64_bit-Debug/untitled_autogen/mocs_compilation.cpp	178076b74c4f0a2f
+276	7537	7342925440190318	CMakeFiles/untitled.dir/mainwindow.cpp.obj	2c6cf111b3ab8b38
+7538	8717	7342925451920185	untitled.exe	fae59ae11ae5ba6d

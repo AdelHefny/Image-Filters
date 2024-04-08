@@ -396,7 +396,38 @@ Image invert(Image image){
 
     return image; // return the image
 }
-
+Image applyOilPaintFilter(Image& image) {
+    int radius = 5;
+    Image new_image(image.width,image.height);
+    for(int i = 0;i < image.width;i++){
+        for(int j = 0;j < image.height;j++){
+            vector<int> intenistyLevels(255),averageR(255),averageG(255),averageB(255);
+            int maxIntenisty = 0;
+            int beginRaw = max(0,i-radius),endRaw = min(i+radius,image.width-1);
+            int beginCol = max(0,j-radius),endCol = min(j+radius,image.height-1);
+            for(int k = beginRaw;k <= endRaw;k++){
+                for(int l = beginCol;l <= endCol;l++){
+                    int intenisty = (image(k,l,0)+image(k,l,1)+image(k,l,2))/3;
+                    intenistyLevels[intenisty]++;
+                    averageR[intenisty] += image(k,l,0);
+                    averageG[intenisty] += image(k,l,1);
+                    averageB[intenisty] += image(k,l,2);
+                }
+            }
+            int maxIndex;
+            for(int k = 0;k < 255;k++){
+                if(maxIntenisty < intenistyLevels[k]){
+                    maxIntenisty = intenistyLevels[k];
+                    maxIndex = k;
+                }
+            }
+            new_image(i,j,0) = averageR[maxIndex]/maxIntenisty;
+            new_image(i,j,1) = averageG[maxIndex]/maxIntenisty;
+            new_image(i,j,2) = averageB[maxIndex]/maxIntenisty;
+        }
+    }
+    return new_image;
+}
 int main(){
     cout << "Welcome to image filters app\nChose a filter to start: \n";
     int choice;
@@ -405,8 +436,8 @@ int main(){
     load_image(image,filename);
     bool saved = false;
     while(true){
-        cout << "1) Load a new image\n2) Grayscale Conversion\n3) Black and White\n4) Invert\n5) Merge Images\n6) Flip Image\n7) Save the image\n8) Exit" << endl;
-        choice = taking_choice(8);
+        cout << "1) Load a new image\n2) Grayscale Conversion\n3) Black and White\n4) Invert\n5) Merge Images\n6) Flip Image\n7) Oil paint image\n8) Save the image\n9) Exit" << endl;
+        choice = taking_choice(9);
         if(choice == 1){
             if(!saved){
                 cout << "1) Do you want to save ?\n2) Continue" << endl;
@@ -432,6 +463,9 @@ int main(){
             saved = false;
             image = flip(image);
         }else if(choice == 7){
+            saved = false;
+            image = applyOilPaintFilter(image);
+        }else if(choice == 8){
             saved = true;
             savingImage(image,filename);
         }else{

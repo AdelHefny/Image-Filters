@@ -20,18 +20,24 @@ class MainWindow : public QMainWindow
 public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
+    void disableObtions();
 signals:
      // void imageChanged(const Image& newImage);
 private slots:
+
+
+    void on_BWBtn_clicked();
+
+    void on_ResizeBtn_clicked();
+
+    void on_FlipBtn_clicked();
+
+    void on_CropBtn_clicked();
+
     void on_pushButton_clicked();
 
-    void on_pushButton_2_clicked();
+    void on_pushButton_7_clicked();
 
-    void on_pushButton_3_clicked();
-
-    void on_pushButton_4_clicked();
-
-    // void BWChangeImage(const Image& newImage);
 private:
     QGraphicsDropShadowEffect *Drop_Shadow_Effect;
     Ui::MainWindow *ui;
