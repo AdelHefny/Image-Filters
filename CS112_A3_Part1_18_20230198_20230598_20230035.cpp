@@ -428,6 +428,19 @@ Image applyOilPaintFilter(Image& image) {
     }
     return new_image;
 }
+
+Image infrared(Image& image) {
+    for(int i = 0;i < image.width;i++){
+        for(int j = 0;j < image.height;j++){
+            image(i,j,0) = 255;
+            int intenisty = (image(i,j,1)+image(i,j,2))/2;
+            image(i,j,1) = 255 - intenisty;
+            image(i,j,2) = 255 - intenisty;
+        }
+    }
+    return image;
+}
+
 int main(){
     cout << "Welcome to image filters app\nChose a filter to start: \n";
     int choice;
@@ -436,8 +449,8 @@ int main(){
     load_image(image,filename);
     bool saved = false;
     while(true){
-        cout << "1) Load a new image\n2) Grayscale Conversion\n3) Black and White\n4) Invert\n5) Merge Images\n6) Flip Image\n7) Oil paint image\n8) Save the image\n9) Exit" << endl;
-        choice = taking_choice(9);
+        cout << "1) Load a new image\n2) Grayscale Conversion\n3) Black and White\n4) Invert\n5) Merge Images\n6) Flip Image\n7) Oil paint image\n8) Infrared\n9) Save the image\n10) Exit" << endl;
+        choice = taking_choice(10);
         if(choice == 1){
             if(!saved){
                 cout << "1) Do you want to save ?\n2) Continue" << endl;
@@ -466,6 +479,9 @@ int main(){
             saved = false;
             image = applyOilPaintFilter(image);
         }else if(choice == 8){
+            saved = false;
+            image = infrared(image);
+        }else if(choice == 9){
             saved = true;
             savingImage(image,filename);
         }else{
