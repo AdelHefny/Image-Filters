@@ -21,7 +21,7 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-
+    this->resize(867,600);
     disableObtions();
     ui->pushButton->setCursor(Qt::PointingHandCursor);
     ui->BWBtn->setCursor(Qt::PointingHandCursor);
@@ -31,12 +31,20 @@ MainWindow::MainWindow(QWidget *parent)
     ui->clearBtn->setCursor(Qt::PointingHandCursor);
     ui->saveBtn->setCursor(Qt::PointingHandCursor);
     ui->applyBtn->setCursor(Qt::PointingHandCursor);
+    ui->Infrared->setCursor(Qt::PointingHandCursor);
+    ui->OilPaint->setCursor(Qt::PointingHandCursor);
 
     Drop_Shadow_Effect = new QGraphicsDropShadowEffect();
     Drop_Shadow_Effect->setBlurRadius(30);
     Drop_Shadow_Effect->setColor(QColor(15,15,15,255));
     Drop_Shadow_Effect->setOffset(0,0);
 
+    QObjectList children = ui->scrollAreaWidgetContents->children();
+    for(QObject *child : children) {
+        if(QWidget *widget = qobject_cast<QWidget*>(child)) {
+            widget->setFocusPolicy(Qt::NoFocus);
+        }
+    }
     connect(this,&MainWindow::filterFinished,this,&MainWindow::updateToImage);
 }
 
@@ -60,24 +68,25 @@ void MainWindow::disableObtions(){
 }
 void MainWindow::loadingFilter(){
     bool val = !ui->BWBtn->isEnabled();
-    ui->BWBtn->setEnabled(val);
-    ui->CropBtn->setEnabled(val);
-    ui->FlipBtn->setEnabled(val);
-    ui->ResizeBtn->setEnabled(val);
+    QObjectList children = ui->scrollAreaWidgetContents->children();
+    for(QObject *child : children) {
+        if(QWidget *widget = qobject_cast<QWidget*>(child)) {
+            widget->setEnabled(val);
+        }
+    }
     if(!val){
-        ui->BWBtn->setStyleSheet("QPushButton{background-color:  rgba(255, 255, 255,200);color:rgba(77, 25, 77,200);}");
-        ui->CropBtn->setStyleSheet("background-color:  rgba(255, 255, 255,200);color:rgba(77, 25, 77,200);");
-        ui->FlipBtn->setStyleSheet("background-color:  rgba(255, 255, 255,200);color:rgba(77, 25, 77,200);");
-        ui->ResizeBtn->setStyleSheet("background-color:  rgba(255, 255, 255,200);color:rgba(77, 25, 77,200);");
+        for(QObject *child : children) {
+            if(QWidget *widget = qobject_cast<QWidget*>(child)) {
+                widget->setStyleSheet("QPushButton{background-color:  rgba(184, 80, 66,200);}");
+            }
+        }
     }else{
-        ui->BWBtn->setStyleSheet("QPushButton{background-color:  rgba(255, 255, 255,255);color:rgba(77, 25, 77,255);}"
-            "QPushButton:hover{background-color:  rgb(156, 92, 156);}");
-        ui->CropBtn->setStyleSheet("QPushButton{background-color:  rgba(255, 255, 255,255);color:rgba(77, 25, 77,255);}"
-            "QPushButton:hover{background-color:  rgb(156, 92, 156);}");
-        ui->FlipBtn->setStyleSheet("QPushButton{background-color:  rgba(255, 255, 255,255);color:rgba(77, 25, 77,255);}"
-            "QPushButton:hover{background-color:  rgb(156, 92, 156);}");
-        ui->ResizeBtn->setStyleSheet("QPushButton{background-color:  rgba(255, 255, 255,255);color:rgba(77, 25, 77,255);}"
-            "QPushButton:hover{background-color:  rgb(156, 92, 156);}");
+        for(QObject *child : children) {
+            if(QWidget *widget = qobject_cast<QWidget*>(child)) {
+                widget->setStyleSheet("QPushButton{background-color:  rgba(184, 80, 66,255);}"
+                "QPushButton:hover{background-color:  #A7BEAE;}");
+            }
+        }
     }
 }
 
@@ -86,6 +95,8 @@ void MainWindow::assigningBtnsText(){
     ui->ResizeBtn->setText("Resize");
     ui->FlipBtn->setText("Flip");
     ui->CropBtn->setText("Crop");
+    ui->OilPaint->setText("Oil Paint");
+    ui->Infrared->setText("Infrared");
 }
 
 void MainWindow::clearFilterBtn(QPushButton* btn){
@@ -158,26 +169,24 @@ void MainWindow::updateToImage(QPushButton* btn){
     loadingFilter();
 }
 
-void BWFilter(QThread *secT,QString path,MainWindow* mainwindow,QPushButton* btn){
+void BWFilter(MainWindow* mainwindow,QPushButton* btn){
     qDebug() << "inside a filter";
     // Grayscale conversion using weighted average
-    for (int i = 0; i < my_image.width; ++i) {
-        for (int j = 0; j < my_image.height; ++j) {
+    for (int i = 0; i < to_image.width; ++i) {
+        for (int j = 0; j < to_image.height; ++j) {
             int avg = 0;
             for(int k = 0;k < 3;k++){
-                avg += my_image(i,j,k);
+                avg += to_image(i,j,k);
             }
             avg /= 3;
             avg = (avg > 127 ? 255 : 0);
-            my_image(i,j,0) = avg;
-            my_image(i,j,1) = avg;
-            my_image(i,j,2) = avg;
+            to_image(i,j,0) = avg;
+            to_image(i,j,1) = avg;
+            to_image(i,j,2) = avg;
         }
     }
     // Save the processed image
-    my_image.saveImage("test.jpg");
-    to_image = my_image;
-    my_image.loadNewImage(path.toStdString());
+    to_image.saveImage("test.jpg");
     emit mainwindow->filterFinished(btn);
 }
 void MainWindow::on_BWBtn_clicked()
@@ -185,65 +194,90 @@ void MainWindow::on_BWBtn_clicked()
     if(path.size() != 0){
         disableObtions();
         loadingFilter();
-        secT = QThread::create(BWFilter,secT,path,this,ui->BWBtn);
+        secT = QThread::create(BWFilter,this,ui->BWBtn);
         secT->start();
 
         ui->BWBtn->setText("");
         QLabel* spinnerLabel = new QLabel(this);
+        spinnerLabel->setStyleSheet("background-color:transparent;");
 
         QMovie* spinner = new QMovie("spinner.gif");
 
         spinnerLabel->setMovie(spinner);
-        spinnerLabel->setStyleSheet("background-color:transparent;");
         spinner->start();
 
         QGridLayout* layout = new QGridLayout();
         layout->addWidget(spinnerLabel, 0, 0, Qt::AlignCenter);
-
         delete ui->BWBtn->layout();
         ui->BWBtn->setLayout(layout);
-
     }
 }
-void flip(bool choice,QThread *secT,QString path,MainWindow* mainwindow,QPushButton* btn){
+void flip(bool choice,MainWindow* mainwindow,QPushButton* btn){
     if(!choice){
-        for(int i = 0;i < my_image.width;i++){
-            for(int j = 0;j < my_image.height/2;j++){
+        for(int i = 0;i < to_image.width;i++){
+            for(int j = 0;j < to_image.height/2;j++){
                 for(int k = 0;k < 3;k++){
-                    int p = my_image(i,j,k);
-                    my_image(i,j,k) = my_image(i,my_image.height - j - 1,k);
-                    my_image(i,my_image.height - j - 1,k) = p;
+                    int p = to_image(i,j,k);
+                    to_image(i,j,k) = to_image(i,to_image.height - j - 1,k);
+                    to_image(i,to_image.height - j - 1,k) = p;
                 }
             }
         }
     }else{
-        for(int i = 0;i < my_image.width/2;i++){
-            for(int j = 0;j < my_image.height;j++){
+        for(int i = 0;i < to_image.width/2;i++){
+            for(int j = 0;j < to_image.height;j++){
                 for(int k = 0;k < 3;k++){
-                    int p = my_image(i,j,k);
-                    my_image(i,j,k) = my_image(my_image.width - i - 1,j,k);
-                    my_image(my_image.width - i - 1,j,k) = p;
+                    int p = to_image(i,j,k);
+                    to_image(i,j,k) = to_image(to_image.width - i - 1,j,k);
+                    to_image(to_image.width - i - 1,j,k) = p;
                 }
             }
         }
     }
-    my_image.saveImage("test.jpg");
-    to_image = my_image;
-    my_image.loadNewImage(path.toStdString());
+    to_image.saveImage("test.jpg");
     emit mainwindow->filterFinished(btn);
+}
+void setupFadeInAnimation(QWidget *widget, int duration) {
+    QGraphicsOpacityEffect *effect = new QGraphicsOpacityEffect(widget);
+    widget->setGraphicsEffect(effect);
+
+    QPropertyAnimation *animation = new QPropertyAnimation(effect, "opacity");
+    animation->setDuration(duration);
+    animation->setStartValue(0.0);
+    animation->setEndValue(1.0);
+    animation->start(QAbstractAnimation::DeleteWhenStopped);
 }
 void MainWindow::on_FlipBtn_clicked()
 {
     if(!ui->radioButton->isVisible()){
-        disableObtions();
-        ui->applyBtn->setVisible(true);
-        ui->options_label->setVisible(true);
+        ui->resize_width->setVisible(false);
+        ui->resize_height->setVisible(false);
+        ui->lineEdit_1->setVisible(false);
+        ui->lineEdit_2->setVisible(false);
+        ui->lineEdit_3->setVisible(false);
+        ui->lineEdit_4->setVisible(false);
+        if (!ui->options_label->isVisible()) {
+            ui->options_label->setVisible(true);
+            setupFadeInAnimation(ui->options_label, 500);
+        }
+
+        if (!ui->applyBtn->isVisible()) {
+            ui->applyBtn->setVisible(true);
+            setupFadeInAnimation(ui->applyBtn, 500);
+        }
+
         ui->radioButton->setVisible(true);
         ui->radioButton_2->setVisible(true);
+
+        setupFadeInAnimation(ui->radioButton, 500);
+
+        // Fade-in animation for radioButton_2
+        setupFadeInAnimation(ui->radioButton_2, 500);
+
         optionsFor = ui->FlipBtn;
     }else if(path.size() != 0){
         loadingFilter();
-        secT = QThread::create(flip,ui->radioButton->isChecked(),secT,path,this,ui->FlipBtn);
+        secT = QThread::create(flip,ui->radioButton->isChecked(),this,ui->FlipBtn);
         secT->start();
         ui->FlipBtn->setText("");
         QLabel* spinnerLabel = new QLabel(this);
@@ -260,7 +294,7 @@ void MainWindow::on_FlipBtn_clicked()
         ui->FlipBtn->setLayout(layout);
     }
 }
-void cropFilter(int fromX,int fromY,int toX,int toY,QThread *secT,MainWindow* mainwindow,QPushButton* btn,QString path){
+void cropFilter(int fromX,int fromY,int toX,int toY,MainWindow* mainwindow,QPushButton* btn){
     Image newImage(toX - fromX + 1,toY - fromY + 1);
 
     int counterX = 0,counterY = 0;
@@ -268,7 +302,7 @@ void cropFilter(int fromX,int fromY,int toX,int toY,QThread *secT,MainWindow* ma
     for(int i = fromX - 1;i < toX;i++){
         for(int j = fromY - 1;j < toY;j++){
             for(int k = 0;k < 3;k++){
-                newImage(counterX,counterY,k) = my_image(i,j,k);
+                newImage(counterX,counterY,k) = to_image(i,j,k);
             }
             counterY++;
         }
@@ -288,13 +322,26 @@ void MainWindow::on_CropBtn_clicked()
         secondTo = ui->lineEdit_4->displayText().toStdString();
     qDebug() << firstFrom << ' ' << secondFrom << ' ' << firstTo << ' ' << secondTo;
     if(!ui->lineEdit_1->isVisible()){
-        disableObtions();
-        ui->applyBtn->setVisible(true);
-        ui->options_label->setVisible(true);
-        ui->lineEdit_1->setVisible(true);
-        ui->lineEdit_2->setVisible(true);
-        ui->lineEdit_3->setVisible(true);
-        ui->lineEdit_4->setVisible(true);
+        ui->resize_width->setVisible(false);
+        ui->resize_height->setVisible(false);
+        ui->radioButton->setVisible(false);
+        ui->radioButton_2->setVisible(false);
+        if (!ui->options_label->isVisible()) {
+            ui->options_label->setVisible(true);
+            setupFadeInAnimation(ui->options_label, 500);
+        }
+
+        if (!ui->applyBtn->isVisible()) {
+            ui->applyBtn->setVisible(true);
+            setupFadeInAnimation(ui->applyBtn, 500);
+        }
+        QList<QLineEdit*> lineEdits = {ui->lineEdit_1, ui->lineEdit_2, ui->lineEdit_3, ui->lineEdit_4};
+        for(QLineEdit *lineEdit : lineEdits) {
+            if(!lineEdit->isVisible()) {
+                lineEdit->setVisible(true);
+                setupFadeInAnimation(lineEdit, 500);
+            }
+        }
         optionsFor = ui->CropBtn;
     }else if(firstFrom.empty() || secondFrom.empty() || firstTo.empty() || secondTo.empty()){}
     else if(!(stoi(firstFrom) <= 0 || stoi(firstFrom) > my_image.width - 1) &&
@@ -303,7 +350,7 @@ void MainWindow::on_CropBtn_clicked()
                !(stoi(secondTo) <= 0 || stoi(secondTo) > my_image.height - 1)){
         if(path.size() != 0){
             loadingFilter();
-            secT = QThread::create(cropFilter,stoi(firstFrom),stoi(secondFrom),stoi(firstTo),stoi(secondTo),secT,this,ui->CropBtn,path);
+            secT = QThread::create(cropFilter,stoi(firstFrom),stoi(secondFrom),stoi(firstTo),stoi(secondTo),this,ui->CropBtn);
             secT->start();
             ui->CropBtn->setText("");
             QLabel* spinnerLabel = new QLabel(this);
@@ -323,12 +370,12 @@ void MainWindow::on_CropBtn_clicked()
     }
 }
 
-void resizeFilter(int newWidth,int newHeight,QThread *secT,MainWindow* mainwindow,QPushButton* btn,QString path){
+void resizeFilter(int newWidth,int newHeight,MainWindow* mainwindow,QPushButton* btn){
     // creating a new image with the desired width and height
     Image newImage(newWidth,newHeight);
-    int oldWidth = my_image.width,oldHeight = my_image.height;
+    int oldWidth = to_image.width,oldHeight = to_image.height;
     // getting the relative width and height
-    float relativeWidth = (float)newWidth/my_image.width,relativeHeight = (float)newHeight/my_image.height;
+    float relativeWidth = (float)newWidth/to_image.width,relativeHeight = (float)newHeight/to_image.height;
 
     for(int i = 0;i < newImage.width;i++){
         for(int j = 0;j < newImage.height;j++){
@@ -346,9 +393,9 @@ void resizeFilter(int newWidth,int newHeight,QThread *secT,MainWindow* mainwindo
                 y = 0;
             }
             // setting the new image pixel
-            newImage(i,j,0) = my_image(x,y,0);
-            newImage(i,j,1) = my_image(x,y,1);
-            newImage(i,j,2) = my_image(x,y,2);
+            newImage(i,j,0) = to_image(x,y,0);
+            newImage(i,j,1) = to_image(x,y,1);
+            newImage(i,j,2) = to_image(x,y,2);
         }
     }
     // Save the processed image
@@ -361,17 +408,34 @@ void MainWindow::on_ResizeBtn_clicked()
 {
     int width = ui->resize_width->text().toInt(),height = ui->resize_height->text().toInt();
     if(!ui->resize_width->isVisible()){
-        disableObtions();
-        ui->applyBtn->setVisible(true);
-        ui->options_label->setVisible(true);
+        ui->radioButton->setVisible(false);
+        ui->radioButton_2->setVisible(false);
+        ui->lineEdit_1->setVisible(false);
+        ui->lineEdit_2->setVisible(false);
+        ui->lineEdit_3->setVisible(false);
+        ui->lineEdit_4->setVisible(false);
+        if (!ui->options_label->isVisible()) {
+            ui->options_label->setVisible(true);
+            setupFadeInAnimation(ui->options_label, 500);
+        }
+
+        if (!ui->applyBtn->isVisible()) {
+            ui->applyBtn->setVisible(true);
+            setupFadeInAnimation(ui->applyBtn, 500);
+        }
+        // Fade-in animation for resize_width
         ui->resize_width->setVisible(true);
+        setupFadeInAnimation(ui->resize_width, 500);
+
+        // Fade-in animation for resize_height
         ui->resize_height->setVisible(true);
+        setupFadeInAnimation(ui->resize_height, 500);
         optionsFor = ui->ResizeBtn;
     }else if(!(width <= 0) &&
                !(height <= 0)){
         if(path.size() != 0){
             loadingFilter();
-            secT = QThread::create(resizeFilter,width,height,secT,this,ui->ResizeBtn,path);
+            secT = QThread::create(resizeFilter,width,height,this,ui->ResizeBtn);
             secT->start();
             ui->ResizeBtn->setText("");
             QLabel* spinnerLabel = new QLabel(this);
@@ -393,6 +457,7 @@ void MainWindow::on_ResizeBtn_clicked()
 
 void MainWindow::on_clearBtn_clicked()
 {
+    to_image = my_image;
 
 }
 
@@ -406,5 +471,100 @@ void MainWindow::on_applyBtn_toggled(bool checked)
 void MainWindow::on_applyBtn_clicked()
 {
     optionsFor->click();
+}
+
+void infrared(MainWindow *mainwindow,QPushButton *btn){
+    for(int i = 0;i < to_image.width;i++){
+        for(int j = 0;j < to_image.height;j++){
+            to_image(i,j,0) = 255;
+            int intenisty = (to_image(i,j,1)+to_image(i,j,2))/2;
+            to_image(i,j,1) = 255 - intenisty;
+            to_image(i,j,2) = 255 - intenisty;
+        }
+    }
+    to_image.saveImage("test.jpg");
+    emit mainwindow->filterFinished(btn);
+}
+
+void MainWindow::on_Infrared_clicked()
+{
+    if(path.size() != 0){
+        disableObtions();
+        loadingFilter();
+        secT = QThread::create(infrared,this,ui->Infrared);
+        secT->start();
+
+        ui->Infrared->setText("");
+        QLabel* spinnerLabel = new QLabel(this);
+        spinnerLabel->setStyleSheet("background-color:transparent;");
+
+        QMovie* spinner = new QMovie("spinner.gif");
+
+        spinnerLabel->setMovie(spinner);
+        spinner->start();
+
+        QGridLayout* layout = new QGridLayout();
+        layout->addWidget(spinnerLabel, 0, 0, Qt::AlignCenter);
+        delete ui->Infrared->layout();
+        ui->Infrared->setLayout(layout);
+    }
+}
+void oilPaint(MainWindow *mainwindow,QPushButton *btn){
+    int radius = 5;
+    Image new_image(to_image.width,to_image.height);
+    for(int i = 0;i < to_image.width;i++){
+        for(int j = 0;j < to_image.height;j++){
+            vector<int> intenistyLevels(255),averageR(255),averageG(255),averageB(255);
+            int maxIntenisty = 0;
+            int beginRaw = max(0,i-radius),endRaw = min(i+radius,to_image.width-1);
+            int beginCol = max(0,j-radius),endCol = min(j+radius,to_image.height-1);
+            for(int k = beginRaw;k <= endRaw;k++){
+                for(int l = beginCol;l <= endCol;l++){
+                    int intenisty = (to_image(k,l,0)+to_image(k,l,1)+to_image(k,l,2))/3;
+                    intenistyLevels[intenisty]++;
+                    averageR[intenisty] += to_image(k,l,0);
+                    averageG[intenisty] += to_image(k,l,1);
+                    averageB[intenisty] += to_image(k,l,2);
+                }
+            }
+            int maxIndex;
+            for(int k = 0;k < 255;k++){
+                if(maxIntenisty < intenistyLevels[k]){
+                    maxIntenisty = intenistyLevels[k];
+                    maxIndex = k;
+                }
+            }
+            new_image(i,j,0) = averageR[maxIndex]/maxIntenisty;
+            new_image(i,j,1) = averageG[maxIndex]/maxIntenisty;
+            new_image(i,j,2) = averageB[maxIndex]/maxIntenisty;
+        }
+    }
+    new_image.saveImage("test.jpg");
+    to_image = new_image;
+    emit mainwindow->filterFinished(btn);
+}
+
+void MainWindow::on_OilPaint_clicked()
+{
+    if(path.size() != 0){
+        disableObtions();
+        loadingFilter();
+        secT = QThread::create(oilPaint,this,ui->OilPaint);
+        secT->start();
+
+        ui->OilPaint->setText("");
+        QLabel* spinnerLabel = new QLabel(this);
+        spinnerLabel->setStyleSheet("background-color:transparent;");
+
+        QMovie* spinner = new QMovie("spinner.gif");
+
+        spinnerLabel->setMovie(spinner);
+        spinner->start();
+
+        QGridLayout* layout = new QGridLayout();
+        layout->addWidget(spinnerLabel, 0, 0, Qt::AlignCenter);
+        delete ui->OilPaint->layout();
+        ui->OilPaint->setLayout(layout);
+    }
 }
 

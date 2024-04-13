@@ -10,6 +10,7 @@
 #define UI_MAINWINDOW_H
 
 #include <QtCore/QVariant>
+#include <QtGui/QIcon>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QFrame>
 #include <QtWidgets/QGridLayout>
@@ -20,6 +21,7 @@
 #include <QtWidgets/QMenuBar>
 #include <QtWidgets/QPushButton>
 #include <QtWidgets/QRadioButton>
+#include <QtWidgets/QScrollArea>
 #include <QtWidgets/QStatusBar>
 #include <QtWidgets/QVBoxLayout>
 #include <QtWidgets/QWidget>
@@ -30,7 +32,7 @@ class Ui_MainWindow
 {
 public:
     QWidget *centralwidget;
-    QVBoxLayout *verticalLayout_5;
+    QVBoxLayout *verticalLayout_9;
     QHBoxLayout *horizontalLayout_5;
     QHBoxLayout *horizontalLayout_2;
     QVBoxLayout *verticalLayout_2;
@@ -41,11 +43,18 @@ public:
     QLabel *label_5;
     QFrame *ToImage;
     QLabel *ToImageSize;
+    QScrollArea *scrollArea;
+    QWidget *scrollAreaWidgetContents;
     QGridLayout *gridLayout;
-    QPushButton *BWBtn;
-    QPushButton *CropBtn;
+    QPushButton *FlipBtn_5;
     QPushButton *ResizeBtn;
+    QPushButton *FlipBtn_6;
+    QPushButton *OilPaint;
+    QPushButton *FlipBtn_4;
+    QPushButton *CropBtn;
+    QPushButton *BWBtn;
     QPushButton *FlipBtn;
+    QPushButton *Infrared;
     QLabel *options_label;
     QHBoxLayout *horizontalLayout_3;
     QRadioButton *radioButton;
@@ -76,40 +85,51 @@ public:
     {
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName("MainWindow");
-        MainWindow->resize(966, 786);
+        MainWindow->resize(867, 761);
+        QSizePolicy sizePolicy(QSizePolicy::Policy::Preferred, QSizePolicy::Policy::Minimum);
+        sizePolicy.setHorizontalStretch(0);
+        sizePolicy.setVerticalStretch(0);
+        sizePolicy.setHeightForWidth(MainWindow->sizePolicy().hasHeightForWidth());
+        MainWindow->setSizePolicy(sizePolicy);
+        QIcon icon;
+        icon.addFile(QString::fromUtf8("../../../../../../Users/ALRWAD LAPTOP/Downloads/icons8-filter-96.png"), QSize(), QIcon::Normal, QIcon::Off);
+        MainWindow->setWindowIcon(icon);
         MainWindow->setStyleSheet(QString::fromUtf8("QMainWindow{\n"
-"	background-color:  qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0 rgba(0, 100, 102, 255), stop:1 rgba(27, 58, 75, 255));\n"
-"	color: #4D194D;\n"
+"	background-color:  #E7E8D1;\n"
+"	color: #B85042;\n"
 "}\n"
 "QPushButton{\n"
-"	background-color:  rgba(255, 255, 255,255);\n"
-"	color:rgba(77, 25, 77,255);\n"
+"	background-color:  #B85042;\n"
+"	color:#E7E8D1;\n"
 "	border-radius: 30%;\n"
 "	font-size: 14px;\n"
 "	font-weight: 600;\n"
 "}\n"
 "QPushButton:hover{\n"
-"	background-color:  rgba(160, 160, 160,255);\n"
+"	background-color:  #A7BEAE;\n"
 "}\n"
 "QRadioButton{\n"
-"	color:#9C5C9C ;\n"
+"	color: #B85042 ;\n"
 "	font-weight: 500;\n"
 "}\n"
 "QLabel{\n"
-"	color: #9C5C9C;\n"
+"	color:  #B85042;\n"
 "}\n"
 "QLineEdit{\n"
 "	border-radius: 18%;\n"
 "	padding: 8px 4px;\n"
 "	background-color:  transparent;\n"
-"	color: #9C5C9C;\n"
-"	 border: 1px solid #9C5C9C;\n"
+"	color:  #B85042;\n"
+"	 border: 1px solid  #B85042;\n"
+"}\n"
+"QLineEdit:focus{\n"
+"	border: 1px solid #A7BEAE;\n"
 "}"));
         MainWindow->setAnimated(true);
         centralwidget = new QWidget(MainWindow);
         centralwidget->setObjectName("centralwidget");
-        verticalLayout_5 = new QVBoxLayout(centralwidget);
-        verticalLayout_5->setObjectName("verticalLayout_5");
+        verticalLayout_9 = new QVBoxLayout(centralwidget);
+        verticalLayout_9->setObjectName("verticalLayout_9");
         horizontalLayout_5 = new QHBoxLayout();
         horizontalLayout_5->setObjectName("horizontalLayout_5");
         horizontalLayout_2 = new QHBoxLayout();
@@ -120,11 +140,11 @@ public:
         verticalLayout_2->setObjectName("verticalLayout_2");
         label_4 = new QLabel(centralwidget);
         label_4->setObjectName("label_4");
-        QSizePolicy sizePolicy(QSizePolicy::Policy::Preferred, QSizePolicy::Policy::Maximum);
-        sizePolicy.setHorizontalStretch(0);
-        sizePolicy.setVerticalStretch(0);
-        sizePolicy.setHeightForWidth(label_4->sizePolicy().hasHeightForWidth());
-        label_4->setSizePolicy(sizePolicy);
+        QSizePolicy sizePolicy1(QSizePolicy::Policy::Preferred, QSizePolicy::Policy::Maximum);
+        sizePolicy1.setHorizontalStretch(0);
+        sizePolicy1.setVerticalStretch(0);
+        sizePolicy1.setHeightForWidth(label_4->sizePolicy().hasHeightForWidth());
+        label_4->setSizePolicy(sizePolicy1);
         QFont font;
         font.setPointSize(11);
         label_4->setFont(font);
@@ -133,11 +153,11 @@ public:
 
         FromImage = new QFrame(centralwidget);
         FromImage->setObjectName("FromImage");
-        QSizePolicy sizePolicy1(QSizePolicy::Policy::Fixed, QSizePolicy::Policy::Maximum);
-        sizePolicy1.setHorizontalStretch(0);
-        sizePolicy1.setVerticalStretch(0);
-        sizePolicy1.setHeightForWidth(FromImage->sizePolicy().hasHeightForWidth());
-        FromImage->setSizePolicy(sizePolicy1);
+        QSizePolicy sizePolicy2(QSizePolicy::Policy::Fixed, QSizePolicy::Policy::Maximum);
+        sizePolicy2.setHorizontalStretch(0);
+        sizePolicy2.setVerticalStretch(0);
+        sizePolicy2.setHeightForWidth(FromImage->sizePolicy().hasHeightForWidth());
+        FromImage->setSizePolicy(sizePolicy2);
         FromImage->setMinimumSize(QSize(300, 200));
         FromImage->setAutoFillBackground(false);
         FromImage->setStyleSheet(QString::fromUtf8("QFrame#frame_2{\n"
@@ -151,8 +171,8 @@ public:
 
         FromImageSize = new QLabel(centralwidget);
         FromImageSize->setObjectName("FromImageSize");
-        sizePolicy.setHeightForWidth(FromImageSize->sizePolicy().hasHeightForWidth());
-        FromImageSize->setSizePolicy(sizePolicy);
+        sizePolicy1.setHeightForWidth(FromImageSize->sizePolicy().hasHeightForWidth());
+        FromImageSize->setSizePolicy(sizePolicy1);
         FromImageSize->setAlignment(Qt::AlignCenter);
 
         verticalLayout_2->addWidget(FromImageSize);
@@ -165,16 +185,16 @@ public:
         verticalLayout_3->setObjectName("verticalLayout_3");
         label_5 = new QLabel(centralwidget);
         label_5->setObjectName("label_5");
-        sizePolicy.setHeightForWidth(label_5->sizePolicy().hasHeightForWidth());
-        label_5->setSizePolicy(sizePolicy);
+        sizePolicy1.setHeightForWidth(label_5->sizePolicy().hasHeightForWidth());
+        label_5->setSizePolicy(sizePolicy1);
         label_5->setFont(font);
 
         verticalLayout_3->addWidget(label_5);
 
         ToImage = new QFrame(centralwidget);
         ToImage->setObjectName("ToImage");
-        sizePolicy1.setHeightForWidth(ToImage->sizePolicy().hasHeightForWidth());
-        ToImage->setSizePolicy(sizePolicy1);
+        sizePolicy2.setHeightForWidth(ToImage->sizePolicy().hasHeightForWidth());
+        ToImage->setSizePolicy(sizePolicy2);
         ToImage->setMinimumSize(QSize(300, 200));
         ToImage->setAutoFillBackground(false);
         ToImage->setStyleSheet(QString::fromUtf8("QFrame#frame_2{\n"
@@ -188,8 +208,8 @@ public:
 
         ToImageSize = new QLabel(centralwidget);
         ToImageSize->setObjectName("ToImageSize");
-        sizePolicy.setHeightForWidth(ToImageSize->sizePolicy().hasHeightForWidth());
-        ToImageSize->setSizePolicy(sizePolicy);
+        sizePolicy1.setHeightForWidth(ToImageSize->sizePolicy().hasHeightForWidth());
+        ToImageSize->setSizePolicy(sizePolicy1);
         ToImageSize->setAlignment(Qt::AlignCenter);
 
         verticalLayout_3->addWidget(ToImageSize);
@@ -200,89 +220,171 @@ public:
 
         horizontalLayout_5->addLayout(horizontalLayout_2);
 
-        gridLayout = new QGridLayout();
+        scrollArea = new QScrollArea(centralwidget);
+        scrollArea->setObjectName("scrollArea");
+        QSizePolicy sizePolicy3(QSizePolicy::Policy::Minimum, QSizePolicy::Policy::Expanding);
+        sizePolicy3.setHorizontalStretch(0);
+        sizePolicy3.setVerticalStretch(0);
+        sizePolicy3.setHeightForWidth(scrollArea->sizePolicy().hasHeightForWidth());
+        scrollArea->setSizePolicy(sizePolicy3);
+        scrollArea->setMaximumSize(QSize(300, 300));
+        scrollArea->setAutoFillBackground(false);
+        scrollArea->setStyleSheet(QString::fromUtf8("QScrollArea{\n"
+"	background-color: transparent;\n"
+"	border radius: 22px;\n"
+"	border: 10px yellow solid;\n"
+"}"));
+        scrollArea->setWidgetResizable(true);
+        scrollAreaWidgetContents = new QWidget();
+        scrollAreaWidgetContents->setObjectName("scrollAreaWidgetContents");
+        scrollAreaWidgetContents->setGeometry(QRect(0, -100, 206, 516));
+        scrollAreaWidgetContents->setStyleSheet(QString::fromUtf8("QWidget{\n"
+"background-color: transparent;\n"
+"}\n"
+"QPushButton{\n"
+"	background-color: #B85042;\n"
+"	border-radius: 24px;\n"
+"}\n"
+"QPushButton:hover{\n"
+"	background-color: #A7BEAE;\n"
+"}"));
+        gridLayout = new QGridLayout(scrollAreaWidgetContents);
         gridLayout->setObjectName("gridLayout");
-        gridLayout->setVerticalSpacing(12);
-        BWBtn = new QPushButton(centralwidget);
-        BWBtn->setObjectName("BWBtn");
-        sizePolicy1.setHeightForWidth(BWBtn->sizePolicy().hasHeightForWidth());
-        BWBtn->setSizePolicy(sizePolicy1);
-        BWBtn->setMinimumSize(QSize(300, 70));
+        FlipBtn_5 = new QPushButton(scrollAreaWidgetContents);
+        FlipBtn_5->setObjectName("FlipBtn_5");
+        sizePolicy2.setHeightForWidth(FlipBtn_5->sizePolicy().hasHeightForWidth());
+        FlipBtn_5->setSizePolicy(sizePolicy2);
+        FlipBtn_5->setMinimumSize(QSize(150, 50));
         QFont font1;
         font1.setWeight(QFont::DemiBold);
+        FlipBtn_5->setFont(font1);
+        FlipBtn_5->setStyleSheet(QString::fromUtf8(""));
+
+        gridLayout->addWidget(FlipBtn_5, 12, 0, 1, 1);
+
+        ResizeBtn = new QPushButton(scrollAreaWidgetContents);
+        ResizeBtn->setObjectName("ResizeBtn");
+        sizePolicy2.setHeightForWidth(ResizeBtn->sizePolicy().hasHeightForWidth());
+        ResizeBtn->setSizePolicy(sizePolicy2);
+        ResizeBtn->setMinimumSize(QSize(150, 50));
+        ResizeBtn->setFont(font1);
+        ResizeBtn->setAutoFillBackground(false);
+        ResizeBtn->setStyleSheet(QString::fromUtf8(""));
+
+        gridLayout->addWidget(ResizeBtn, 5, 0, 1, 1);
+
+        FlipBtn_6 = new QPushButton(scrollAreaWidgetContents);
+        FlipBtn_6->setObjectName("FlipBtn_6");
+        sizePolicy2.setHeightForWidth(FlipBtn_6->sizePolicy().hasHeightForWidth());
+        FlipBtn_6->setSizePolicy(sizePolicy2);
+        FlipBtn_6->setMinimumSize(QSize(150, 50));
+        FlipBtn_6->setFont(font1);
+        FlipBtn_6->setStyleSheet(QString::fromUtf8(""));
+
+        gridLayout->addWidget(FlipBtn_6, 13, 0, 1, 1);
+
+        OilPaint = new QPushButton(scrollAreaWidgetContents);
+        OilPaint->setObjectName("OilPaint");
+        sizePolicy2.setHeightForWidth(OilPaint->sizePolicy().hasHeightForWidth());
+        OilPaint->setSizePolicy(sizePolicy2);
+        OilPaint->setMinimumSize(QSize(150, 50));
+        OilPaint->setFont(font1);
+        OilPaint->setStyleSheet(QString::fromUtf8(""));
+
+        gridLayout->addWidget(OilPaint, 10, 0, 1, 1);
+
+        FlipBtn_4 = new QPushButton(scrollAreaWidgetContents);
+        FlipBtn_4->setObjectName("FlipBtn_4");
+        sizePolicy2.setHeightForWidth(FlipBtn_4->sizePolicy().hasHeightForWidth());
+        FlipBtn_4->setSizePolicy(sizePolicy2);
+        FlipBtn_4->setMinimumSize(QSize(150, 50));
+        FlipBtn_4->setFont(font1);
+        FlipBtn_4->setStyleSheet(QString::fromUtf8(""));
+
+        gridLayout->addWidget(FlipBtn_4, 11, 0, 1, 1);
+
+        CropBtn = new QPushButton(scrollAreaWidgetContents);
+        CropBtn->setObjectName("CropBtn");
+        sizePolicy2.setHeightForWidth(CropBtn->sizePolicy().hasHeightForWidth());
+        CropBtn->setSizePolicy(sizePolicy2);
+        CropBtn->setMinimumSize(QSize(150, 50));
+        CropBtn->setFont(font1);
+        CropBtn->setStyleSheet(QString::fromUtf8(""));
+
+        gridLayout->addWidget(CropBtn, 3, 0, 1, 1);
+
+        BWBtn = new QPushButton(scrollAreaWidgetContents);
+        BWBtn->setObjectName("BWBtn");
+        sizePolicy2.setHeightForWidth(BWBtn->sizePolicy().hasHeightForWidth());
+        BWBtn->setSizePolicy(sizePolicy2);
+        BWBtn->setMinimumSize(QSize(150, 50));
         BWBtn->setFont(font1);
         BWBtn->setLayoutDirection(Qt::LeftToRight);
         BWBtn->setStyleSheet(QString::fromUtf8(""));
 
-        gridLayout->addWidget(BWBtn, 1, 0, 1, 1);
+        gridLayout->addWidget(BWBtn, 0, 0, 1, 1);
 
-        CropBtn = new QPushButton(centralwidget);
-        CropBtn->setObjectName("CropBtn");
-        sizePolicy1.setHeightForWidth(CropBtn->sizePolicy().hasHeightForWidth());
-        CropBtn->setSizePolicy(sizePolicy1);
-        CropBtn->setMinimumSize(QSize(300, 70));
-        CropBtn->setFont(font1);
-        CropBtn->setStyleSheet(QString::fromUtf8(""));
-
-        gridLayout->addWidget(CropBtn, 4, 0, 1, 1);
-
-        ResizeBtn = new QPushButton(centralwidget);
-        ResizeBtn->setObjectName("ResizeBtn");
-        sizePolicy1.setHeightForWidth(ResizeBtn->sizePolicy().hasHeightForWidth());
-        ResizeBtn->setSizePolicy(sizePolicy1);
-        ResizeBtn->setMinimumSize(QSize(300, 70));
-        ResizeBtn->setFont(font1);
-        ResizeBtn->setStyleSheet(QString::fromUtf8(""));
-
-        gridLayout->addWidget(ResizeBtn, 2, 0, 1, 1);
-
-        FlipBtn = new QPushButton(centralwidget);
+        FlipBtn = new QPushButton(scrollAreaWidgetContents);
         FlipBtn->setObjectName("FlipBtn");
-        sizePolicy1.setHeightForWidth(FlipBtn->sizePolicy().hasHeightForWidth());
-        FlipBtn->setSizePolicy(sizePolicy1);
-        FlipBtn->setMinimumSize(QSize(300, 70));
+        sizePolicy2.setHeightForWidth(FlipBtn->sizePolicy().hasHeightForWidth());
+        FlipBtn->setSizePolicy(sizePolicy2);
+        FlipBtn->setMinimumSize(QSize(150, 50));
         FlipBtn->setFont(font1);
         FlipBtn->setStyleSheet(QString::fromUtf8(""));
 
-        gridLayout->addWidget(FlipBtn, 3, 0, 1, 1);
+        gridLayout->addWidget(FlipBtn, 1, 0, 1, 1);
+
+        Infrared = new QPushButton(scrollAreaWidgetContents);
+        Infrared->setObjectName("Infrared");
+        sizePolicy2.setHeightForWidth(Infrared->sizePolicy().hasHeightForWidth());
+        Infrared->setSizePolicy(sizePolicy2);
+        Infrared->setMinimumSize(QSize(150, 50));
+        Infrared->setFont(font1);
+        Infrared->setStyleSheet(QString::fromUtf8(""));
+
+        gridLayout->addWidget(Infrared, 6, 0, 1, 1);
+
+        scrollArea->setWidget(scrollAreaWidgetContents);
+
+        horizontalLayout_5->addWidget(scrollArea);
 
 
-        horizontalLayout_5->addLayout(gridLayout);
-
-
-        verticalLayout_5->addLayout(horizontalLayout_5);
+        verticalLayout_9->addLayout(horizontalLayout_5);
 
         options_label = new QLabel(centralwidget);
         options_label->setObjectName("options_label");
         QFont font2;
         font2.setPointSize(20);
         options_label->setFont(font2);
+        options_label->setStyleSheet(QString::fromUtf8("QLabel{\n"
+"	opacity:0.4;\n"
+"}"));
 
-        verticalLayout_5->addWidget(options_label);
+        verticalLayout_9->addWidget(options_label);
 
         horizontalLayout_3 = new QHBoxLayout();
         horizontalLayout_3->setObjectName("horizontalLayout_3");
         radioButton = new QRadioButton(centralwidget);
         radioButton->setObjectName("radioButton");
         radioButton->setEnabled(true);
-        QSizePolicy sizePolicy2(QSizePolicy::Policy::Fixed, QSizePolicy::Policy::Fixed);
-        sizePolicy2.setHorizontalStretch(0);
-        sizePolicy2.setVerticalStretch(0);
-        sizePolicy2.setHeightForWidth(radioButton->sizePolicy().hasHeightForWidth());
-        radioButton->setSizePolicy(sizePolicy2);
+        QSizePolicy sizePolicy4(QSizePolicy::Policy::Fixed, QSizePolicy::Policy::Fixed);
+        sizePolicy4.setHorizontalStretch(0);
+        sizePolicy4.setVerticalStretch(0);
+        sizePolicy4.setHeightForWidth(radioButton->sizePolicy().hasHeightForWidth());
+        radioButton->setSizePolicy(sizePolicy4);
         radioButton->setStyleSheet(QString::fromUtf8(""));
 
         horizontalLayout_3->addWidget(radioButton);
 
         radioButton_2 = new QRadioButton(centralwidget);
         radioButton_2->setObjectName("radioButton_2");
-        sizePolicy2.setHeightForWidth(radioButton_2->sizePolicy().hasHeightForWidth());
-        radioButton_2->setSizePolicy(sizePolicy2);
+        sizePolicy4.setHeightForWidth(radioButton_2->sizePolicy().hasHeightForWidth());
+        radioButton_2->setSizePolicy(sizePolicy4);
 
         horizontalLayout_3->addWidget(radioButton_2);
 
 
-        verticalLayout_5->addLayout(horizontalLayout_3);
+        verticalLayout_9->addLayout(horizontalLayout_3);
 
         verticalLayout_4 = new QVBoxLayout();
         verticalLayout_4->setObjectName("verticalLayout_4");
@@ -291,18 +393,18 @@ public:
         horizontalLayout_4->setSizeConstraint(QLayout::SetDefaultConstraint);
         lineEdit_1 = new QLineEdit(centralwidget);
         lineEdit_1->setObjectName("lineEdit_1");
-        QSizePolicy sizePolicy3(QSizePolicy::Policy::Maximum, QSizePolicy::Policy::Fixed);
-        sizePolicy3.setHorizontalStretch(0);
-        sizePolicy3.setVerticalStretch(0);
-        sizePolicy3.setHeightForWidth(lineEdit_1->sizePolicy().hasHeightForWidth());
-        lineEdit_1->setSizePolicy(sizePolicy3);
+        QSizePolicy sizePolicy5(QSizePolicy::Policy::Maximum, QSizePolicy::Policy::Fixed);
+        sizePolicy5.setHorizontalStretch(0);
+        sizePolicy5.setVerticalStretch(0);
+        sizePolicy5.setHeightForWidth(lineEdit_1->sizePolicy().hasHeightForWidth());
+        lineEdit_1->setSizePolicy(sizePolicy5);
 
         horizontalLayout_4->addWidget(lineEdit_1);
 
         lineEdit_3 = new QLineEdit(centralwidget);
         lineEdit_3->setObjectName("lineEdit_3");
-        sizePolicy3.setHeightForWidth(lineEdit_3->sizePolicy().hasHeightForWidth());
-        lineEdit_3->setSizePolicy(sizePolicy3);
+        sizePolicy5.setHeightForWidth(lineEdit_3->sizePolicy().hasHeightForWidth());
+        lineEdit_3->setSizePolicy(sizePolicy5);
 
         horizontalLayout_4->addWidget(lineEdit_3);
 
@@ -313,15 +415,15 @@ public:
         horizontalLayout_6->setObjectName("horizontalLayout_6");
         lineEdit_2 = new QLineEdit(centralwidget);
         lineEdit_2->setObjectName("lineEdit_2");
-        sizePolicy3.setHeightForWidth(lineEdit_2->sizePolicy().hasHeightForWidth());
-        lineEdit_2->setSizePolicy(sizePolicy3);
+        sizePolicy5.setHeightForWidth(lineEdit_2->sizePolicy().hasHeightForWidth());
+        lineEdit_2->setSizePolicy(sizePolicy5);
 
         horizontalLayout_6->addWidget(lineEdit_2);
 
         lineEdit_4 = new QLineEdit(centralwidget);
         lineEdit_4->setObjectName("lineEdit_4");
-        sizePolicy3.setHeightForWidth(lineEdit_4->sizePolicy().hasHeightForWidth());
-        lineEdit_4->setSizePolicy(sizePolicy3);
+        sizePolicy5.setHeightForWidth(lineEdit_4->sizePolicy().hasHeightForWidth());
+        lineEdit_4->setSizePolicy(sizePolicy5);
 
         horizontalLayout_6->addWidget(lineEdit_4);
 
@@ -329,33 +431,33 @@ public:
         verticalLayout_4->addLayout(horizontalLayout_6);
 
 
-        verticalLayout_5->addLayout(verticalLayout_4);
+        verticalLayout_9->addLayout(verticalLayout_4);
 
         horizontalLayout_8 = new QHBoxLayout();
         horizontalLayout_8->setObjectName("horizontalLayout_8");
         resize_width = new QLineEdit(centralwidget);
         resize_width->setObjectName("resize_width");
-        sizePolicy3.setHeightForWidth(resize_width->sizePolicy().hasHeightForWidth());
-        resize_width->setSizePolicy(sizePolicy3);
+        sizePolicy5.setHeightForWidth(resize_width->sizePolicy().hasHeightForWidth());
+        resize_width->setSizePolicy(sizePolicy5);
 
         horizontalLayout_8->addWidget(resize_width);
 
         resize_height = new QLineEdit(centralwidget);
         resize_height->setObjectName("resize_height");
-        sizePolicy3.setHeightForWidth(resize_height->sizePolicy().hasHeightForWidth());
-        resize_height->setSizePolicy(sizePolicy3);
+        sizePolicy5.setHeightForWidth(resize_height->sizePolicy().hasHeightForWidth());
+        resize_height->setSizePolicy(sizePolicy5);
 
         horizontalLayout_8->addWidget(resize_height);
 
 
-        verticalLayout_5->addLayout(horizontalLayout_8);
+        verticalLayout_9->addLayout(horizontalLayout_8);
 
         horizontalLayout_7 = new QHBoxLayout();
         horizontalLayout_7->setObjectName("horizontalLayout_7");
         applyBtn = new QPushButton(centralwidget);
         applyBtn->setObjectName("applyBtn");
-        sizePolicy1.setHeightForWidth(applyBtn->sizePolicy().hasHeightForWidth());
-        applyBtn->setSizePolicy(sizePolicy1);
+        sizePolicy2.setHeightForWidth(applyBtn->sizePolicy().hasHeightForWidth());
+        applyBtn->setSizePolicy(sizePolicy2);
         applyBtn->setMinimumSize(QSize(107, 30));
         applyBtn->setMaximumSize(QSize(16777215, 16777215));
         applyBtn->setStyleSheet(QString::fromUtf8("QPushButton{\n"
@@ -367,7 +469,7 @@ public:
         horizontalLayout_7->addWidget(applyBtn);
 
 
-        verticalLayout_5->addLayout(horizontalLayout_7);
+        verticalLayout_9->addLayout(horizontalLayout_7);
 
         verticalLayout = new QVBoxLayout();
         verticalLayout->setObjectName("verticalLayout");
@@ -375,8 +477,8 @@ public:
         horizontalLayout->setObjectName("horizontalLayout");
         pushButton = new QPushButton(centralwidget);
         pushButton->setObjectName("pushButton");
-        sizePolicy1.setHeightForWidth(pushButton->sizePolicy().hasHeightForWidth());
-        pushButton->setSizePolicy(sizePolicy1);
+        sizePolicy2.setHeightForWidth(pushButton->sizePolicy().hasHeightForWidth());
+        pushButton->setSizePolicy(sizePolicy2);
         pushButton->setMinimumSize(QSize(150, 35));
         pushButton->setStyleSheet(QString::fromUtf8("QPushButton{\n"
 "	border-radius: 15%;\n"
@@ -387,11 +489,11 @@ public:
 
         label = new QLabel(centralwidget);
         label->setObjectName("label");
-        QSizePolicy sizePolicy4(QSizePolicy::Policy::Minimum, QSizePolicy::Policy::Preferred);
-        sizePolicy4.setHorizontalStretch(0);
-        sizePolicy4.setVerticalStretch(0);
-        sizePolicy4.setHeightForWidth(label->sizePolicy().hasHeightForWidth());
-        label->setSizePolicy(sizePolicy4);
+        QSizePolicy sizePolicy6(QSizePolicy::Policy::Minimum, QSizePolicy::Policy::Preferred);
+        sizePolicy6.setHorizontalStretch(0);
+        sizePolicy6.setVerticalStretch(0);
+        sizePolicy6.setHeightForWidth(label->sizePolicy().hasHeightForWidth());
+        label->setSizePolicy(sizePolicy6);
         QFont font3;
         font3.setPointSize(18);
         label->setFont(font3);
@@ -404,8 +506,8 @@ public:
 
         clearBtn = new QPushButton(centralwidget);
         clearBtn->setObjectName("clearBtn");
-        sizePolicy1.setHeightForWidth(clearBtn->sizePolicy().hasHeightForWidth());
-        clearBtn->setSizePolicy(sizePolicy1);
+        sizePolicy2.setHeightForWidth(clearBtn->sizePolicy().hasHeightForWidth());
+        clearBtn->setSizePolicy(sizePolicy2);
         clearBtn->setMinimumSize(QSize(150, 35));
         clearBtn->setStyleSheet(QString::fromUtf8("QPushButton{\n"
 "	border-radius: 15%;\n"
@@ -416,8 +518,8 @@ public:
 
         saveBtn = new QPushButton(centralwidget);
         saveBtn->setObjectName("saveBtn");
-        sizePolicy1.setHeightForWidth(saveBtn->sizePolicy().hasHeightForWidth());
-        saveBtn->setSizePolicy(sizePolicy1);
+        sizePolicy2.setHeightForWidth(saveBtn->sizePolicy().hasHeightForWidth());
+        saveBtn->setSizePolicy(sizePolicy2);
         saveBtn->setMinimumSize(QSize(150, 35));
         saveBtn->setStyleSheet(QString::fromUtf8("QPushButton{\n"
 "	border-radius: 15%;\n"
@@ -427,15 +529,15 @@ public:
         verticalLayout->addWidget(saveBtn);
 
 
-        verticalLayout_5->addLayout(verticalLayout);
+        verticalLayout_9->addLayout(verticalLayout);
 
         errorLabel = new QLabel(centralwidget);
         errorLabel->setObjectName("errorLabel");
-        QSizePolicy sizePolicy5(QSizePolicy::Policy::Fixed, QSizePolicy::Policy::Preferred);
-        sizePolicy5.setHorizontalStretch(0);
-        sizePolicy5.setVerticalStretch(0);
-        sizePolicy5.setHeightForWidth(errorLabel->sizePolicy().hasHeightForWidth());
-        errorLabel->setSizePolicy(sizePolicy5);
+        QSizePolicy sizePolicy7(QSizePolicy::Policy::Fixed, QSizePolicy::Policy::Preferred);
+        sizePolicy7.setHorizontalStretch(0);
+        sizePolicy7.setVerticalStretch(0);
+        sizePolicy7.setHeightForWidth(errorLabel->sizePolicy().hasHeightForWidth());
+        errorLabel->setSizePolicy(sizePolicy7);
         QFont font4;
         font4.setPointSize(12);
         errorLabel->setFont(font4);
@@ -445,12 +547,12 @@ public:
 "}"));
         errorLabel->setAlignment(Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter);
 
-        verticalLayout_5->addWidget(errorLabel);
+        verticalLayout_9->addWidget(errorLabel);
 
         MainWindow->setCentralWidget(centralwidget);
         menubar = new QMenuBar(MainWindow);
         menubar->setObjectName("menubar");
-        menubar->setGeometry(QRect(0, 0, 966, 21));
+        menubar->setGeometry(QRect(0, 0, 867, 21));
         MainWindow->setMenuBar(menubar);
         statusbar = new QStatusBar(MainWindow);
         statusbar->setObjectName("statusbar");
@@ -469,15 +571,20 @@ public:
 
     void retranslateUi(QMainWindow *MainWindow)
     {
-        MainWindow->setWindowTitle(QCoreApplication::translate("MainWindow", "MainWindow", nullptr));
+        MainWindow->setWindowTitle(QCoreApplication::translate("MainWindow", "baby Filters", nullptr));
         label_4->setText(QCoreApplication::translate("MainWindow", "From", nullptr));
         FromImageSize->setText(QString());
         label_5->setText(QCoreApplication::translate("MainWindow", "To", nullptr));
         ToImageSize->setText(QString());
-        BWBtn->setText(QCoreApplication::translate("MainWindow", "Black and white filter", nullptr));
-        CropBtn->setText(QCoreApplication::translate("MainWindow", "Crop", nullptr));
+        FlipBtn_5->setText(QCoreApplication::translate("MainWindow", "Flip", nullptr));
         ResizeBtn->setText(QCoreApplication::translate("MainWindow", "Resize", nullptr));
+        FlipBtn_6->setText(QCoreApplication::translate("MainWindow", "Flip", nullptr));
+        OilPaint->setText(QCoreApplication::translate("MainWindow", "Oil Paint", nullptr));
+        FlipBtn_4->setText(QCoreApplication::translate("MainWindow", "Flip", nullptr));
+        CropBtn->setText(QCoreApplication::translate("MainWindow", "Crop", nullptr));
+        BWBtn->setText(QCoreApplication::translate("MainWindow", "Black and white filter", nullptr));
         FlipBtn->setText(QCoreApplication::translate("MainWindow", "Flip", nullptr));
+        Infrared->setText(QCoreApplication::translate("MainWindow", "Infrared", nullptr));
         options_label->setText(QCoreApplication::translate("MainWindow", "Options", nullptr));
         radioButton->setText(QCoreApplication::translate("MainWindow", "horizontally", nullptr));
         radioButton_2->setText(QCoreApplication::translate("MainWindow", "verticlay", nullptr));

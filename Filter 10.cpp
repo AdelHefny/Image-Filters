@@ -4,52 +4,66 @@
 
 using namespace std;
 
-Image EdgeDetection(int width, int height, Image& image, Image& final_image)
+// Function to convert image to black and white
+void BlackAndWhite(Image& image)
 {
-    int SobelX[3][3] = {{-1, 0, 1}, {-2, 0, 2}, {-1, 0, 1}};
-    int SobelY[3][3] = {{-1, -2, -1}, {0, 0, 0}, {1, 2, 1}};
-
-    for (int i = 0; i < width; i++) {
-        if(i == width-2)break;
-        for (int j = 0; j < height; j++){
-               int SumX = 0, SumY = 0;
-                if(j == height-2)break;
-
-                for(int k = -1; k <= 1; k++){
-                    for(int l = -1; l <= 1; l++){
-                            for(int o = 0; o < 3; o++){
-                                SumX += image.getPixel(i+k+1, j+l+1,o) * SobelX[k+1][l+1];
-                                SumY += image.getPixel(i+k+1, j+l+1,o) * SobelY[k+1][l+1];
-                            }
-                    }
-                }
-             int GradientMagnitude = sqrt((SumX*SumX) + (SumY*SumY));
-             final_image.getPixel(i,j,0) = GradientMagnitude > 255? 255 : GradientMagnitude;
-             final_image.getPixel(i,j,1) = GradientMagnitude > 255? 255 : GradientMagnitude;
-             final_image.getPixel(i,j,2) = GradientMagnitude > 255? 255 : GradientMagnitude;
+    for(int i = 0; i < image.width; i++){
+        for(int j = 0; j < image.height; j++){
+            // Calculate average intensity value across RGB channels
+            int avg = 0;
+            for(int k = 0; k < 3; k++){
+                avg += image(i, j, k);
+            }
+            avg /= 3;
+            // Threshold to binary (black and white)
+            avg = (avg > 127 ? 255 : 0);
+            // Set RGB values to the same value to convert to grayscale
+            image(i, j, 0) = avg;
+            image(i, j, 1) = avg;
+            image(i, j, 2) = avg;
         }
-
     }
-    return final_image;
 }
 
+// Function for edge detection
+void EdgeDetection(int width, int height, Image& image)
+{
+    // Convert image to black and white
+    BlackAndWhite(image);
 
+    // Perform edge detection
+    for(int i = 0; i < width - 1; i++){
+        for(int j = 0; j < height - 1; j++){
+            for(int k = 0; k < 3; k++){
+                // Compute differences in vertical and horizontal directions
+                int diffV = abs(image(i, j, k) - image(i + 1, j, k)); // Vertical difference
+                int diffH = abs(image(i, j, k) - image(i, j + 1, k)); // Horizontal difference
+                // Compute gradient magnitude using Euclidean distance
+                int res = sqrt(diffV * diffV + diffH * diffH);
+                // Apply thresholding
+                int constant = 100; // Threshold constant (adjust as needed)
+                image(i, j, k) = res > constant ? 0 : 255; // Set pixel to black or white based on threshold
+            }
+        }
+    }
+}
 
 int main() {
     string filename, new_filename;
     cout << "Please enter the first image name: ";
     cin >> filename;
 
+    // Load image
     Image image(filename);
-    Image final_image(image.width, image.height);
 
-    EdgeDetection(image.width, image.height, image, final_image);
+    // Perform edge detection
+    EdgeDetection(image.width, image.height, image);
 
+    // Save and display resulting image
     cout << endl << "Please enter image name to store new image\n";
     cout << "and specify extension .jpg .bmp .png .tga: ";
     cin >> new_filename;
-
-    final_image.saveImage(new_filename);
+    image.saveImage(new_filename);
     system(new_filename.c_str());
 
     return 0;

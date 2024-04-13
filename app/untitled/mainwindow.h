@@ -54,6 +54,10 @@ private slots:
 
     void on_applyBtn_clicked();
 
+    void on_Infrared_clicked();
+
+    void on_OilPaint_clicked();
+
 private:
     QGraphicsDropShadowEffect *Drop_Shadow_Effect;
     Ui::MainWindow *ui;
