@@ -22,6 +22,7 @@
 #include <QtWidgets/QPushButton>
 #include <QtWidgets/QRadioButton>
 #include <QtWidgets/QScrollArea>
+#include <QtWidgets/QSlider>
 #include <QtWidgets/QStatusBar>
 #include <QtWidgets/QVBoxLayout>
 #include <QtWidgets/QWidget>
@@ -32,7 +33,7 @@ class Ui_MainWindow
 {
 public:
     QWidget *centralwidget;
-    QVBoxLayout *verticalLayout_9;
+    QVBoxLayout *verticalLayout_5;
     QHBoxLayout *horizontalLayout_5;
     QHBoxLayout *horizontalLayout_2;
     QVBoxLayout *verticalLayout_2;
@@ -46,29 +47,40 @@ public:
     QScrollArea *scrollArea;
     QWidget *scrollAreaWidgetContents;
     QGridLayout *gridLayout;
-    QPushButton *FlipBtn_5;
-    QPushButton *ResizeBtn;
-    QPushButton *FlipBtn_6;
-    QPushButton *OilPaint;
-    QPushButton *FlipBtn_4;
-    QPushButton *CropBtn;
     QPushButton *BWBtn;
+    QPushButton *OilPaint;
+    QPushButton *ResizeBtn;
     QPushButton *FlipBtn;
     QPushButton *Infrared;
+    QPushButton *Sepia;
+    QPushButton *CropBtn;
+    QPushButton *Purple;
+    QPushButton *mergeBtn;
+    QPushButton *sunLightBtn;
+    QPushButton *GrayscaleBtn;
+    QPushButton *brightnessBtn;
+    QPushButton *EdgeDetection;
+    QPushButton *nightMoodBtn;
     QLabel *options_label;
-    QHBoxLayout *horizontalLayout_3;
-    QRadioButton *radioButton;
-    QRadioButton *radioButton_2;
-    QVBoxLayout *verticalLayout_4;
+    QHBoxLayout *horizontalLayout_30;
+    QLabel *label_3;
+    QSlider *Brightness;
     QHBoxLayout *horizontalLayout_4;
     QLineEdit *lineEdit_1;
     QLineEdit *lineEdit_3;
     QHBoxLayout *horizontalLayout_6;
     QLineEdit *lineEdit_2;
     QLineEdit *lineEdit_4;
+    QHBoxLayout *horizontalLayout_3;
+    QRadioButton *radioButton;
+    QRadioButton *radioButton_2;
     QHBoxLayout *horizontalLayout_8;
     QLineEdit *resize_width;
     QLineEdit *resize_height;
+    QHBoxLayout *horizontalLayout_29;
+    QPushButton *loadNewImage;
+    QLabel *label_2;
+    QVBoxLayout *verticalLayout_4;
     QHBoxLayout *horizontalLayout_7;
     QPushButton *applyBtn;
     QVBoxLayout *verticalLayout;
@@ -85,7 +97,7 @@ public:
     {
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName("MainWindow");
-        MainWindow->resize(867, 761);
+        MainWindow->resize(867, 828);
         QSizePolicy sizePolicy(QSizePolicy::Policy::Preferred, QSizePolicy::Policy::Minimum);
         sizePolicy.setHorizontalStretch(0);
         sizePolicy.setVerticalStretch(0);
@@ -128,8 +140,8 @@ public:
         MainWindow->setAnimated(true);
         centralwidget = new QWidget(MainWindow);
         centralwidget->setObjectName("centralwidget");
-        verticalLayout_9 = new QVBoxLayout(centralwidget);
-        verticalLayout_9->setObjectName("verticalLayout_9");
+        verticalLayout_5 = new QVBoxLayout(centralwidget);
+        verticalLayout_5->setObjectName("verticalLayout_5");
         horizontalLayout_5 = new QHBoxLayout();
         horizontalLayout_5->setObjectName("horizontalLayout_5");
         horizontalLayout_2 = new QHBoxLayout();
@@ -232,12 +244,12 @@ public:
         scrollArea->setStyleSheet(QString::fromUtf8("QScrollArea{\n"
 "	background-color: transparent;\n"
 "	border radius: 22px;\n"
-"	border: 10px yellow solid;\n"
+"	border: 1px solid #A7BEAE;\n"
 "}"));
         scrollArea->setWidgetResizable(true);
         scrollAreaWidgetContents = new QWidget();
         scrollAreaWidgetContents->setObjectName("scrollAreaWidgetContents");
-        scrollAreaWidgetContents->setGeometry(QRect(0, -100, 206, 516));
+        scrollAreaWidgetContents->setGeometry(QRect(0, 0, 204, 796));
         scrollAreaWidgetContents->setStyleSheet(QString::fromUtf8("QWidget{\n"
 "background-color: transparent;\n"
 "}\n"
@@ -250,38 +262,18 @@ public:
 "}"));
         gridLayout = new QGridLayout(scrollAreaWidgetContents);
         gridLayout->setObjectName("gridLayout");
-        FlipBtn_5 = new QPushButton(scrollAreaWidgetContents);
-        FlipBtn_5->setObjectName("FlipBtn_5");
-        sizePolicy2.setHeightForWidth(FlipBtn_5->sizePolicy().hasHeightForWidth());
-        FlipBtn_5->setSizePolicy(sizePolicy2);
-        FlipBtn_5->setMinimumSize(QSize(150, 50));
+        BWBtn = new QPushButton(scrollAreaWidgetContents);
+        BWBtn->setObjectName("BWBtn");
+        sizePolicy2.setHeightForWidth(BWBtn->sizePolicy().hasHeightForWidth());
+        BWBtn->setSizePolicy(sizePolicy2);
+        BWBtn->setMinimumSize(QSize(150, 50));
         QFont font1;
         font1.setWeight(QFont::DemiBold);
-        FlipBtn_5->setFont(font1);
-        FlipBtn_5->setStyleSheet(QString::fromUtf8(""));
+        BWBtn->setFont(font1);
+        BWBtn->setLayoutDirection(Qt::LeftToRight);
+        BWBtn->setStyleSheet(QString::fromUtf8(""));
 
-        gridLayout->addWidget(FlipBtn_5, 12, 0, 1, 1);
-
-        ResizeBtn = new QPushButton(scrollAreaWidgetContents);
-        ResizeBtn->setObjectName("ResizeBtn");
-        sizePolicy2.setHeightForWidth(ResizeBtn->sizePolicy().hasHeightForWidth());
-        ResizeBtn->setSizePolicy(sizePolicy2);
-        ResizeBtn->setMinimumSize(QSize(150, 50));
-        ResizeBtn->setFont(font1);
-        ResizeBtn->setAutoFillBackground(false);
-        ResizeBtn->setStyleSheet(QString::fromUtf8(""));
-
-        gridLayout->addWidget(ResizeBtn, 5, 0, 1, 1);
-
-        FlipBtn_6 = new QPushButton(scrollAreaWidgetContents);
-        FlipBtn_6->setObjectName("FlipBtn_6");
-        sizePolicy2.setHeightForWidth(FlipBtn_6->sizePolicy().hasHeightForWidth());
-        FlipBtn_6->setSizePolicy(sizePolicy2);
-        FlipBtn_6->setMinimumSize(QSize(150, 50));
-        FlipBtn_6->setFont(font1);
-        FlipBtn_6->setStyleSheet(QString::fromUtf8(""));
-
-        gridLayout->addWidget(FlipBtn_6, 13, 0, 1, 1);
+        gridLayout->addWidget(BWBtn, 0, 0, 1, 1);
 
         OilPaint = new QPushButton(scrollAreaWidgetContents);
         OilPaint->setObjectName("OilPaint");
@@ -293,36 +285,16 @@ public:
 
         gridLayout->addWidget(OilPaint, 10, 0, 1, 1);
 
-        FlipBtn_4 = new QPushButton(scrollAreaWidgetContents);
-        FlipBtn_4->setObjectName("FlipBtn_4");
-        sizePolicy2.setHeightForWidth(FlipBtn_4->sizePolicy().hasHeightForWidth());
-        FlipBtn_4->setSizePolicy(sizePolicy2);
-        FlipBtn_4->setMinimumSize(QSize(150, 50));
-        FlipBtn_4->setFont(font1);
-        FlipBtn_4->setStyleSheet(QString::fromUtf8(""));
+        ResizeBtn = new QPushButton(scrollAreaWidgetContents);
+        ResizeBtn->setObjectName("ResizeBtn");
+        sizePolicy2.setHeightForWidth(ResizeBtn->sizePolicy().hasHeightForWidth());
+        ResizeBtn->setSizePolicy(sizePolicy2);
+        ResizeBtn->setMinimumSize(QSize(150, 50));
+        ResizeBtn->setFont(font1);
+        ResizeBtn->setAutoFillBackground(false);
+        ResizeBtn->setStyleSheet(QString::fromUtf8(""));
 
-        gridLayout->addWidget(FlipBtn_4, 11, 0, 1, 1);
-
-        CropBtn = new QPushButton(scrollAreaWidgetContents);
-        CropBtn->setObjectName("CropBtn");
-        sizePolicy2.setHeightForWidth(CropBtn->sizePolicy().hasHeightForWidth());
-        CropBtn->setSizePolicy(sizePolicy2);
-        CropBtn->setMinimumSize(QSize(150, 50));
-        CropBtn->setFont(font1);
-        CropBtn->setStyleSheet(QString::fromUtf8(""));
-
-        gridLayout->addWidget(CropBtn, 3, 0, 1, 1);
-
-        BWBtn = new QPushButton(scrollAreaWidgetContents);
-        BWBtn->setObjectName("BWBtn");
-        sizePolicy2.setHeightForWidth(BWBtn->sizePolicy().hasHeightForWidth());
-        BWBtn->setSizePolicy(sizePolicy2);
-        BWBtn->setMinimumSize(QSize(150, 50));
-        BWBtn->setFont(font1);
-        BWBtn->setLayoutDirection(Qt::LeftToRight);
-        BWBtn->setStyleSheet(QString::fromUtf8(""));
-
-        gridLayout->addWidget(BWBtn, 0, 0, 1, 1);
+        gridLayout->addWidget(ResizeBtn, 5, 0, 1, 1);
 
         FlipBtn = new QPushButton(scrollAreaWidgetContents);
         FlipBtn->setObjectName("FlipBtn");
@@ -344,12 +316,102 @@ public:
 
         gridLayout->addWidget(Infrared, 6, 0, 1, 1);
 
+        Sepia = new QPushButton(scrollAreaWidgetContents);
+        Sepia->setObjectName("Sepia");
+        sizePolicy2.setHeightForWidth(Sepia->sizePolicy().hasHeightForWidth());
+        Sepia->setSizePolicy(sizePolicy2);
+        Sepia->setMinimumSize(QSize(150, 50));
+        Sepia->setFont(font1);
+        Sepia->setStyleSheet(QString::fromUtf8(""));
+
+        gridLayout->addWidget(Sepia, 17, 0, 1, 1);
+
+        CropBtn = new QPushButton(scrollAreaWidgetContents);
+        CropBtn->setObjectName("CropBtn");
+        sizePolicy2.setHeightForWidth(CropBtn->sizePolicy().hasHeightForWidth());
+        CropBtn->setSizePolicy(sizePolicy2);
+        CropBtn->setMinimumSize(QSize(150, 50));
+        CropBtn->setFont(font1);
+        CropBtn->setStyleSheet(QString::fromUtf8(""));
+
+        gridLayout->addWidget(CropBtn, 3, 0, 1, 1);
+
+        Purple = new QPushButton(scrollAreaWidgetContents);
+        Purple->setObjectName("Purple");
+        sizePolicy2.setHeightForWidth(Purple->sizePolicy().hasHeightForWidth());
+        Purple->setSizePolicy(sizePolicy2);
+        Purple->setMinimumSize(QSize(150, 50));
+        Purple->setFont(font1);
+        Purple->setStyleSheet(QString::fromUtf8(""));
+
+        gridLayout->addWidget(Purple, 16, 0, 1, 1);
+
+        mergeBtn = new QPushButton(scrollAreaWidgetContents);
+        mergeBtn->setObjectName("mergeBtn");
+        sizePolicy2.setHeightForWidth(mergeBtn->sizePolicy().hasHeightForWidth());
+        mergeBtn->setSizePolicy(sizePolicy2);
+        mergeBtn->setMinimumSize(QSize(150, 50));
+        mergeBtn->setFont(font1);
+        mergeBtn->setStyleSheet(QString::fromUtf8(""));
+
+        gridLayout->addWidget(mergeBtn, 12, 0, 1, 1);
+
+        sunLightBtn = new QPushButton(scrollAreaWidgetContents);
+        sunLightBtn->setObjectName("sunLightBtn");
+        sizePolicy2.setHeightForWidth(sunLightBtn->sizePolicy().hasHeightForWidth());
+        sunLightBtn->setSizePolicy(sizePolicy2);
+        sunLightBtn->setMinimumSize(QSize(150, 50));
+        sunLightBtn->setFont(font1);
+        sunLightBtn->setStyleSheet(QString::fromUtf8(""));
+
+        gridLayout->addWidget(sunLightBtn, 15, 0, 1, 1);
+
+        GrayscaleBtn = new QPushButton(scrollAreaWidgetContents);
+        GrayscaleBtn->setObjectName("GrayscaleBtn");
+        sizePolicy2.setHeightForWidth(GrayscaleBtn->sizePolicy().hasHeightForWidth());
+        GrayscaleBtn->setSizePolicy(sizePolicy2);
+        GrayscaleBtn->setMinimumSize(QSize(150, 50));
+        GrayscaleBtn->setFont(font1);
+        GrayscaleBtn->setStyleSheet(QString::fromUtf8(""));
+
+        gridLayout->addWidget(GrayscaleBtn, 11, 0, 1, 1);
+
+        brightnessBtn = new QPushButton(scrollAreaWidgetContents);
+        brightnessBtn->setObjectName("brightnessBtn");
+        sizePolicy2.setHeightForWidth(brightnessBtn->sizePolicy().hasHeightForWidth());
+        brightnessBtn->setSizePolicy(sizePolicy2);
+        brightnessBtn->setMinimumSize(QSize(150, 50));
+        brightnessBtn->setFont(font1);
+        brightnessBtn->setStyleSheet(QString::fromUtf8(""));
+
+        gridLayout->addWidget(brightnessBtn, 13, 0, 1, 1);
+
+        EdgeDetection = new QPushButton(scrollAreaWidgetContents);
+        EdgeDetection->setObjectName("EdgeDetection");
+        sizePolicy2.setHeightForWidth(EdgeDetection->sizePolicy().hasHeightForWidth());
+        EdgeDetection->setSizePolicy(sizePolicy2);
+        EdgeDetection->setMinimumSize(QSize(150, 50));
+        EdgeDetection->setFont(font1);
+        EdgeDetection->setStyleSheet(QString::fromUtf8(""));
+
+        gridLayout->addWidget(EdgeDetection, 14, 0, 1, 1);
+
+        nightMoodBtn = new QPushButton(scrollAreaWidgetContents);
+        nightMoodBtn->setObjectName("nightMoodBtn");
+        sizePolicy2.setHeightForWidth(nightMoodBtn->sizePolicy().hasHeightForWidth());
+        nightMoodBtn->setSizePolicy(sizePolicy2);
+        nightMoodBtn->setMinimumSize(QSize(150, 50));
+        nightMoodBtn->setFont(font1);
+        nightMoodBtn->setStyleSheet(QString::fromUtf8(""));
+
+        gridLayout->addWidget(nightMoodBtn, 18, 0, 1, 1);
+
         scrollArea->setWidget(scrollAreaWidgetContents);
 
         horizontalLayout_5->addWidget(scrollArea);
 
 
-        verticalLayout_9->addLayout(horizontalLayout_5);
+        verticalLayout_5->addLayout(horizontalLayout_5);
 
         options_label = new QLabel(centralwidget);
         options_label->setObjectName("options_label");
@@ -360,34 +422,32 @@ public:
 "	opacity:0.4;\n"
 "}"));
 
-        verticalLayout_9->addWidget(options_label);
+        verticalLayout_5->addWidget(options_label);
 
-        horizontalLayout_3 = new QHBoxLayout();
-        horizontalLayout_3->setObjectName("horizontalLayout_3");
-        radioButton = new QRadioButton(centralwidget);
-        radioButton->setObjectName("radioButton");
-        radioButton->setEnabled(true);
-        QSizePolicy sizePolicy4(QSizePolicy::Policy::Fixed, QSizePolicy::Policy::Fixed);
+        horizontalLayout_30 = new QHBoxLayout();
+        horizontalLayout_30->setSpacing(0);
+        horizontalLayout_30->setObjectName("horizontalLayout_30");
+        label_3 = new QLabel(centralwidget);
+        label_3->setObjectName("label_3");
+        QSizePolicy sizePolicy4(QSizePolicy::Policy::Fixed, QSizePolicy::Policy::Preferred);
         sizePolicy4.setHorizontalStretch(0);
         sizePolicy4.setVerticalStretch(0);
-        sizePolicy4.setHeightForWidth(radioButton->sizePolicy().hasHeightForWidth());
-        radioButton->setSizePolicy(sizePolicy4);
-        radioButton->setStyleSheet(QString::fromUtf8(""));
+        sizePolicy4.setHeightForWidth(label_3->sizePolicy().hasHeightForWidth());
+        label_3->setSizePolicy(sizePolicy4);
+        label_3->setAlignment(Qt::AlignCenter);
 
-        horizontalLayout_3->addWidget(radioButton);
+        horizontalLayout_30->addWidget(label_3);
 
-        radioButton_2 = new QRadioButton(centralwidget);
-        radioButton_2->setObjectName("radioButton_2");
-        sizePolicy4.setHeightForWidth(radioButton_2->sizePolicy().hasHeightForWidth());
-        radioButton_2->setSizePolicy(sizePolicy4);
+        Brightness = new QSlider(centralwidget);
+        Brightness->setObjectName("Brightness");
+        Brightness->setMaximumSize(QSize(400, 16777215));
+        Brightness->setOrientation(Qt::Horizontal);
 
-        horizontalLayout_3->addWidget(radioButton_2);
+        horizontalLayout_30->addWidget(Brightness);
 
 
-        verticalLayout_9->addLayout(horizontalLayout_3);
+        verticalLayout_5->addLayout(horizontalLayout_30);
 
-        verticalLayout_4 = new QVBoxLayout();
-        verticalLayout_4->setObjectName("verticalLayout_4");
         horizontalLayout_4 = new QHBoxLayout();
         horizontalLayout_4->setObjectName("horizontalLayout_4");
         horizontalLayout_4->setSizeConstraint(QLayout::SetDefaultConstraint);
@@ -409,7 +469,7 @@ public:
         horizontalLayout_4->addWidget(lineEdit_3);
 
 
-        verticalLayout_4->addLayout(horizontalLayout_4);
+        verticalLayout_5->addLayout(horizontalLayout_4);
 
         horizontalLayout_6 = new QHBoxLayout();
         horizontalLayout_6->setObjectName("horizontalLayout_6");
@@ -428,10 +488,31 @@ public:
         horizontalLayout_6->addWidget(lineEdit_4);
 
 
-        verticalLayout_4->addLayout(horizontalLayout_6);
+        verticalLayout_5->addLayout(horizontalLayout_6);
+
+        horizontalLayout_3 = new QHBoxLayout();
+        horizontalLayout_3->setObjectName("horizontalLayout_3");
+        radioButton = new QRadioButton(centralwidget);
+        radioButton->setObjectName("radioButton");
+        radioButton->setEnabled(true);
+        QSizePolicy sizePolicy6(QSizePolicy::Policy::Fixed, QSizePolicy::Policy::Fixed);
+        sizePolicy6.setHorizontalStretch(0);
+        sizePolicy6.setVerticalStretch(0);
+        sizePolicy6.setHeightForWidth(radioButton->sizePolicy().hasHeightForWidth());
+        radioButton->setSizePolicy(sizePolicy6);
+        radioButton->setStyleSheet(QString::fromUtf8(""));
+
+        horizontalLayout_3->addWidget(radioButton);
+
+        radioButton_2 = new QRadioButton(centralwidget);
+        radioButton_2->setObjectName("radioButton_2");
+        sizePolicy6.setHeightForWidth(radioButton_2->sizePolicy().hasHeightForWidth());
+        radioButton_2->setSizePolicy(sizePolicy6);
+
+        horizontalLayout_3->addWidget(radioButton_2);
 
 
-        verticalLayout_9->addLayout(verticalLayout_4);
+        verticalLayout_5->addLayout(horizontalLayout_3);
 
         horizontalLayout_8 = new QHBoxLayout();
         horizontalLayout_8->setObjectName("horizontalLayout_8");
@@ -450,7 +531,43 @@ public:
         horizontalLayout_8->addWidget(resize_height);
 
 
-        verticalLayout_9->addLayout(horizontalLayout_8);
+        verticalLayout_5->addLayout(horizontalLayout_8);
+
+        horizontalLayout_29 = new QHBoxLayout();
+        horizontalLayout_29->setObjectName("horizontalLayout_29");
+        loadNewImage = new QPushButton(centralwidget);
+        loadNewImage->setObjectName("loadNewImage");
+        sizePolicy2.setHeightForWidth(loadNewImage->sizePolicy().hasHeightForWidth());
+        loadNewImage->setSizePolicy(sizePolicy2);
+        loadNewImage->setMinimumSize(QSize(150, 35));
+        loadNewImage->setStyleSheet(QString::fromUtf8("QPushButton{\n"
+"	border-radius: 15%;\n"
+"}"));
+        loadNewImage->setFlat(false);
+
+        horizontalLayout_29->addWidget(loadNewImage);
+
+        label_2 = new QLabel(centralwidget);
+        label_2->setObjectName("label_2");
+        QSizePolicy sizePolicy7(QSizePolicy::Policy::Minimum, QSizePolicy::Policy::Preferred);
+        sizePolicy7.setHorizontalStretch(0);
+        sizePolicy7.setVerticalStretch(0);
+        sizePolicy7.setHeightForWidth(label_2->sizePolicy().hasHeightForWidth());
+        label_2->setSizePolicy(sizePolicy7);
+        QFont font3;
+        font3.setPointSize(18);
+        label_2->setFont(font3);
+        label_2->setStyleSheet(QString::fromUtf8(""));
+
+        horizontalLayout_29->addWidget(label_2);
+
+
+        verticalLayout_5->addLayout(horizontalLayout_29);
+
+        verticalLayout_4 = new QVBoxLayout();
+        verticalLayout_4->setObjectName("verticalLayout_4");
+
+        verticalLayout_5->addLayout(verticalLayout_4);
 
         horizontalLayout_7 = new QHBoxLayout();
         horizontalLayout_7->setObjectName("horizontalLayout_7");
@@ -469,7 +586,7 @@ public:
         horizontalLayout_7->addWidget(applyBtn);
 
 
-        verticalLayout_9->addLayout(horizontalLayout_7);
+        verticalLayout_5->addLayout(horizontalLayout_7);
 
         verticalLayout = new QVBoxLayout();
         verticalLayout->setObjectName("verticalLayout");
@@ -489,13 +606,8 @@ public:
 
         label = new QLabel(centralwidget);
         label->setObjectName("label");
-        QSizePolicy sizePolicy6(QSizePolicy::Policy::Minimum, QSizePolicy::Policy::Preferred);
-        sizePolicy6.setHorizontalStretch(0);
-        sizePolicy6.setVerticalStretch(0);
-        sizePolicy6.setHeightForWidth(label->sizePolicy().hasHeightForWidth());
-        label->setSizePolicy(sizePolicy6);
-        QFont font3;
-        font3.setPointSize(18);
+        sizePolicy7.setHeightForWidth(label->sizePolicy().hasHeightForWidth());
+        label->setSizePolicy(sizePolicy7);
         label->setFont(font3);
         label->setStyleSheet(QString::fromUtf8(""));
 
@@ -529,15 +641,12 @@ public:
         verticalLayout->addWidget(saveBtn);
 
 
-        verticalLayout_9->addLayout(verticalLayout);
+        verticalLayout_5->addLayout(verticalLayout);
 
         errorLabel = new QLabel(centralwidget);
         errorLabel->setObjectName("errorLabel");
-        QSizePolicy sizePolicy7(QSizePolicy::Policy::Fixed, QSizePolicy::Policy::Preferred);
-        sizePolicy7.setHorizontalStretch(0);
-        sizePolicy7.setVerticalStretch(0);
-        sizePolicy7.setHeightForWidth(errorLabel->sizePolicy().hasHeightForWidth());
-        errorLabel->setSizePolicy(sizePolicy7);
+        sizePolicy4.setHeightForWidth(errorLabel->sizePolicy().hasHeightForWidth());
+        errorLabel->setSizePolicy(sizePolicy4);
         QFont font4;
         font4.setPointSize(12);
         errorLabel->setFont(font4);
@@ -547,7 +656,7 @@ public:
 "}"));
         errorLabel->setAlignment(Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter);
 
-        verticalLayout_9->addWidget(errorLabel);
+        verticalLayout_5->addWidget(errorLabel);
 
         MainWindow->setCentralWidget(centralwidget);
         menubar = new QMenuBar(MainWindow);
@@ -560,6 +669,7 @@ public:
 
         retranslateUi(MainWindow);
 
+        loadNewImage->setDefault(false);
         applyBtn->setDefault(false);
         pushButton->setDefault(false);
         clearBtn->setDefault(false);
@@ -576,26 +686,34 @@ public:
         FromImageSize->setText(QString());
         label_5->setText(QCoreApplication::translate("MainWindow", "To", nullptr));
         ToImageSize->setText(QString());
-        FlipBtn_5->setText(QCoreApplication::translate("MainWindow", "Flip", nullptr));
-        ResizeBtn->setText(QCoreApplication::translate("MainWindow", "Resize", nullptr));
-        FlipBtn_6->setText(QCoreApplication::translate("MainWindow", "Flip", nullptr));
-        OilPaint->setText(QCoreApplication::translate("MainWindow", "Oil Paint", nullptr));
-        FlipBtn_4->setText(QCoreApplication::translate("MainWindow", "Flip", nullptr));
-        CropBtn->setText(QCoreApplication::translate("MainWindow", "Crop", nullptr));
         BWBtn->setText(QCoreApplication::translate("MainWindow", "Black and white filter", nullptr));
+        OilPaint->setText(QCoreApplication::translate("MainWindow", "Oil Paint", nullptr));
+        ResizeBtn->setText(QCoreApplication::translate("MainWindow", "Resize", nullptr));
         FlipBtn->setText(QCoreApplication::translate("MainWindow", "Flip", nullptr));
         Infrared->setText(QCoreApplication::translate("MainWindow", "Infrared", nullptr));
+        Sepia->setText(QCoreApplication::translate("MainWindow", "Sepia", nullptr));
+        CropBtn->setText(QCoreApplication::translate("MainWindow", "Crop", nullptr));
+        Purple->setText(QCoreApplication::translate("MainWindow", "Purple", nullptr));
+        mergeBtn->setText(QCoreApplication::translate("MainWindow", "Merge", nullptr));
+        sunLightBtn->setText(QCoreApplication::translate("MainWindow", "Sun Light", nullptr));
+        GrayscaleBtn->setText(QCoreApplication::translate("MainWindow", "Grayscale", nullptr));
+        brightnessBtn->setText(QCoreApplication::translate("MainWindow", "Brightness", nullptr));
+        EdgeDetection->setText(QCoreApplication::translate("MainWindow", "Edge detection", nullptr));
+        nightMoodBtn->setText(QCoreApplication::translate("MainWindow", "Night Mood", nullptr));
         options_label->setText(QCoreApplication::translate("MainWindow", "Options", nullptr));
-        radioButton->setText(QCoreApplication::translate("MainWindow", "horizontally", nullptr));
-        radioButton_2->setText(QCoreApplication::translate("MainWindow", "verticlay", nullptr));
+        label_3->setText(QCoreApplication::translate("MainWindow", "Brightness level", nullptr));
         lineEdit_1->setPlaceholderText(QCoreApplication::translate("MainWindow", "From X", nullptr));
         lineEdit_3->setText(QString());
         lineEdit_3->setPlaceholderText(QCoreApplication::translate("MainWindow", "To X", nullptr));
         lineEdit_2->setText(QString());
         lineEdit_2->setPlaceholderText(QCoreApplication::translate("MainWindow", "From Y", nullptr));
         lineEdit_4->setPlaceholderText(QCoreApplication::translate("MainWindow", "To Y", nullptr));
+        radioButton->setText(QCoreApplication::translate("MainWindow", "horizontally", nullptr));
+        radioButton_2->setText(QCoreApplication::translate("MainWindow", "verticlay", nullptr));
         resize_width->setPlaceholderText(QCoreApplication::translate("MainWindow", "Width", nullptr));
         resize_height->setPlaceholderText(QCoreApplication::translate("MainWindow", "Height", nullptr));
+        loadNewImage->setText(QCoreApplication::translate("MainWindow", "Load second image", nullptr));
+        label_2->setText(QCoreApplication::translate("MainWindow", "Path", nullptr));
         applyBtn->setText(QCoreApplication::translate("MainWindow", "Apply", nullptr));
         pushButton->setText(QCoreApplication::translate("MainWindow", "Load image", nullptr));
         label->setText(QCoreApplication::translate("MainWindow", "Path", nullptr));

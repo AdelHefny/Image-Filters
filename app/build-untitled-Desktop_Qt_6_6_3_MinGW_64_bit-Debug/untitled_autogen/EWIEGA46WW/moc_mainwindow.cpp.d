@@ -158,6 +158,7 @@ C:/Me/college/structured\ programming/assignment3/app/build-untitled-Desktop_Qt_
   C:/Qt/6.6.3/mingw_64/include/QtWidgets/QMainWindow \
   C:/Qt/6.6.3/mingw_64/include/QtWidgets/qdialog.h \
   C:/Qt/6.6.3/mingw_64/include/QtWidgets/qfiledialog.h \
+  C:/Qt/6.6.3/mingw_64/include/QtWidgets/qframe.h \
   C:/Qt/6.6.3/mingw_64/include/QtWidgets/qgraphicseffect.h \
   C:/Qt/6.6.3/mingw_64/include/QtWidgets/qmainwindow.h \
   C:/Qt/6.6.3/mingw_64/include/QtWidgets/qsizepolicy.h \
