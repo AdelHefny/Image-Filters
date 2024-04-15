@@ -71,6 +71,9 @@ public:
     QHBoxLayout *horizontalLayout_6;
     QLineEdit *lineEdit_2;
     QLineEdit *lineEdit_4;
+    QHBoxLayout *horizontalLayout_9;
+    QRadioButton *CommonArea;
+    QRadioButton *ResizeMerge;
     QHBoxLayout *horizontalLayout_3;
     QRadioButton *radioButton;
     QRadioButton *radioButton_2;
@@ -97,7 +100,7 @@ public:
     {
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName("MainWindow");
-        MainWindow->resize(867, 828);
+        MainWindow->resize(867, 834);
         QSizePolicy sizePolicy(QSizePolicy::Policy::Preferred, QSizePolicy::Policy::Minimum);
         sizePolicy.setHorizontalStretch(0);
         sizePolicy.setVerticalStretch(0);
@@ -490,6 +493,25 @@ public:
 
         verticalLayout_5->addLayout(horizontalLayout_6);
 
+        horizontalLayout_9 = new QHBoxLayout();
+        horizontalLayout_9->setObjectName("horizontalLayout_9");
+        CommonArea = new QRadioButton(centralwidget);
+        CommonArea->setObjectName("CommonArea");
+        sizePolicy5.setHeightForWidth(CommonArea->sizePolicy().hasHeightForWidth());
+        CommonArea->setSizePolicy(sizePolicy5);
+
+        horizontalLayout_9->addWidget(CommonArea);
+
+        ResizeMerge = new QRadioButton(centralwidget);
+        ResizeMerge->setObjectName("ResizeMerge");
+        sizePolicy5.setHeightForWidth(ResizeMerge->sizePolicy().hasHeightForWidth());
+        ResizeMerge->setSizePolicy(sizePolicy5);
+
+        horizontalLayout_9->addWidget(ResizeMerge);
+
+
+        verticalLayout_5->addLayout(horizontalLayout_9);
+
         horizontalLayout_3 = new QHBoxLayout();
         horizontalLayout_3->setObjectName("horizontalLayout_3");
         radioButton = new QRadioButton(centralwidget);
@@ -575,10 +597,10 @@ public:
         applyBtn->setObjectName("applyBtn");
         sizePolicy2.setHeightForWidth(applyBtn->sizePolicy().hasHeightForWidth());
         applyBtn->setSizePolicy(sizePolicy2);
-        applyBtn->setMinimumSize(QSize(107, 30));
+        applyBtn->setMinimumSize(QSize(150, 50));
         applyBtn->setMaximumSize(QSize(16777215, 16777215));
         applyBtn->setStyleSheet(QString::fromUtf8("QPushButton{\n"
-"	border-radius: 15%;\n"
+"	border-radius: 24px;\n"
 "}"));
         applyBtn->setAutoDefault(false);
         applyBtn->setFlat(false);
@@ -708,6 +730,8 @@ public:
         lineEdit_2->setText(QString());
         lineEdit_2->setPlaceholderText(QCoreApplication::translate("MainWindow", "From Y", nullptr));
         lineEdit_4->setPlaceholderText(QCoreApplication::translate("MainWindow", "To Y", nullptr));
+        CommonArea->setText(QCoreApplication::translate("MainWindow", "Common Area", nullptr));
+        ResizeMerge->setText(QCoreApplication::translate("MainWindow", "Resize Both", nullptr));
         radioButton->setText(QCoreApplication::translate("MainWindow", "horizontally", nullptr));
         radioButton_2->setText(QCoreApplication::translate("MainWindow", "verticlay", nullptr));
         resize_width->setPlaceholderText(QCoreApplication::translate("MainWindow", "Width", nullptr));

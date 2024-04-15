@@ -19,8 +19,11 @@
 //  Date : 27/3/2024
 
 #include <iostream>
+#include <random>
 #include "Image_Class.h"
 #include <regex>
+#include <cmath>
+#include <bits/stdc++.h>
 using namespace std;
 
 void load_image(Image &image,string &filename){
@@ -206,7 +209,7 @@ Image brightness(Image image){
     int choice;
     cout << "DO YOU WANT TO INCREASE THE BRIGHTNESS OR DECREASE IT BY 50%?\n";
     cout << "1) Increase the brightness          2) Decrease the brightness: ";
-    cin >> choice;
+    choice = taking_choice(2);
 
     Image final_image(image.width, image.height);
 
@@ -283,7 +286,7 @@ Image blackAndWhite(Image image){
 
 Image resize(Image image){
 
-    cout << "New with and new height" << endl;
+    cout << "New width and new height" << endl;
     int newWidth,newHeight;
     cin >> newWidth >> newHeight;
 
@@ -363,23 +366,32 @@ Image crop(Image image){
     int fromX,fromY;
     cin >> fromX >> fromY;
 
-    cout << "Enter the to x and y: " << endl;
-    int toX,toY;
-    cin >> toX >> toY;
-
-    Image newImage(toX - fromX + 1,toY - fromY + 1);
+    cout << "Enter new width: " << endl;
+    int width,height;
+    cin >> width;
+    while(width <= 0 || width > image.width - fromX){
+        cout << "Enter new width: " << endl;
+        cin >> width;
+    }
+    cout << "Enter new height: " << endl;
+    cin >> height;
+    while(height <= 0 || height > image.height - fromY){
+        cout << "Enter new height: " << endl;
+        cin >> height;
+    }
+    Image newImage(width,height);
     int counterX = 0,counterY = 0;
-    for(int i = fromX - 1;i < toX;i++){
-        for(int j = fromY - 1;j < toY;j++){
-            for(int k = 0;k < 3;k++){
+    for(int i = fromX; i < fromX + width && i < image.width; i++){
+        for(int j = fromY; j < fromY + height && j < image.height; j++){
+            for(int k = 0; k < 3; k++){
                 newImage(counterX,counterY,k) = image(i,j,k);
             }
             counterY++;
         }
         counterX++;
-        counterY = 0;
+        counterY = 0; // Reset counterY for the next row
     }
-    return image;
+    return newImage;
 }
 
 Image invert(Image image){
@@ -429,6 +441,25 @@ Image applyOilPaintFilter(Image& image) {
     return new_image;
 }
 
+Image Purple(Image& image){
+    // Create a new image for the purple effect
+    Image purple(image.width, image.height);
+
+    // Create a final image to store the modified result
+    Image final_image(image.width, image.height);
+
+    // Apply the purple effect to the image
+    for (int i = 0; i < image.width; i++) {
+        for (int j = 0; j < image.height; j++) {
+            // Adjust RGB values to create a purple effect
+            purple(i, j, 0) = min(image(i, j, 0) + 20, 255);  // Increase red
+            purple(i, j, 1) = max(image(i, j, 1) - 30, 0);   // Decrease green
+            purple(i, j, 2) = min(image(i, j, 2) + 20, 255);  // Increase blue
+        }
+    }
+    return final_image;
+}
+
 Image infrared(Image& image) {
     for(int i = 0;i < image.width;i++){
         for(int j = 0;j < image.height;j++){
@@ -437,6 +468,382 @@ Image infrared(Image& image) {
             image(i,j,1) = 255 - intenisty;
             image(i,j,2) = 255 - intenisty;
         }
+    }
+    return image;
+}
+// Function to apply Sepia Tone filter to the image
+Image SepiaTone( Image& ogImage) {
+    int width = ogImage.width,height = ogImage.height;
+    Image image = ogImage;
+    int newR, newG, newB;
+
+    // Iterate over each pixel in the image
+    for (int i = 0; i < width; i++) {
+        for (int j = 0; j < height; j++) {
+            // For each pixel, calculate new RGB values based on the sepia tone effect
+            for (int k = 0; k < 3; k++) {
+                int PixelValue = image(i, j, k);
+                if (k == 0) {
+                    // Calculate new Red value
+                    newR = min(255, (int)(0.393 * PixelValue + 0.769 * image(i, j, 1) + 0.189 * image(i, j, 2)));
+                }
+                else if (k == 1) {
+                    // Calculate new Green value
+                    newG = min(255, (int)(0.349 * image(i, j, 0) + 0.686 * PixelValue + 0.168 * image(i, j, 2)));
+                }
+                else {
+                    // Calculate new Blue value
+                    newB = min(255, (int)(0.272 * image(i, j, 0) + 0.534 * image(i, j, 1) + 0.131 * PixelValue));
+                }
+            }
+
+            // Update the pixel with the new RGB values
+            image(i, j, 0) = newR;
+            image(i, j, 1) = newG;
+            image(i, j, 2) = newB;
+        }
+    }
+    return image;
+}\
+// Function to apply the Night Mood filter to the image
+Image NightMood(Image& ogImage) {
+    Image image = ogImage;
+    int width = image.width,height = image.height;
+    // Iterate over each pixel in the image
+    for (int i = 0; i < width; i++) {
+        for (int j = 0; j < height; j++){
+            // Iterate over each color channel (R, G, B) of the pixel
+            for (int k = 0; k < 3; k++){
+
+                // Retrieve the pixel value for the current channel
+                int PixelValue = image(i,j,k);
+
+                // Apply different multipliers to each channel to achieve the night mood effect
+                if(k == 0) { // Red channel
+                    PixelValue *= 0.5; // Reduce intensity by 50%
+                    PixelValue = max(0, min(PixelValue, 255)); // Ensure the value stays within valid range
+                    image(i,j,0) = PixelValue; // Update the pixel value for the Red channel
+                }
+                else if (k == 1) { // Green channel
+                    PixelValue *= 0.5; // Reduce intensity by 50%
+                    PixelValue = max(0, min(PixelValue, 255)); // Ensure the value stays within valid range
+                    image(i,j,1) = PixelValue; // Update the pixel value for the Green channel
+                }
+                else {
+                    // Blue channel
+                    PixelValue *= 0.7; // Reduce intensity by 30%
+                    PixelValue = max(0, min(PixelValue, 255)); // Ensure the value stays within valid range
+                    image(i,j,2) = PixelValue; // Update the pixel value for the Blue channel
+                }
+            }
+        }
+    }
+    return image;
+}
+// Function to rotate the image clockwise by 90 degrees
+Image rotateImage90(Image& image) {
+    int r = image.width;
+    int c = image.height;
+    Image rotated(c, r); // Create a new image with dimensions swapped
+
+    for (int i = 0; i < r; ++i) {
+        for (int j = 0; j < c; ++j) {
+            for (int k = 0; k < 3; ++k) {
+                rotated(c - 1 - j, i, k) = image(i, j, k); // Correct indices for clockwise rotation
+            }
+        }
+    }
+
+    return rotated;
+}
+
+// Function to rotate the image clockwise by 180 degrees
+Image rotateImage180(Image& image) {
+    int r = image.width;
+    int c = image.height;
+    Image rotated(r, c); // Create a new image with the same dimensions
+
+    for (int i = 0; i < r; ++i) {
+        for (int j = 0; j < c; ++j) {
+            for (int k = 0; k < 3; ++k) {
+                rotated(i, j, k) = image(r - 1 - i, c - 1 - j, k); // Correct indices for 180-degree rotation
+            }
+        }
+    }
+
+    return rotated;
+}
+
+// Function to rotate the image clockwise by 270 degrees
+Image rotateImage270(Image& image) {
+    int r = image.width;
+    int c = image.height;
+    Image rotated(c, r);
+
+    for (int i = 0; i < r; ++i) {
+        for (int j = 0; j < c; ++j) {
+            for (int k = 0; k < 3; ++k) {
+                rotated(j, r - 1 - i, k) = image(i, j, k); // Correct indices for clockwise rotation
+            }
+        }
+    }
+
+    return rotated;
+}
+
+Image Rotate(Image image){
+
+    int choice;
+    do {
+        cout << "Choose rotation angle:" << endl;
+        cout << "1. 90 degrees" << endl;
+        cout << "2. 180 degrees" << endl;
+        cout << "3. 270 degrees" << endl;
+        cout << "Enter your choice(1-3): ";
+        cin >> choice;
+
+        switch (choice) {
+            case 1:
+                image = rotateImage90(image);
+                break;
+            case 2:
+                image = rotateImage180(image);
+                break;
+            case 3:
+                image = rotateImage270(image);
+                break;
+            default:
+                cout << "Invalid choice. Please enter a valid option." << endl;
+                break;
+        }
+    } while (choice != 4 && choice != 1&& choice != 2 && choice != 3);
+    return image;
+}
+void BlackAndWhite(Image& image)
+{
+    for(int i = 0; i < image.width; i++){
+        for(int j = 0; j < image.height; j++){
+            // Calculate average intensity value across RGB channels
+            int avg = 0;
+            for(int k = 0; k < 3; k++){
+                avg += image(i, j, k);
+            }
+            avg /= 3;
+            // Threshold to binary (black and white)
+            avg = (avg > 127 ? 255 : 0);
+            // Set RGB values to the same value to convert to grayscale
+            image(i, j, 0) = avg;
+            image(i, j, 1) = avg;
+            image(i, j, 2) = avg;
+        }
+    }
+}
+
+// Function for edge detection
+Image EdgeDetection(Image image)
+{
+    // Convert image to black and white
+    BlackAndWhite(image);
+    int width = image.width,height = image.height;
+    // Perform edge detection
+    for(int i = 0; i < width - 1; i++){
+        for(int j = 0; j < height - 1; j++){
+            for(int k = 0; k < 3; k++){
+                // Compute differences in vertical and horizontal directions
+                int diffV = abs(image(i, j, k) - image(i + 1, j, k)); // Vertical difference
+                int diffH = abs(image(i, j, k) - image(i, j + 1, k)); // Horizontal difference
+                // Compute gradient magnitude using Euclidean distance
+                int res = sqrt(diffV * diffV + diffH * diffH);
+                // Apply thresholding
+                int constant = 100; // Threshold constant (adjust as needed)
+                image(i, j, k) = res > constant ? 0 : 255; // Set pixel to black or white based on threshold
+            }
+        }
+    }
+    return image;
+}
+
+Image sunLight(Image image){
+
+    Image sunlightImage(image.width, image.height);
+
+    // Apply sunlight effect to the image
+    for (int i = 0; i < image.width; i++) {
+        for (int j = 0; j < image.height; j++) {
+            // Adjust pixel values for sunlightImage effect
+            sunlightImage(i,j,0) = min(image(i,j,0) + 30, 255);
+            sunlightImage(i,j,1) = min(image(i,j,1) + 30, 255);
+            sunlightImage(i,j,2) = max(0, image(i,j,2) - 50);
+        }
+    }
+    return sunlightImage;
+}
+
+// Function to apply vertical skew effects to an image
+Image applyVerticalSkew(Image& image) {
+    double angleOfSkew;
+    cout << "Enter the angle of skewness along the vertical axis (in degrees): ";
+    cin >> angleOfSkew;
+    // Convert the angle from degrees to radians
+    double angleRad = angleOfSkew * M_PI / 180.0;
+
+    // Calculate the new width and height after skewing
+    int newWidth = round(image.width + tan(angleRad) * image.height);
+    int newHeight = image.height;
+
+    // Create a new image with the skewed dimensions
+    Image skewedImage(newWidth, newHeight);
+
+    // Apply skew transformation to each pixel
+    for (int y = 0; y < newHeight; ++y) {
+        for (int x = 0; x < newWidth; ++x) {
+            // Calculate the corresponding position in the original image after skewing
+            int origX = round(x - tan(angleRad) * (newHeight - y));
+
+            // Check if the original position is within bounds
+            if (origX >= 0 && origX < image.width && y >= 0 && y < image.height) {
+                // Get the color values from the original position and set them in the skewed image
+                for (int c = 0; c < image.channels; ++c) {
+                    skewedImage(x, y, c) = image(origX, y, c);
+                }
+            }
+        }
+    }
+    // Update the original image with the skewed version
+    return skewedImage;
+}
+
+// Function to apply box blur to an image using a specified kernel size
+Image applyBoxBlur(Image& image) {
+    int kernelSize;
+    cout << "Enter the kernel size for box blur: ";
+    cin >> kernelSize;
+    int width = image.width;
+    int height = image.height;
+    int channels = image.channels;
+
+    // Create a temporary image to store the blurred result
+    Image blurredImage(width, height);
+
+    // Apply box blur using the specified kernel size
+    for (int i = 0; i < width; ++i) {
+        for (int j = 0; j < height; ++j) {
+            for (int c = 0; c < channels; ++c) {
+                int sum = 0;
+                int count = 0;
+                for (int k = -kernelSize; k <= kernelSize; ++k) {
+                    for (int l = -kernelSize; l <= kernelSize; ++l) {
+                        int x = max(0, min(width - 1, i + k));
+                        int y = max(0, min(height - 1, j + l));
+                        sum += image(x, y, c);
+                        count++;
+                    }
+                }
+                blurredImage(i, j, c) = sum / count; // Average of the pixel values in the kernel
+            }
+        }
+    }
+    return blurredImage;
+}
+
+Image tvEffect(Image image){
+    random_device rd;
+    mt19937 gen(rd());
+    uniform_int_distribution<int> dis(0, 30);
+    int width = image.width;
+    int height = image.height;
+
+    for (int i = 0; i < width; ++i) {
+        for (int j = 0; j < height; ++j) {
+            int random = dis(gen); // Random value for each pixel
+
+            for (int k = 0; k < image.channels; ++k) {
+                if (i % 2 == 0) { // Even row
+                    int newValue = image(i, j, k) - random;
+                    image(i, j, k) = (newValue < 0) ? 0 : newValue;
+                } else { // Odd row
+                    int newValue = image(i, j, k) + random;
+                    image(i, j, k) = (newValue > 255) ? 255 : newValue;
+                }
+            }
+        }
+    }
+    return image;
+}
+
+void setColorForFrame(Image& image, int startX, int startY, int endX, int endY, int r, int g, int b) {
+    for (int i = startX; i < endX; ++i) {
+        for (int j = startY; j < endY; ++j) {
+            image(i, j, 0) = r;
+            image(i, j, 1) = g;
+            image(i, j, 2) = b;
+        }
+    }
+}
+
+// Function to create a simple frame with a specified color
+void createSimpleFrame(Image& image) {
+    string color;
+    cout << "Enter the color for the frame (red, green, blue, etc.): ";
+    cin >> color;
+
+    int rValue, gValue, bValue;
+    if (color == "red") {
+        rValue = 255;
+        gValue = 0;
+        bValue = 0;
+    } else if (color == "green") {
+        rValue = 0;
+        gValue = 255;
+        bValue = 0;
+    } else if (color == "blue") {
+        rValue = 0;
+        gValue = 0;
+        bValue = 255;
+    }
+    // Add more else-if conditions for other colors...
+
+    setColorForFrame(image, 0, 0, 5, image.height, rValue, gValue, bValue);
+    setColorForFrame(image, image.width - 5, 0, image.width, image.height, rValue, gValue, bValue);
+    setColorForFrame(image, 0, 0, image.width, 5, rValue, gValue, bValue);
+    setColorForFrame(image, 0, image.height - 5, image.width, image.height, rValue, gValue, bValue);
+}
+
+// Function to create a fancy frame with gradient colors
+void createFancyFrame(Image &image) {
+    int startColorR = 255;  // Red
+    int startColorG = 0;
+    int startColorB = 0;
+    int endColorR = 0;      // Blue
+    int endColorG = 0;
+    int endColorB = 255;
+
+    int frameSize = 10;
+
+    setColorForFrame(image, 0, 0, frameSize, image.height, startColorR, startColorG, startColorB);
+    setColorForFrame(image, image.width - frameSize, 0, image.width, image.height, endColorR, endColorG, endColorB);
+    setColorForFrame(image, 0, 0, image.width, frameSize, startColorR, startColorG, startColorB);
+    setColorForFrame(image, 0, image.height - frameSize, image.width, image.height, endColorR, endColorG, endColorB);
+}
+
+Image frame(Image image){
+    int choice;
+    cout << "Choose the type of frame to add:" << endl;
+    cout << "1. Simple Frame" << endl;
+    cout << "2. Fancy Frame" << endl;
+    cout << "Enter your choice (1 or 2): ";
+    choice = taking_choice(2);
+
+    switch (choice) {
+        case 1:
+            createSimpleFrame(image);
+            break;
+        case 2:
+            createFancyFrame(image);
+            break;
+        default:
+            cout << "Invalid choice. No frame added." << endl;
+            break;
     }
     return image;
 }
@@ -449,8 +856,8 @@ int main(){
     load_image(image,filename);
     bool saved = false;
     while(true){
-        cout << "1) Load a new image\n2) Grayscale Conversion\n3) Black and White\n4) Invert\n5) Merge Images\n6) Flip Image\n7) Oil paint image\n8) Infrared\n9) Save the image\n10) Exit" << endl;
-        choice = taking_choice(10);
+        cout << "1) Load a new image\n2) Grayscale Conversion\n3) Black and White\n4) Invert\n5) Merge Images\n6) Flip \n7) Rotate Image \n8) Brightness\n9) Crop \n10) Adding Frame\n11) Detect edges \n12) Resize \n13) Blur \n14) SunLight \n15) Oil paint image \n16) TV effect \n17) Purple\n18) Infrared\n19) Skew \n20) Sepia Tone \n21) Night Mood\n22) Save the image\n23) Exit" << endl;
+        choice = taking_choice(23);
         if(choice == 1){
             if(!saved){
                 cout << "1) Do you want to save ?\n2) Continue" << endl;
@@ -477,11 +884,50 @@ int main(){
             image = flip(image);
         }else if(choice == 7){
             saved = false;
-            image = applyOilPaintFilter(image);
+            image = Rotate(image);
         }else if(choice == 8){
             saved = false;
-            image = infrared(image);
+            image = brightness(image);
         }else if(choice == 9){
+            saved = false;
+            image = crop(image);
+        }else if(choice == 10){
+            saved = false;
+            // image = frame(image);
+        }else if(choice == 11){
+            saved = false;
+            image = EdgeDetection(image);
+        }else if(choice == 12){
+            saved = false;
+            image = resize(image);
+        }else if(choice == 13){
+            saved = false;
+            image = applyBoxBlur(image);
+        }else if(choice == 14){
+            saved = false;
+            image = sunLight(image);
+        }else if(choice == 15){
+            saved = false;
+            image = applyOilPaintFilter(image);
+        }else if(choice == 16){
+            saved = false;
+            image = tvEffect(image);
+        }else if(choice == 17){
+            saved = false;
+            image = Purple(image);
+        }else if(choice == 18){
+            saved = false;
+            image = infrared(image);
+        }else if(choice == 19){
+            saved = false;
+            image = applyVerticalSkew(image);
+        }else if(choice == 20){
+            saved = false;
+            image = SepiaTone(image);
+        }else if(choice == 21){
+            saved = false;
+            image = NightMood(image);
+        }else if(choice == 22){
             saved = true;
             savingImage(image,filename);
         }else{
