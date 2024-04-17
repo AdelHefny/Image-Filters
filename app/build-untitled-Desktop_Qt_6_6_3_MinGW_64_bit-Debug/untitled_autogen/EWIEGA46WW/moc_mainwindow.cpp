@@ -68,11 +68,23 @@ constexpr auto qt_meta_stringdata_CLASSMainWindowENDCLASS = QtMocHelpers::string
     "on_sunLightBtn_clicked",
     "on_Purple_clicked",
     "on_Sepia_clicked",
-    "on_nightMoodBtn_clicked"
+    "on_nightMoodBtn_clicked",
+    "on_Invert_clicked",
+    "on_RotateBtn_clicked",
+    "on_horizontalSlider_valueChanged",
+    "on_BlurBtn_clicked",
+    "on_horizontalSlider_2_valueChanged",
+    "on_TVEffect_clicked",
+    "on_SkewBtn_clicked",
+    "on_horizontalSlider_3_valueChanged",
+    "on_FrameBtn_clicked",
+    "on_pushButton_2_clicked",
+    "on_radioButton_3_clicked",
+    "on_radioButton_4_clicked"
 );
 #else  // !QT_MOC_HAS_STRING_DATA
 struct qt_meta_stringdata_CLASSMainWindowENDCLASS_t {
-    uint offsetsAndSizes[62];
+    uint offsetsAndSizes[86];
     char stringdata0[11];
     char stringdata1[12];
     char stringdata2[1];
@@ -104,6 +116,18 @@ struct qt_meta_stringdata_CLASSMainWindowENDCLASS_t {
     char stringdata28[18];
     char stringdata29[17];
     char stringdata30[24];
+    char stringdata31[18];
+    char stringdata32[21];
+    char stringdata33[33];
+    char stringdata34[19];
+    char stringdata35[35];
+    char stringdata36[20];
+    char stringdata37[19];
+    char stringdata38[35];
+    char stringdata39[20];
+    char stringdata40[24];
+    char stringdata41[25];
+    char stringdata42[25];
 };
 #define QT_MOC_LITERAL(ofs, len) \
     uint(sizeof(qt_meta_stringdata_CLASSMainWindowENDCLASS_t::offsetsAndSizes) + ofs), len 
@@ -139,7 +163,19 @@ Q_CONSTINIT static const qt_meta_stringdata_CLASSMainWindowENDCLASS_t qt_meta_st
         QT_MOC_LITERAL(456, 22),  // "on_sunLightBtn_clicked"
         QT_MOC_LITERAL(479, 17),  // "on_Purple_clicked"
         QT_MOC_LITERAL(497, 16),  // "on_Sepia_clicked"
-        QT_MOC_LITERAL(514, 23)   // "on_nightMoodBtn_clicked"
+        QT_MOC_LITERAL(514, 23),  // "on_nightMoodBtn_clicked"
+        QT_MOC_LITERAL(538, 17),  // "on_Invert_clicked"
+        QT_MOC_LITERAL(556, 20),  // "on_RotateBtn_clicked"
+        QT_MOC_LITERAL(577, 32),  // "on_horizontalSlider_valueChanged"
+        QT_MOC_LITERAL(610, 18),  // "on_BlurBtn_clicked"
+        QT_MOC_LITERAL(629, 34),  // "on_horizontalSlider_2_valueCh..."
+        QT_MOC_LITERAL(664, 19),  // "on_TVEffect_clicked"
+        QT_MOC_LITERAL(684, 18),  // "on_SkewBtn_clicked"
+        QT_MOC_LITERAL(703, 34),  // "on_horizontalSlider_3_valueCh..."
+        QT_MOC_LITERAL(738, 19),  // "on_FrameBtn_clicked"
+        QT_MOC_LITERAL(758, 23),  // "on_pushButton_2_clicked"
+        QT_MOC_LITERAL(782, 24),  // "on_radioButton_3_clicked"
+        QT_MOC_LITERAL(807, 24)   // "on_radioButton_4_clicked"
     },
     "MainWindow",
     "imageLoaded",
@@ -171,7 +207,19 @@ Q_CONSTINIT static const qt_meta_stringdata_CLASSMainWindowENDCLASS_t qt_meta_st
     "on_sunLightBtn_clicked",
     "on_Purple_clicked",
     "on_Sepia_clicked",
-    "on_nightMoodBtn_clicked"
+    "on_nightMoodBtn_clicked",
+    "on_Invert_clicked",
+    "on_RotateBtn_clicked",
+    "on_horizontalSlider_valueChanged",
+    "on_BlurBtn_clicked",
+    "on_horizontalSlider_2_valueChanged",
+    "on_TVEffect_clicked",
+    "on_SkewBtn_clicked",
+    "on_horizontalSlider_3_valueChanged",
+    "on_FrameBtn_clicked",
+    "on_pushButton_2_clicked",
+    "on_radioButton_3_clicked",
+    "on_radioButton_4_clicked"
 };
 #undef QT_MOC_LITERAL
 #endif // !QT_MOC_HAS_STRING_DATA
@@ -183,7 +231,7 @@ Q_CONSTINIT static const uint qt_meta_data_CLASSMainWindowENDCLASS[] = {
       12,       // revision
        0,       // classname
        0,    0, // classinfo
-      25,   14, // methods
+      37,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -191,33 +239,45 @@ Q_CONSTINIT static const uint qt_meta_data_CLASSMainWindowENDCLASS[] = {
        2,       // signalCount
 
  // signals: name, argc, parameters, tag, flags, initial metatype offsets
-       1,    0,  164,    2, 0x06,    1 /* Public */,
-       3,    1,  165,    2, 0x06,    2 /* Public */,
+       1,    0,  236,    2, 0x06,    1 /* Public */,
+       3,    1,  237,    2, 0x06,    2 /* Public */,
 
  // slots: name, argc, parameters, tag, flags, initial metatype offsets
-       6,    0,  168,    2, 0x0a,    4 /* Public */,
-       7,    1,  169,    2, 0x0a,    5 /* Public */,
-       8,    0,  172,    2, 0x08,    7 /* Private */,
-       9,    0,  173,    2, 0x08,    8 /* Private */,
-      10,    0,  174,    2, 0x08,    9 /* Private */,
-      11,    0,  175,    2, 0x08,   10 /* Private */,
-      12,    0,  176,    2, 0x08,   11 /* Private */,
-      13,    0,  177,    2, 0x08,   12 /* Private */,
-      14,    0,  178,    2, 0x08,   13 /* Private */,
-      15,    1,  179,    2, 0x08,   14 /* Private */,
-      17,    0,  182,    2, 0x08,   16 /* Private */,
-      18,    0,  183,    2, 0x08,   17 /* Private */,
-      19,    0,  184,    2, 0x08,   18 /* Private */,
-      20,    0,  185,    2, 0x08,   19 /* Private */,
-      21,    0,  186,    2, 0x08,   20 /* Private */,
-      22,    0,  187,    2, 0x08,   21 /* Private */,
-      23,    1,  188,    2, 0x08,   22 /* Private */,
-      25,    0,  191,    2, 0x08,   24 /* Private */,
-      26,    0,  192,    2, 0x08,   25 /* Private */,
-      27,    0,  193,    2, 0x08,   26 /* Private */,
-      28,    0,  194,    2, 0x08,   27 /* Private */,
-      29,    0,  195,    2, 0x08,   28 /* Private */,
-      30,    0,  196,    2, 0x08,   29 /* Private */,
+       6,    0,  240,    2, 0x0a,    4 /* Public */,
+       7,    1,  241,    2, 0x0a,    5 /* Public */,
+       8,    0,  244,    2, 0x08,    7 /* Private */,
+       9,    0,  245,    2, 0x08,    8 /* Private */,
+      10,    0,  246,    2, 0x08,    9 /* Private */,
+      11,    0,  247,    2, 0x08,   10 /* Private */,
+      12,    0,  248,    2, 0x08,   11 /* Private */,
+      13,    0,  249,    2, 0x08,   12 /* Private */,
+      14,    0,  250,    2, 0x08,   13 /* Private */,
+      15,    1,  251,    2, 0x08,   14 /* Private */,
+      17,    0,  254,    2, 0x08,   16 /* Private */,
+      18,    0,  255,    2, 0x08,   17 /* Private */,
+      19,    0,  256,    2, 0x08,   18 /* Private */,
+      20,    0,  257,    2, 0x08,   19 /* Private */,
+      21,    0,  258,    2, 0x08,   20 /* Private */,
+      22,    0,  259,    2, 0x08,   21 /* Private */,
+      23,    1,  260,    2, 0x08,   22 /* Private */,
+      25,    0,  263,    2, 0x08,   24 /* Private */,
+      26,    0,  264,    2, 0x08,   25 /* Private */,
+      27,    0,  265,    2, 0x08,   26 /* Private */,
+      28,    0,  266,    2, 0x08,   27 /* Private */,
+      29,    0,  267,    2, 0x08,   28 /* Private */,
+      30,    0,  268,    2, 0x08,   29 /* Private */,
+      31,    0,  269,    2, 0x08,   30 /* Private */,
+      32,    0,  270,    2, 0x08,   31 /* Private */,
+      33,    1,  271,    2, 0x08,   32 /* Private */,
+      34,    0,  274,    2, 0x08,   34 /* Private */,
+      35,    1,  275,    2, 0x08,   35 /* Private */,
+      36,    0,  278,    2, 0x08,   37 /* Private */,
+      37,    0,  279,    2, 0x08,   38 /* Private */,
+      38,    1,  280,    2, 0x08,   39 /* Private */,
+      39,    0,  283,    2, 0x08,   41 /* Private */,
+      40,    0,  284,    2, 0x08,   42 /* Private */,
+      41,    0,  285,    2, 0x08,   43 /* Private */,
+      42,    0,  286,    2, 0x08,   44 /* Private */,
 
  // signals: parameters
     QMetaType::Void,
@@ -243,6 +303,18 @@ Q_CONSTINIT static const uint qt_meta_data_CLASSMainWindowENDCLASS[] = {
     QMetaType::Void, QMetaType::Int,   24,
     QMetaType::Void,
     QMetaType::Void,
+    QMetaType::Void,
+    QMetaType::Void,
+    QMetaType::Void,
+    QMetaType::Void,
+    QMetaType::Void,
+    QMetaType::Void,
+    QMetaType::Void, QMetaType::Int,   24,
+    QMetaType::Void,
+    QMetaType::Void, QMetaType::Int,   24,
+    QMetaType::Void,
+    QMetaType::Void,
+    QMetaType::Void, QMetaType::Int,   24,
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
@@ -313,6 +385,33 @@ Q_CONSTINIT const QMetaObject MainWindow::staticMetaObject = { {
         // method 'on_Sepia_clicked'
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
         // method 'on_nightMoodBtn_clicked'
+        QtPrivate::TypeAndForceComplete<void, std::false_type>,
+        // method 'on_Invert_clicked'
+        QtPrivate::TypeAndForceComplete<void, std::false_type>,
+        // method 'on_RotateBtn_clicked'
+        QtPrivate::TypeAndForceComplete<void, std::false_type>,
+        // method 'on_horizontalSlider_valueChanged'
+        QtPrivate::TypeAndForceComplete<void, std::false_type>,
+        QtPrivate::TypeAndForceComplete<int, std::false_type>,
+        // method 'on_BlurBtn_clicked'
+        QtPrivate::TypeAndForceComplete<void, std::false_type>,
+        // method 'on_horizontalSlider_2_valueChanged'
+        QtPrivate::TypeAndForceComplete<void, std::false_type>,
+        QtPrivate::TypeAndForceComplete<int, std::false_type>,
+        // method 'on_TVEffect_clicked'
+        QtPrivate::TypeAndForceComplete<void, std::false_type>,
+        // method 'on_SkewBtn_clicked'
+        QtPrivate::TypeAndForceComplete<void, std::false_type>,
+        // method 'on_horizontalSlider_3_valueChanged'
+        QtPrivate::TypeAndForceComplete<void, std::false_type>,
+        QtPrivate::TypeAndForceComplete<int, std::false_type>,
+        // method 'on_FrameBtn_clicked'
+        QtPrivate::TypeAndForceComplete<void, std::false_type>,
+        // method 'on_pushButton_2_clicked'
+        QtPrivate::TypeAndForceComplete<void, std::false_type>,
+        // method 'on_radioButton_3_clicked'
+        QtPrivate::TypeAndForceComplete<void, std::false_type>,
+        // method 'on_radioButton_4_clicked'
         QtPrivate::TypeAndForceComplete<void, std::false_type>
     >,
     nullptr
@@ -349,6 +448,18 @@ void MainWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
         case 22: _t->on_Purple_clicked(); break;
         case 23: _t->on_Sepia_clicked(); break;
         case 24: _t->on_nightMoodBtn_clicked(); break;
+        case 25: _t->on_Invert_clicked(); break;
+        case 26: _t->on_RotateBtn_clicked(); break;
+        case 27: _t->on_horizontalSlider_valueChanged((*reinterpret_cast< std::add_pointer_t<int>>(_a[1]))); break;
+        case 28: _t->on_BlurBtn_clicked(); break;
+        case 29: _t->on_horizontalSlider_2_valueChanged((*reinterpret_cast< std::add_pointer_t<int>>(_a[1]))); break;
+        case 30: _t->on_TVEffect_clicked(); break;
+        case 31: _t->on_SkewBtn_clicked(); break;
+        case 32: _t->on_horizontalSlider_3_valueChanged((*reinterpret_cast< std::add_pointer_t<int>>(_a[1]))); break;
+        case 33: _t->on_FrameBtn_clicked(); break;
+        case 34: _t->on_pushButton_2_clicked(); break;
+        case 35: _t->on_radioButton_3_clicked(); break;
+        case 36: _t->on_radioButton_4_clicked(); break;
         default: ;
         }
     } else if (_c == QMetaObject::IndexOfMethod) {
@@ -389,13 +500,13 @@ int MainWindow::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 25)
+        if (_id < 37)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 25;
+        _id -= 37;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 25)
+        if (_id < 37)
             *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType();
-        _id -= 25;
+        _id -= 37;
     }
     return _id;
 }

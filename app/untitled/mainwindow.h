@@ -24,6 +24,7 @@ public:
     QString file_name,file_name2;
     QThread *secT;
     QPushButton *optionsFor;
+    QColor Framecolor = QColor(0,0,0,255);
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
     void disableObtions();
@@ -78,6 +79,30 @@ private slots:
     void on_Sepia_clicked();
 
     void on_nightMoodBtn_clicked();
+
+    void on_Invert_clicked();
+
+    void on_RotateBtn_clicked();
+
+    void on_horizontalSlider_valueChanged(int value);
+
+    void on_BlurBtn_clicked();
+
+    void on_horizontalSlider_2_valueChanged(int value);
+
+    void on_TVEffect_clicked();
+
+    void on_SkewBtn_clicked();
+
+    void on_horizontalSlider_3_valueChanged(int value);
+
+    void on_FrameBtn_clicked();
+
+    void on_pushButton_2_clicked();
+
+    void on_radioButton_3_clicked();
+
+    void on_radioButton_4_clicked();
 
 private:
     QGraphicsDropShadowEffect *Drop_Shadow_Effect;

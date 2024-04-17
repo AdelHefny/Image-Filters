@@ -4,6 +4,8 @@
 #include <QObject>
 #include <QMovie>
 #include <QDebug>
+#include <random>
+#include <QColorDialog>
 #include "Image_Class.h"
 #include <QIntValidator>
 #include <QPropertyAnimation>
@@ -37,6 +39,7 @@ MainWindow::MainWindow(QWidget *parent)
     ui->saveBtn->setCursor(Qt::PointingHandCursor);
     ui->loadNewImage->setCursor(Qt::PointingHandCursor);
     ui->applyBtn->setCursor(Qt::PointingHandCursor);
+    ui->pushButton_2->setCursor(Qt::PointingHandCursor);
     connect(this,&MainWindow::filterFinished,this,&MainWindow::updateToImage);
 
     ui->FromImage->setAcceptDrops(true);
@@ -65,10 +68,18 @@ void MainWindow::disableObtions(){
     ui->applyBtn->setVisible(false);
     ui->ResizeMerge->setVisible(false);
     ui->CommonArea->setVisible(false);
+    ui->label_6->setVisible(false);
+    ui->frame_4->setVisible(false);
+    ui->frame_5->setVisible(false);
+    ui->frame_6->setVisible(false);
+    ui->frame_7->setVisible(false);
 }
 void MainWindow::loadingFilter(){
     bool val = !ui->BWBtn->isEnabled();
     ui->applyBtn->setEnabled(val);
+    ui->pushButton->setEnabled(val);
+    ui->clearBtn->setEnabled(val);
+    ui->saveBtn->setEnabled(val);
     QObjectList children = ui->scrollAreaWidgetContents->children();
     if(!val){
         for(QObject *child : children) {
@@ -78,6 +89,9 @@ void MainWindow::loadingFilter(){
             }
         }
         ui->applyBtn->setStyleSheet("QPushButton{background-color:  rgba(184, 80, 66,200);border-radius:24px;}");
+        ui->pushButton->setStyleSheet("QPushButton{background-color:  rgba(184, 80, 66,200);border-radius: 15%;}");
+        ui->clearBtn->setStyleSheet("QPushButton{background-color:  rgba(184, 80, 66,200);border-radius: 15%;}");
+        ui->saveBtn->setStyleSheet("QPushButton{background-color:  rgba(184, 80, 66,200);border-radius: 15%;}");
     }else{
         for(QObject *child : children) {
             if(QWidget *widget = qobject_cast<QWidget*>(child)) {
@@ -88,14 +102,23 @@ void MainWindow::loadingFilter(){
         }
         ui->applyBtn->setStyleSheet("QPushButton{background-color:  rgba(184, 80, 66,255);border-radius:24px;}"
                 "QPushButton:hover{background-color:  #A7BEAE;}");
+        ui->pushButton->setStyleSheet("QPushButton{background-color:  rgba(184, 80, 66,255);border-radius: 15%;}"
+                "QPushButton:hover{background-color:  #A7BEAE;}");
+        ui->clearBtn->setStyleSheet("QPushButton{background-color:  rgba(184, 80, 66,255);border-radius: 15%;}"
+                "QPushButton:hover{background-color:  #A7BEAE;}");
+        ui->saveBtn->setStyleSheet("QPushButton{background-color:  rgba(184, 80, 66,255);border-radius: 15%;}"
+                "QPushButton:hover{background-color:  #A7BEAE;}");
     }
 }
 void MainWindow::assigningBtnsText(){
     ui->applyBtn->setText("Apply");
     ui->BWBtn->setText("Black and white filter");
     ui->ResizeBtn->setText("Resize");
+    ui->Invert->setText("Invert");
     ui->FlipBtn->setText("Flip");
     ui->CropBtn->setText("Crop");
+    ui->RotateBtn->setText("Rotate");
+    ui->BlurBtn->setText("Blur");
     ui->OilPaint->setText("Oil Paint");
     ui->Infrared->setText("Infrared");
     ui->GrayscaleBtn->setText("Grayscale");
@@ -106,6 +129,10 @@ void MainWindow::assigningBtnsText(){
     ui->sunLightBtn->setText("Sun Light");
     ui->Sepia->setText("Sepia");
     ui->nightMoodBtn->setText("Night Mood");
+    ui->TVEffect->setText("TV Effect");
+    ui->SkewBtn->setText("Skew");
+    ui->FrameBtn->setText("Frame");
+    ui->errorLabel->setText("");
 }
 
 void MainWindow::clearFilterBtn(QPushButton* btn){
@@ -261,6 +288,8 @@ void MainWindow::on_BWBtn_clicked()
 
         putSpinner(ui->BWBtn);
         putSpinner(ui->applyBtn);
+    }else{
+        ui->errorLabel->setText("please select an image");
     }
 }
 void flip(bool choice,MainWindow* mainwindow,QPushButton* btn){
@@ -313,6 +342,11 @@ void MainWindow::on_FlipBtn_clicked()
         ui->Brightness->setVisible(false);
         ui->ResizeMerge->setVisible(false);
         ui->CommonArea->setVisible(false);
+        ui->label_6->setVisible(false);
+        ui->frame_4->setVisible(false);
+        ui->frame_5->setVisible(false);
+        ui->frame_6->setVisible(false);
+        ui->frame_7->setVisible(false);
         if (!ui->options_label->isVisible()) {
             ui->options_label->setVisible(true);
             setupFadeInAnimation(ui->options_label, 500);
@@ -332,28 +366,32 @@ void MainWindow::on_FlipBtn_clicked()
         setupFadeInAnimation(ui->radioButton_2, 500);
 
         optionsFor = ui->FlipBtn;
-    }else if(path.size() != 0){
+    }else if(path.size() != 0 && (ui->radioButton->isChecked() || ui->radioButton_2->isChecked())){
         loadingFilter();
         secT = QThread::create(flip,ui->radioButton->isChecked(),this,ui->FlipBtn);
         secT->start();
         putSpinner(ui->FlipBtn);
         putSpinner(ui->applyBtn);
+    }else{
+        if(path.size() == 0){
+            ui->errorLabel->setText("please select an image");
+        }else{
+            ui->errorLabel->setText("please select an option");
+        }
     }
 }
-void cropFilter(int fromX,int fromY,int toX,int toY,MainWindow* mainwindow,QPushButton* btn){
-    Image newImage(toX - fromX + 1,toY - fromY + 1);
-
+void cropFilter(int fromX,int fromY,int width,int height,MainWindow* mainwindow,QPushButton* btn){
+    Image newImage(width,height);
     int counterX = 0,counterY = 0;
-
-    for(int i = fromX - 1;i < toX;i++){
-        for(int j = fromY - 1;j < toY;j++){
-            for(int k = 0;k < 3;k++){
+    for(int i = fromX; i < fromX + width && i < to_image.width; i++){
+        for(int j = fromY; j < fromY + height && j < to_image.height; j++){
+            for(int k = 0; k < 3; k++){
                 newImage(counterX,counterY,k) = to_image(i,j,k);
             }
             counterY++;
         }
         counterX++;
-        counterY = 0;
+        counterY = 0; // Reset counterY for the next row
     }
     // Save the processed image
     newImage.saveImage("test.jpg");
@@ -378,6 +416,11 @@ void MainWindow::on_CropBtn_clicked()
         ui->Brightness->setVisible(false);
         ui->ResizeMerge->setVisible(false);
         ui->CommonArea->setVisible(false);
+        ui->label_6->setVisible(false);
+        ui->frame_4->setVisible(false);
+        ui->frame_5->setVisible(false);
+        ui->frame_6->setVisible(false);
+        ui->frame_7->setVisible(false);
         if (!ui->options_label->isVisible()) {
             ui->options_label->setVisible(true);
             setupFadeInAnimation(ui->options_label, 500);
@@ -396,10 +439,10 @@ void MainWindow::on_CropBtn_clicked()
         }
         optionsFor = ui->CropBtn;
     }else if(firstFrom.empty() || secondFrom.empty() || firstTo.empty() || secondTo.empty()){}
-    else if(!(stoi(firstFrom) <= 0 || stoi(firstFrom) > my_image.width - 1) &&
-               !(stoi(firstTo) <= 0 || stoi(firstTo) > my_image.width - 1) &&
-               !(stoi(secondFrom) <= 0 || stoi(secondFrom) > my_image.height - 1) &&
-               !(stoi(secondTo) <= 0 || stoi(secondTo) > my_image.height - 1)){
+    else if(!(stoi(firstFrom) < 0 || stoi(firstFrom) > to_image.width - 1) &&
+               !(stoi(firstTo) <= 0 || stoi(firstTo) > to_image.width - stoi(firstFrom)) &&
+               !(stoi(secondFrom) < 0 || stoi(secondFrom) > to_image.height - 1) &&
+               !(stoi(secondTo) <= 0 || stoi(secondTo) > to_image.height - stoi(secondFrom))){
         if(path.size() != 0){
             loadingFilter();
             secT = QThread::create(cropFilter,stoi(firstFrom),stoi(secondFrom),stoi(firstTo),stoi(secondTo),this,ui->CropBtn);
@@ -408,7 +451,11 @@ void MainWindow::on_CropBtn_clicked()
             putSpinner(ui->applyBtn);
         }
     }else{
-        ui->errorLabel->setText("invalid crop values");
+        if(path.size() == 0){
+            ui->errorLabel->setText("please select an image");
+        }else{
+            ui->errorLabel->setText("please enter valid values");
+        }
     }
 }
 
@@ -462,6 +509,11 @@ void MainWindow::on_ResizeBtn_clicked()
         ui->Brightness->setVisible(false);
         ui->ResizeMerge->setVisible(false);
         ui->CommonArea->setVisible(false);
+        ui->label_6->setVisible(false);
+        ui->frame_4->setVisible(false);
+        ui->frame_5->setVisible(false);
+        ui->frame_6->setVisible(false);
+        ui->frame_7->setVisible(false);
         if (!ui->options_label->isVisible()) {
             ui->options_label->setVisible(true);
             setupFadeInAnimation(ui->options_label, 500);
@@ -487,6 +539,8 @@ void MainWindow::on_ResizeBtn_clicked()
             secT->start();
             putSpinner(ui->ResizeBtn);
             putSpinner(ui->applyBtn);
+        }else{
+            ui->errorLabel->setText("please select an image");
         }
     }else{
         ui->errorLabel->setText("invalid width or height value");
@@ -535,6 +589,8 @@ void MainWindow::on_Infrared_clicked()
         secT->start();
         putSpinner(ui->Infrared);
         putSpinner(ui->applyBtn);
+    }else{
+        ui->errorLabel->setText("please select an image");
     }
 }
 void oilPaint(MainWindow *mainwindow,QPushButton *btn){
@@ -581,6 +637,8 @@ void MainWindow::on_OilPaint_clicked()
         secT->start();
         putSpinner(ui->OilPaint);
         putSpinner(ui->applyBtn);
+    }else{
+        ui->errorLabel->setText("please select an image");
     }
 }
 
@@ -638,6 +696,8 @@ void MainWindow::on_EdgeDetection_clicked()
 
         putSpinner(ui->EdgeDetection);
         putSpinner(ui->applyBtn);
+    }else{
+        ui->errorLabel->setText("please select an image");
     }
 }
 
@@ -673,6 +733,8 @@ void MainWindow::on_GrayscaleBtn_clicked()
         secT->start();
         putSpinner(ui->GrayscaleBtn);
         putSpinner(ui->applyBtn);
+    }else{
+        ui->errorLabel->setText("please select an image");
     }
 }
 Image resize(int newWidth,int newHeight,Image &image){
@@ -731,13 +793,30 @@ void mergeFilter(QPushButton* btn,MainWindow* mainwindow){
     else{
         qDebug() << "second";
         int MidPoint = 0;
-        for(int i = 0; i < my_image.width; i++){
-            for(int j = 0; j < my_image.height; j++){
+        for(int i = 0; i < to_image.width; i++){
+            for(int j = 0; j < to_image.height; j++){
                 for(int k = 0; k < 3; k++){
                     // Average RGB values of corresponding pixels
-                    MidPoint = (my_image(i,j,k) + my_image2(i,j,k))/2;
+                    MidPoint = (to_image(i,j,k) + my_image2(i,j,k))/2;
                     final_image(i,j,k) = MidPoint;
                 }
+            }
+        }
+    }
+    final_image.saveImage("test.jpg");
+    to_image = final_image;
+    emit mainwindow->filterFinished(btn);
+}
+
+void mergeCommonAreaFilter(QPushButton* btn,MainWindow* mainwindow){
+    int NewHeight = min(to_image.height, my_image2.height), NewWidth = min(to_image.width, my_image2.width),MidPoint;
+    Image final_image(NewWidth,NewHeight);
+    for(int i = 0; i < NewWidth; i++){
+        for(int j = 0; j < NewHeight; j++){
+            for(int k = 0; k < 3; k++){
+                // Average RGB values of corresponding pixels
+                MidPoint = (to_image(i,j,k) + my_image2(i,j,k))/2;
+                final_image(i,j,k) = MidPoint;
             }
         }
     }
@@ -759,7 +838,10 @@ void MainWindow::on_mergeBtn_clicked()
         ui->resize_height->setVisible(false);
         ui->Brightness->setVisible(false);
         ui->label_3->setVisible(false);
-
+        ui->frame_4->setVisible(false);
+        ui->frame_5->setVisible(false);
+        ui->frame_6->setVisible(false);
+        ui->frame_7->setVisible(false);
         if (!ui->options_label->isVisible()) {
             ui->options_label->setVisible(true);
             setupFadeInAnimation(ui->options_label, 500);
@@ -772,6 +854,9 @@ void MainWindow::on_mergeBtn_clicked()
         // Fade-in animation for resize_width
         ui->label_2->setVisible(true);
         setupFadeInAnimation(ui->label_2, 500);
+
+        ui->label_6->setVisible(true);
+        setupFadeInAnimation(ui->label_6, 500);
 
         // Fade-in animation for resize_height
         ui->loadNewImage->setVisible(true);
@@ -787,17 +872,23 @@ void MainWindow::on_mergeBtn_clicked()
         optionsFor = ui->mergeBtn;
     }else if(path.size() != 0 && path2.size() != 0){
         loadingFilter();
-        secT = QThread::create(mergeFilter,ui->mergeBtn,this);
+        if(ui->CommonArea->isChecked()){
+            secT = QThread::create(mergeCommonAreaFilter,ui->mergeBtn,this);
+        }else{
+            secT = QThread::create(mergeFilter,ui->mergeBtn,this);
+        }
         secT->start();
         putSpinner(ui->mergeBtn);
         putSpinner(ui->applyBtn);
+    }else{
+        ui->errorLabel->setText("please select an image");
     }
 }
 
 void MainWindow::on_Brightness_valueChanged(int value)
 {
     if(path.size() != 0){
-        double val = value/100.f;
+        double val = value/50.f;
         putSpinner(ui->brightnessBtn);
         Image final_image(recoverImage.width, recoverImage.height);
         int increase_brightness;
@@ -827,6 +918,8 @@ void MainWindow::on_Brightness_valueChanged(int value)
             delete item;
         }
         ui->brightnessBtn->setText("Brightness");
+    }else{
+        ui->errorLabel->setText("please select an image");
     }
 }
 
@@ -846,6 +939,11 @@ void MainWindow::on_brightnessBtn_clicked()
         ui->applyBtn->setVisible(false);
         ui->ResizeMerge->setVisible(false);
         ui->CommonArea->setVisible(false);
+        ui->label_6->setVisible(false);
+        ui->frame_4->setVisible(false);
+        ui->frame_5->setVisible(false);
+        ui->frame_6->setVisible(false);
+        ui->frame_7->setVisible(false);
         if (!ui->options_label->isVisible()) {
             ui->options_label->setVisible(true);
             setupFadeInAnimation(ui->options_label, 500);
@@ -891,6 +989,8 @@ void MainWindow::on_sunLightBtn_clicked()
 
         putSpinner(ui->sunLightBtn);
         putSpinner(ui->applyBtn);
+    }else{
+        ui->errorLabel->setText("please select an image");
     }
 }
 
@@ -921,6 +1021,8 @@ void MainWindow::on_Purple_clicked()
 
         putSpinner(ui->Purple);
         putSpinner(ui->applyBtn);
+    }else{
+        ui->errorLabel->setText("please select an image");
     }
 }
 
@@ -968,6 +1070,8 @@ void MainWindow::on_Sepia_clicked()
 
         putSpinner(ui->Sepia);
         putSpinner(ui->applyBtn);
+    }else{
+        ui->errorLabel->setText("please select an image");
     }
 }
 
@@ -1015,5 +1119,498 @@ void MainWindow::on_nightMoodBtn_clicked()
 
         putSpinner(ui->nightMoodBtn);
         putSpinner(ui->applyBtn);
+    }else{
+        ui->errorLabel->setText("please select an image");
     }
 }
+
+void invert(MainWindow* mainwindow,QPushButton* btn){
+    int r = to_image.width; // Get the width of the image
+    int c = to_image.height; // Get the height of the image
+
+    for (int i = 0; i < r; ++i){ // Loop through each row of the image
+        for (int j = 0; j < c ; ++j){ // Loop through each column of the image
+            for (int k = 0; k < 3; ++k){ // Loop through each color channel (RGB)
+                to_image(i, j, k) = 255 - to_image(i, j, k) ; // Invert the pixel value for each color channel
+            }
+        }
+    }
+    to_image.saveImage("test.jpg");
+    emit mainwindow->filterFinished(btn);
+}
+
+void MainWindow::on_Invert_clicked()
+{
+    if(path.size() != 0){
+        disableObtions();
+        loadingFilter();
+        secT = QThread::create(invert,this,ui->Invert);
+        secT->start();
+
+        putSpinner(ui->Invert);
+        putSpinner(ui->applyBtn);
+    }else{
+        ui->errorLabel->setText("please select an image");
+    }
+}
+
+// Function to rotate the image clockwise by 90 degrees
+Image rotateImage90(Image& image) {
+    int r = image.width;
+    int c = image.height;
+    Image rotated(c, r); // Create a new image with dimensions swapped
+
+    for (int i = 0; i < r; ++i) {
+        for (int j = 0; j < c; ++j) {
+            for (int k = 0; k < 3; ++k) {
+                rotated(c - 1 - j, i, k) = image(i, j, k); // Correct indices for clockwise rotation
+            }
+        }
+    }
+
+    return rotated;
+}
+
+// Function to rotate the image clockwise by 180 degrees
+Image rotateImage180(Image& image) {
+    int r = image.width;
+    int c = image.height;
+    Image rotated(r, c); // Create a new image with the same dimensions
+
+    for (int i = 0; i < r; ++i) {
+        for (int j = 0; j < c; ++j) {
+            for (int k = 0; k < 3; ++k) {
+                rotated(i, j, k) = image(r - 1 - i, c - 1 - j, k); // Correct indices for 180-degree rotation
+            }
+        }
+    }
+
+    return rotated;
+}
+
+// Function to rotate the image clockwise by 270 degrees
+Image rotateImage270(Image& image) {
+    int r = image.width;
+    int c = image.height;
+    Image rotated(c, r);
+
+    for (int i = 0; i < r; ++i) {
+        for (int j = 0; j < c; ++j) {
+            for (int k = 0; k < 3; ++k) {
+                rotated(j, r - 1 - i, k) = image(i, j, k); // Correct indices for clockwise rotation
+            }
+        }
+    }
+
+    return rotated;
+}
+
+void Rotate(MainWindow* mainwindow,QPushButton* btn,int choice){
+    switch (choice) {
+    case 1:
+        to_image = rotateImage90(recoverImage);
+        break;
+    case 2:
+        to_image = rotateImage180(recoverImage);
+        break;
+    case 3:
+        to_image = rotateImage270(recoverImage);
+        break;
+    default:
+        to_image = recoverImage;
+        break;
+    }
+    to_image.saveImage("test.jpg");
+    emit mainwindow->filterFinished(btn);
+}
+
+void MainWindow::on_RotateBtn_clicked()
+{
+    if(!ui->frame_4->isVisible()){
+        recoverImage = to_image;
+        ui->radioButton->setVisible(false);
+        ui->radioButton_2->setVisible(false);
+        ui->lineEdit_1->setVisible(false);
+        ui->lineEdit_2->setVisible(false);
+        ui->lineEdit_3->setVisible(false);
+        ui->lineEdit_4->setVisible(false);
+        ui->resize_width->setVisible(false);
+        ui->resize_height->setVisible(false);
+        ui->Brightness->setVisible(false);
+        ui->label_3->setVisible(false);
+        ui->frame_5->setVisible(false);
+        ui->frame_6->setVisible(false);
+        ui->frame_7->setVisible(false);
+        if (!ui->options_label->isVisible()) {
+            ui->options_label->setVisible(true);
+            setupFadeInAnimation(ui->options_label, 500);
+        }
+
+        if (!ui->applyBtn->isVisible()) {
+            ui->applyBtn->setVisible(true);
+            setupFadeInAnimation(ui->applyBtn, 500);
+        }
+        // Fade-in animation for frame_4
+        ui->frame_4->setVisible(true);
+        setupFadeInAnimation(ui->frame_4, 500);
+        optionsFor = ui->RotateBtn;
+    }else if(path.size() != 0){
+        int val = ui->horizontalSlider->value();
+        loadingFilter();
+        secT = QThread::create(Rotate,this,ui->RotateBtn,val);
+        secT->start();
+
+        putSpinner(ui->RotateBtn);
+        putSpinner(ui->applyBtn);
+    }else{
+        ui->errorLabel->setText("please select an image");
+    }
+}
+
+
+void MainWindow::on_horizontalSlider_valueChanged(int value)
+{
+    if(value == 1){
+        ui->label_7->setText("90");
+    }else if(value == 2){
+        ui->label_7->setText("180");
+    }else if(value == 3){
+        ui->label_7->setText("270");
+    }else{
+        ui->label_7->setText("0");
+    }
+}
+
+void applyBoxBlur(MainWindow* mainwindow,QPushButton* btn,int kernelSize) {
+    int width = recoverImage.width;
+    int height = recoverImage.height;
+    int channels = recoverImage.channels;
+
+    // Create a temporary image to store the blurred result
+    Image blurredImage(width, height);
+
+    // Apply box blur using the specified kernel size
+    for (int i = 0; i < width; ++i) {
+        for (int j = 0; j < height; ++j) {
+            for (int c = 0; c < channels; ++c) {
+                int sum = 0;
+                int count = 0;
+                for (int k = -kernelSize; k <= kernelSize; ++k) {
+                    for (int l = -kernelSize; l <= kernelSize; ++l) {
+                        int x = max(0, min(width - 1, i + k));
+                        int y = max(0, min(height - 1, j + l));
+                        sum += recoverImage(x, y, c);
+                        count++;
+                    }
+                }
+                blurredImage(i, j, c) = sum / count; // Average of the pixel values in the kernel
+            }
+        }
+    }
+    to_image = blurredImage;
+    to_image.saveImage("test.jpg");
+    emit mainwindow->filterFinished(btn);
+}
+void MainWindow::on_BlurBtn_clicked()
+{
+    if(!ui->frame_5->isVisible()){
+        recoverImage = to_image;
+        ui->radioButton->setVisible(false);
+        ui->radioButton_2->setVisible(false);
+        ui->lineEdit_1->setVisible(false);
+        ui->lineEdit_2->setVisible(false);
+        ui->lineEdit_3->setVisible(false);
+        ui->lineEdit_4->setVisible(false);
+        ui->resize_width->setVisible(false);
+        ui->resize_height->setVisible(false);
+        ui->Brightness->setVisible(false);
+        ui->label_3->setVisible(false);
+        ui->frame_4->setVisible(false);
+        ui->frame_6->setVisible(false);
+        ui->frame_7->setVisible(false);
+        if (!ui->options_label->isVisible()) {
+            ui->options_label->setVisible(true);
+            setupFadeInAnimation(ui->options_label, 500);
+        }
+
+        if (!ui->applyBtn->isVisible()) {
+            ui->applyBtn->setVisible(true);
+            setupFadeInAnimation(ui->applyBtn, 500);
+        }
+        // Fade-in animation for frame_5
+        ui->frame_5->setVisible(true);
+        setupFadeInAnimation(ui->frame_5, 500);
+        optionsFor = ui->BlurBtn;
+    }else if(path.size() != 0){
+        int val = ui->horizontalSlider_2->value();
+        loadingFilter();
+        secT = QThread::create(applyBoxBlur,this,ui->BlurBtn,val);
+        secT->start();
+
+        putSpinner(ui->BlurBtn);
+        putSpinner(ui->applyBtn);
+    }else{
+        ui->errorLabel->setText("please select an image");
+    }
+}
+
+void MainWindow::on_horizontalSlider_2_valueChanged(int value)
+{
+    ui->label_8->setText(QString::fromStdString(to_string(value)));
+}
+
+void tvEffect(MainWindow* mainwindow,QPushButton* btn){
+    random_device rd;
+    mt19937 gen(rd());
+    uniform_int_distribution<int> dis(0, 30);
+    int width = to_image.width;
+    int height = to_image.height;
+
+    for (int i = 0; i < width; ++i) {
+        for (int j = 0; j < height; ++j) {
+            int random = dis(gen); // Random value for each pixel
+
+            for (int k = 0; k < to_image.channels; ++k) {
+                if (i % 2 == 0) { // Even row
+                    int newValue = to_image(i, j, k) - random;
+                    to_image(i, j, k) = (newValue < 0) ? 0 : newValue;
+                } else { // Odd row
+                    int newValue = to_image(i, j, k) + random;
+                    to_image(i, j, k) = (newValue > 255) ? 255 : newValue;
+                }
+            }
+        }
+    }
+    to_image.saveImage("test.jpg");
+    emit mainwindow->filterFinished(btn);
+}
+
+void MainWindow::on_TVEffect_clicked()
+{
+    if(path.size() != 0){
+        disableObtions();
+        loadingFilter();
+        secT = QThread::create(tvEffect,this,ui->TVEffect);
+        secT->start();
+
+        putSpinner(ui->TVEffect);
+        putSpinner(ui->applyBtn);
+    }else{
+        ui->errorLabel->setText("please select an image");
+    }
+}
+
+// Function to apply vertical skew effects to an image
+void applyVerticalSkew(MainWindow* mainwindow,QPushButton* btn,double angleOfSkew) {
+    // Convert the angle from degrees to radians
+    double angleRad = angleOfSkew * M_PI / 180.0;
+
+    // Calculate the new width and height after skewing
+    int newWidth = round(recoverImage.width + tan(angleRad) * recoverImage.height);
+    int newHeight = recoverImage.height;
+
+    // Create a new image with the skewed dimensions
+    Image skewedImage(newWidth, newHeight);
+
+    // Apply skew transformation to each pixel
+    for (int y = 0; y < newHeight; ++y) {
+        for (int x = 0; x < newWidth; ++x) {
+            // Calculate the corresponding position in the original image after skewing
+            int origX = round(x - tan(angleRad) * (newHeight - y));
+
+            // Check if the original position is within bounds
+            if (origX >= 0 && origX < recoverImage.width && y >= 0 && y < recoverImage.height) {
+                // Get the color values from the original position and set them in the skewed image
+                for (int c = 0; c < recoverImage.channels; ++c) {
+                    skewedImage(x, y, c) = recoverImage(origX, y, c);
+                }
+            }
+        }
+    }
+    // Update the original image with the skewed version
+    to_image = skewedImage;
+    to_image.saveImage("test.jpg");
+    emit mainwindow->filterFinished(btn);
+}
+
+void MainWindow::on_SkewBtn_clicked()
+{
+    if(!ui->frame_6->isVisible()){
+        recoverImage = to_image;
+        ui->radioButton->setVisible(false);
+        ui->radioButton_2->setVisible(false);
+        ui->lineEdit_1->setVisible(false);
+        ui->lineEdit_2->setVisible(false);
+        ui->lineEdit_3->setVisible(false);
+        ui->lineEdit_4->setVisible(false);
+        ui->resize_width->setVisible(false);
+        ui->resize_height->setVisible(false);
+        ui->Brightness->setVisible(false);
+        ui->label_3->setVisible(false);
+        ui->frame_4->setVisible(false);
+        ui->frame_5->setVisible(false);
+        ui->frame_7->setVisible(false);
+        if (!ui->options_label->isVisible()) {
+            ui->options_label->setVisible(true);
+            setupFadeInAnimation(ui->options_label, 500);
+        }
+
+        if (!ui->applyBtn->isVisible()) {
+            ui->applyBtn->setVisible(true);
+            setupFadeInAnimation(ui->applyBtn, 500);
+        }
+        // Fade-in animation for frame_5
+        ui->frame_6->setVisible(true);
+        setupFadeInAnimation(ui->frame_6, 500);
+        optionsFor = ui->SkewBtn;
+    }else if(path.size() != 0){
+        int val = ui->horizontalSlider_3->value();
+        loadingFilter();
+        secT = QThread::create(applyVerticalSkew,this,ui->SkewBtn,val);
+        secT->start();
+
+        putSpinner(ui->SkewBtn);
+        putSpinner(ui->applyBtn);
+    }else{
+        ui->errorLabel->setText("please select an image");
+    }
+}
+
+
+void MainWindow::on_horizontalSlider_3_valueChanged(int value)
+{
+    ui->label_12->setText(QString::fromStdString(to_string(value)));
+}
+
+
+void setColorForFrame(Image& image, int startX, int startY, int endX, int endY, int r, int g, int b) {
+    for (int i = startX; i < endX; ++i) {
+        for (int j = startY; j < endY; ++j) {
+            image(i, j, 0) = r;
+            image(i, j, 1) = g;
+            image(i, j, 2) = b;
+        }
+    }
+}
+
+// Function to create a simple frame with a specified color
+void createSimpleFrame(QColor frameColor) {
+    int rValue = frameColor.red(), gValue = frameColor.green(), bValue = frameColor.blue();
+
+    setColorForFrame(to_image, 0, 0, 5, to_image.height, rValue, gValue, bValue);
+    setColorForFrame(to_image, to_image.width - 5, 0, to_image.width, to_image.height, rValue, gValue, bValue);
+    setColorForFrame(to_image, 0, 0, to_image.width, 5, rValue, gValue, bValue);
+    setColorForFrame(to_image, 0, to_image.height - 5, to_image.width, to_image.height, rValue, gValue, bValue);
+}
+
+// Function to create a fancy frame with gradient colors
+void createFancyFrame() {
+    int startColorR = 255;  // Red
+    int startColorG = 0;
+    int startColorB = 0;
+    int endColorR = 0;      // Blue
+    int endColorG = 0;
+    int endColorB = 255;
+
+    int frameSize = 10;
+
+    setColorForFrame(to_image, 0, 0, frameSize, to_image.height, startColorR, startColorG, startColorB);
+    setColorForFrame(to_image, to_image.width - frameSize, 0, to_image.width, to_image.height, endColorR, endColorG, endColorB);
+    setColorForFrame(to_image, 0, 0, to_image.width, frameSize, startColorR, startColorG, startColorB);
+    setColorForFrame(to_image, 0, to_image.height - frameSize, to_image.width, to_image.height, endColorR, endColorG, endColorB);
+}
+
+void frame(MainWindow* mainwindow,QPushButton* btn,int choice,QColor frameColor){
+    switch (choice) {
+    case 1:
+        createSimpleFrame(frameColor);
+        break;
+    case 2:
+        createFancyFrame();
+        break;
+    default:
+        break;
+    }
+    to_image.saveImage("test.jpg");
+    emit mainwindow->filterFinished(btn);
+}
+
+void MainWindow::on_FrameBtn_clicked()
+{
+    if(!ui->frame_7->isVisible()){
+        ui->radioButton->setVisible(false);
+        ui->radioButton_2->setVisible(false);
+        ui->lineEdit_1->setVisible(false);
+        ui->lineEdit_2->setVisible(false);
+        ui->lineEdit_3->setVisible(false);
+        ui->lineEdit_4->setVisible(false);
+        ui->resize_width->setVisible(false);
+        ui->resize_height->setVisible(false);
+        ui->Brightness->setVisible(false);
+        ui->label_3->setVisible(false);
+        ui->frame_4->setVisible(false);
+        ui->frame_5->setVisible(false);
+        ui->frame_6->setVisible(false);
+        ui->frame_8->setVisible(false);
+        if (!ui->options_label->isVisible()) {
+            ui->options_label->setVisible(true);
+            setupFadeInAnimation(ui->options_label, 500);
+        }
+
+        if (!ui->applyBtn->isVisible()) {
+            ui->applyBtn->setVisible(true);
+            setupFadeInAnimation(ui->applyBtn, 500);
+        }
+        // Fade-in animation for frame_5
+        ui->frame_7->setVisible(true);
+        setupFadeInAnimation(ui->frame_7, 500);
+        optionsFor = ui->FrameBtn;
+    }else if(path.size() != 0){
+        loadingFilter();
+        int choice;
+        if(ui->radioButton_3->isChecked()){
+            choice = 1;
+        }else{
+            choice = 2;
+        }
+        secT = QThread::create(frame,this,ui->FrameBtn,choice,Framecolor);
+        secT->start();
+
+        putSpinner(ui->FrameBtn);
+        putSpinner(ui->applyBtn);
+    }else{
+        ui->errorLabel->setText("please select an image");
+    }
+}
+
+
+void MainWindow::on_pushButton_2_clicked()
+{
+    QColorDialog *colorDialog = new QColorDialog();
+    colorDialog->setOption(QColorDialog::DontUseNativeDialog); // optional: Use this line if you want to ensure that the QColorDialog always uses the Qt version
+    QDialog* dialog = new QDialog(this); // Creating a QDialog to hold the QColorDialog
+    dialog->resize(320, 400);
+
+    QGridLayout* layout = new QGridLayout(dialog); // Setting the layout to the dialog
+    layout->addWidget(colorDialog);
+
+    connect(colorDialog, &QColorDialog::finished, dialog, &QDialog::accept);
+
+    dialog->exec(); // Show the dialog as a modal dialog
+    delete dialog; // Release the allocated memory when the dialog is closed
+    Framecolor = colorDialog->currentColor();
+}
+
+
+
+void MainWindow::on_radioButton_3_clicked()
+{
+    ui->frame_8->setVisible(true);
+}
+
+
+void MainWindow::on_radioButton_4_clicked()
+{
+    ui->frame_8->setVisible(false);
+}
+
