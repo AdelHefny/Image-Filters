@@ -28,7 +28,7 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         stb_image.h
         stb_image_write.h
 
-
+     main.cpp
 
 
     )

@@ -25,6 +25,7 @@ public:
     QThread *secT;
     QPushButton *optionsFor;
     QColor Framecolor = QColor(0,0,0,255);
+    int blueStrength = 255,yellowStrength = 255;
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
     void disableObtions();
@@ -103,6 +104,12 @@ private slots:
     void on_radioButton_3_clicked();
 
     void on_radioButton_4_clicked();
+
+    void on_horizontalSlider_4_valueChanged(int value);
+
+    void on_horizontalSlider_5_valueChanged(int value);
+
+    void on_radioButton_5_clicked();
 
 private:
     QGraphicsDropShadowEffect *Drop_Shadow_Effect;

@@ -41,6 +41,8 @@ MainWindow::MainWindow(QWidget *parent)
     ui->applyBtn->setCursor(Qt::PointingHandCursor);
     ui->pushButton_2->setCursor(Qt::PointingHandCursor);
     connect(this,&MainWindow::filterFinished,this,&MainWindow::updateToImage);
+    ui->label_15->setText(QString::fromStdString(to_string(ui->horizontalSlider_4->value())));
+    ui->label_17->setText(QString::fromStdString(to_string(ui->horizontalSlider_5->value())));
 
     ui->FromImage->setAcceptDrops(true);
 }
@@ -1279,6 +1281,36 @@ void MainWindow::on_horizontalSlider_valueChanged(int value)
     }else{
         ui->label_7->setText("0");
     }
+    ui->applyBtn->click();
+}
+
+// Function to apply box blur to an image using a specified kernel size
+void calculatePrefixSum(const Image& image, vector<vector<vector<int>>>& prefixSum) {
+    int width = image.width;
+    int height = image.height;
+    int channels = image.channels;
+
+    prefixSum.resize(width, vector<vector<int>>(height, vector<int>(channels)));
+
+    // Calculate prefix sum for each channel
+    for (int c = 0; c < channels; ++c) {
+        // Calculate prefix sum for the first row
+        for (int i = 0; i < width; ++i) {
+            prefixSum[i][0][c] = image(i, 0, c);
+        }
+
+        // Calculate prefix sum for the first column
+        for (int j = 0; j < height; ++j) {
+            prefixSum[0][j][c] = image(0, j, c);
+        }
+
+        // Calculate prefix sum for the rest of the image
+        for (int i = 1; i < width; ++i) {
+            for (int j = 1; j < height; ++j) {
+                prefixSum[i][j][c] = image(i, j, c) + prefixSum[i - 1][j][c] + prefixSum[i][j - 1][c] - prefixSum[i - 1][j - 1][c];
+            }
+        }
+    }
 }
 
 void applyBoxBlur(MainWindow* mainwindow,QPushButton* btn,int kernelSize) {
@@ -1289,20 +1321,20 @@ void applyBoxBlur(MainWindow* mainwindow,QPushButton* btn,int kernelSize) {
     // Create a temporary image to store the blurred result
     Image blurredImage(width, height);
 
-    // Apply box blur using the specified kernel size
+    // Calculate prefix sum of the original image
+    vector<vector<vector<int>>> prefixSum;
+    calculatePrefixSum(recoverImage, prefixSum);
+
+    // Apply box blur using the prefix sum
     for (int i = 0; i < width; ++i) {
         for (int j = 0; j < height; ++j) {
             for (int c = 0; c < channels; ++c) {
-                int sum = 0;
-                int count = 0;
-                for (int k = -kernelSize; k <= kernelSize; ++k) {
-                    for (int l = -kernelSize; l <= kernelSize; ++l) {
-                        int x = max(0, min(width - 1, i + k));
-                        int y = max(0, min(height - 1, j + l));
-                        sum += recoverImage(x, y, c);
-                        count++;
-                    }
-                }
+                int x1 = max(0, i - kernelSize);
+                int y1 = max(0, j - kernelSize);
+                int x2 = min(width - 1, i + kernelSize);
+                int y2 = min(height - 1, j + kernelSize);
+                int count = (x2 - x1 + 1) * (y2 - y1 + 1);
+                int sum = prefixSum[x2][y2][c] - (x1 > 0 ? prefixSum[x1 - 1][y2][c] : 0) - (y1 > 0 ? prefixSum[x2][y1 - 1][c] : 0) + (x1 > 0 && y1 > 0 ? prefixSum[x1 - 1][y1 - 1][c] : 0);
                 blurredImage(i, j, c) = sum / count; // Average of the pixel values in the kernel
             }
         }
@@ -1357,6 +1389,7 @@ void MainWindow::on_BlurBtn_clicked()
 void MainWindow::on_horizontalSlider_2_valueChanged(int value)
 {
     ui->label_8->setText(QString::fromStdString(to_string(value)));
+    ui->applyBtn->click();
 }
 
 void tvEffect(MainWindow* mainwindow,QPushButton* btn){
@@ -1480,6 +1513,7 @@ void MainWindow::on_SkewBtn_clicked()
 void MainWindow::on_horizontalSlider_3_valueChanged(int value)
 {
     ui->label_12->setText(QString::fromStdString(to_string(value)));
+    ui->applyBtn->click();
 }
 
 
@@ -1519,14 +1553,48 @@ void createFancyFrame() {
     setColorForFrame(to_image, 0, 0, to_image.width, frameSize, startColorR, startColorG, startColorB);
     setColorForFrame(to_image, 0, to_image.height - frameSize, to_image.width, to_image.height, endColorR, endColorG, endColorB);
 }
+void createGradientFrame(int r1, int g1, int b1, int r2, int g2, int b2) {
+    int width = to_image.width;
+    int height = to_image.height;
 
-void frame(MainWindow* mainwindow,QPushButton* btn,int choice,QColor frameColor){
+    // Define the size of the frame
+    int frameSize = 20;
+
+    // Iterate through each pixel in the image
+    for (int y = 0; y < height; y++) {
+        for (int x = 0; x < width; x++) {
+            // Check if the pixel is in the frame area
+            if (x < frameSize || x >= width - frameSize || y < frameSize || y >= height - frameSize) {
+                // Calculate the gradient color based on pixel position
+                float t1 = float(x - frameSize) / frameSize;
+                float t2 = float(width - x - frameSize) / frameSize;
+                float t3 = float(y - frameSize) / frameSize;
+                float t4 = float(height - y - frameSize) / frameSize;
+
+                float t = min(t1, min(t2, min(t3, t4)));
+
+                int r = (1 - t) * r1 + t * r2;
+                int g = (1 - t) * g1 + t * g2;
+                int b = (1 - t) * b1 + t * b2;
+
+                // Set the pixel color in the frame area
+                to_image.imageData[(y * width + x) * 3 + 0] = r;
+                to_image.imageData[(y * width + x) * 3 + 1] = g;
+                to_image.imageData[(y * width + x) * 3 + 2] = b;
+            }
+        }
+    }
+}
+void frame(MainWindow* mainwindow,QPushButton* btn,int choice,QColor frameColor,int blue,int yellow){
     switch (choice) {
     case 1:
         createSimpleFrame(frameColor);
         break;
     case 2:
         createFancyFrame();
+        break;
+    case 3:
+        createGradientFrame(0, 0, blue, yellow, yellow, 0);
         break;
     default:
         break;
@@ -1552,6 +1620,7 @@ void MainWindow::on_FrameBtn_clicked()
         ui->frame_5->setVisible(false);
         ui->frame_6->setVisible(false);
         ui->frame_8->setVisible(false);
+        ui->frame_9->setVisible(false);
         if (!ui->options_label->isVisible()) {
             ui->options_label->setVisible(true);
             setupFadeInAnimation(ui->options_label, 500);
@@ -1570,10 +1639,12 @@ void MainWindow::on_FrameBtn_clicked()
         int choice;
         if(ui->radioButton_3->isChecked()){
             choice = 1;
-        }else{
+        }else if(ui->radioButton_4->isChecked()){
             choice = 2;
+        }else{
+            choice = 3;
         }
-        secT = QThread::create(frame,this,ui->FrameBtn,choice,Framecolor);
+        secT = QThread::create(frame,this,ui->FrameBtn,choice,Framecolor,blueStrength,yellowStrength);
         secT->start();
 
         putSpinner(ui->FrameBtn);
@@ -1582,6 +1653,7 @@ void MainWindow::on_FrameBtn_clicked()
         ui->errorLabel->setText("please select an image");
     }
 }
+
 
 
 void MainWindow::on_pushButton_2_clicked()
@@ -1606,11 +1678,36 @@ void MainWindow::on_pushButton_2_clicked()
 void MainWindow::on_radioButton_3_clicked()
 {
     ui->frame_8->setVisible(true);
+    ui->frame_9->setVisible(false);
 }
 
 
 void MainWindow::on_radioButton_4_clicked()
 {
+    ui->frame_8->setVisible(false);
+    ui->frame_9->setVisible(false);
+}
+
+
+void MainWindow::on_horizontalSlider_4_valueChanged(int value)
+{
+    ui->label_15->setText(QString::fromStdString(to_string(value)));
+    blueStrength = value;
+    ui->applyBtn->click();
+}
+
+
+void MainWindow::on_horizontalSlider_5_valueChanged(int value)
+{
+    ui->label_17->setText(QString::fromStdString(to_string(value)));
+    yellowStrength = value;
+    ui->applyBtn->click();
+}
+
+
+void MainWindow::on_radioButton_5_clicked()
+{
+    ui->frame_9->setVisible(true);
     ui->frame_8->setVisible(false);
 }
 
