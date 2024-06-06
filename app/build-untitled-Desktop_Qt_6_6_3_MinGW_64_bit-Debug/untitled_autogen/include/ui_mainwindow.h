@@ -136,14 +136,14 @@ public:
     QLabel *label_8;
     QSlider *horizontalSlider_2;
     QSpacerItem *horizontalSpacer_2;
-    QHBoxLayout *horizontalLayout_7;
-    QPushButton *applyBtn;
-    QHBoxLayout *horizontalLayout_3;
-    QRadioButton *radioButton;
-    QRadioButton *radioButton_2;
     QHBoxLayout *horizontalLayout_6;
     QLineEdit *lineEdit_3;
     QLineEdit *lineEdit_4;
+    QHBoxLayout *horizontalLayout_3;
+    QRadioButton *radioButton;
+    QRadioButton *radioButton_2;
+    QHBoxLayout *horizontalLayout_7;
+    QPushButton *applyBtn;
     QFrame *frame;
     QHBoxLayout *horizontalLayout_10;
     QFrame *frame_2;
@@ -1067,24 +1067,24 @@ public:
 
         verticalLayout_4->addWidget(frame_5);
 
-        horizontalLayout_7 = new QHBoxLayout();
-        horizontalLayout_7->setObjectName("horizontalLayout_7");
-        applyBtn = new QPushButton(centralwidget);
-        applyBtn->setObjectName("applyBtn");
-        sizePolicy2.setHeightForWidth(applyBtn->sizePolicy().hasHeightForWidth());
-        applyBtn->setSizePolicy(sizePolicy2);
-        applyBtn->setMinimumSize(QSize(150, 50));
-        applyBtn->setMaximumSize(QSize(16777215, 16777215));
-        applyBtn->setStyleSheet(QString::fromUtf8("QPushButton{\n"
-"	border-radius: 24px;\n"
-"}"));
-        applyBtn->setAutoDefault(false);
-        applyBtn->setFlat(false);
+        horizontalLayout_6 = new QHBoxLayout();
+        horizontalLayout_6->setObjectName("horizontalLayout_6");
+        lineEdit_3 = new QLineEdit(centralwidget);
+        lineEdit_3->setObjectName("lineEdit_3");
+        sizePolicy7.setHeightForWidth(lineEdit_3->sizePolicy().hasHeightForWidth());
+        lineEdit_3->setSizePolicy(sizePolicy7);
 
-        horizontalLayout_7->addWidget(applyBtn);
+        horizontalLayout_6->addWidget(lineEdit_3);
+
+        lineEdit_4 = new QLineEdit(centralwidget);
+        lineEdit_4->setObjectName("lineEdit_4");
+        sizePolicy7.setHeightForWidth(lineEdit_4->sizePolicy().hasHeightForWidth());
+        lineEdit_4->setSizePolicy(sizePolicy7);
+
+        horizontalLayout_6->addWidget(lineEdit_4);
 
 
-        verticalLayout_4->addLayout(horizontalLayout_7);
+        verticalLayout_4->addLayout(horizontalLayout_6);
 
         horizontalLayout_3 = new QHBoxLayout();
         horizontalLayout_3->setObjectName("horizontalLayout_3");
@@ -1108,24 +1108,24 @@ public:
 
         verticalLayout_4->addLayout(horizontalLayout_3);
 
-        horizontalLayout_6 = new QHBoxLayout();
-        horizontalLayout_6->setObjectName("horizontalLayout_6");
-        lineEdit_3 = new QLineEdit(centralwidget);
-        lineEdit_3->setObjectName("lineEdit_3");
-        sizePolicy7.setHeightForWidth(lineEdit_3->sizePolicy().hasHeightForWidth());
-        lineEdit_3->setSizePolicy(sizePolicy7);
+        horizontalLayout_7 = new QHBoxLayout();
+        horizontalLayout_7->setObjectName("horizontalLayout_7");
+        applyBtn = new QPushButton(centralwidget);
+        applyBtn->setObjectName("applyBtn");
+        sizePolicy2.setHeightForWidth(applyBtn->sizePolicy().hasHeightForWidth());
+        applyBtn->setSizePolicy(sizePolicy2);
+        applyBtn->setMinimumSize(QSize(150, 50));
+        applyBtn->setMaximumSize(QSize(16777215, 16777215));
+        applyBtn->setStyleSheet(QString::fromUtf8("QPushButton{\n"
+"	border-radius: 24px;\n"
+"}"));
+        applyBtn->setAutoDefault(false);
+        applyBtn->setFlat(false);
 
-        horizontalLayout_6->addWidget(lineEdit_3);
-
-        lineEdit_4 = new QLineEdit(centralwidget);
-        lineEdit_4->setObjectName("lineEdit_4");
-        sizePolicy7.setHeightForWidth(lineEdit_4->sizePolicy().hasHeightForWidth());
-        lineEdit_4->setSizePolicy(sizePolicy7);
-
-        horizontalLayout_6->addWidget(lineEdit_4);
+        horizontalLayout_7->addWidget(applyBtn);
 
 
-        verticalLayout_4->addLayout(horizontalLayout_6);
+        verticalLayout_4->addLayout(horizontalLayout_7);
 
         frame = new QFrame(centralwidget);
         frame->setObjectName("frame");
@@ -1302,12 +1302,12 @@ public:
         label_7->setText(QCoreApplication::translate("MainWindow", "0", nullptr));
         label_9->setText(QCoreApplication::translate("MainWindow", "Blur strength", nullptr));
         label_8->setText(QCoreApplication::translate("MainWindow", "0", nullptr));
-        applyBtn->setText(QCoreApplication::translate("MainWindow", "Apply", nullptr));
-        radioButton->setText(QCoreApplication::translate("MainWindow", "horizontally", nullptr));
-        radioButton_2->setText(QCoreApplication::translate("MainWindow", "verticlay", nullptr));
         lineEdit_3->setText(QString());
         lineEdit_3->setPlaceholderText(QCoreApplication::translate("MainWindow", "Width", nullptr));
         lineEdit_4->setPlaceholderText(QCoreApplication::translate("MainWindow", "Height", nullptr));
+        radioButton->setText(QCoreApplication::translate("MainWindow", "horizontally", nullptr));
+        radioButton_2->setText(QCoreApplication::translate("MainWindow", "verticlay", nullptr));
+        applyBtn->setText(QCoreApplication::translate("MainWindow", "Apply", nullptr));
         pushButton->setText(QCoreApplication::translate("MainWindow", "Load image", nullptr));
         label->setText(QCoreApplication::translate("MainWindow", "Path", nullptr));
         clearBtn->setText(QCoreApplication::translate("MainWindow", "clear", nullptr));

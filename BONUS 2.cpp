@@ -15,6 +15,8 @@ void NightMood(int width, int height, Image& image) {
                 // Retrieve the pixel value for the current channel
                 int PixelValue = image(i,j,k);
 
+
+
                 // Apply different multipliers to each channel to achieve the night mood effect
                 if(k == 0) { // Red channel
                     PixelValue *= 0.5; // Reduce intensity by 50%
